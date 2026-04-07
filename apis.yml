@@ -8,10 +8,10 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - iPaaS
-  - Integration
   - API Management
   - Automation
+  - Integration
+  - iPaaS
 url: >-
   https://raw.githubusercontent.com/api-evangelist/jitterbit/refs/heads/main/apis.yml
 created: '2026-03-16'
@@ -27,8 +27,8 @@ apis:
     humanURL: https://developer.jitterbit.com/connector-sdk/apis/
     tags:
       - Connectors
-      - SDK
       - Integration
+      - SDK
     properties:
       - type: Documentation
         url: https://developer.jitterbit.com/connector-sdk/apis/
