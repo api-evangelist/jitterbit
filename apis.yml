@@ -41,6 +41,10 @@ common:
     url: https://developer.jitterbit.com/
   - type: Documentation
     url: https://docs.jitterbit.com/developer-portal/
+  - type: Integrations
+    url: https://www.jitterbit.com/products/marketplace/
+integrations:
+  - name: Global Strategic Partners
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
