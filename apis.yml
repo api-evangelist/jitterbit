@@ -35,6 +35,10 @@ apis:
       - type: GettingStarted
         url: https://developer.jitterbit.com/
 common:
+  - type: GitHubOrganization
+    url: https://github.com/jitterbit
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/jitterbit
   - type: Website
     url: https://www.jitterbit.com
   - type: Portal
