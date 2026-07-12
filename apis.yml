@@ -35,6 +35,10 @@ apis:
       - type: GettingStarted
         url: https://developer.jitterbit.com/
 common:
+  - type: TrustCenter
+    url: security/jitterbit-trust-center.yml
+  - type: DomainSecurity
+    url: security/jitterbit-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/jitterbit
   - type: LinkedIn
@@ -47,6 +51,8 @@ common:
     url: https://docs.jitterbit.com/developer-portal/
   - type: Integrations
     url: https://www.jitterbit.com/products/marketplace/
+  - url: https://www.jitterbit.com/feed/
+    type: Blog
 integrations:
   - name: Global Strategic Partners
 maintainers:
