@@ -28,7 +28,7 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/jitterbit/refs/heads/main/apis.yml
 created: '2026-03-16'
 modified: '2026-03-16'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - aid: jitterbit:connector-sdk-api
     name: Jitterbit Connector SDK REST API
