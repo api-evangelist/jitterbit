@@ -52,91 +52,132 @@ created: '2026-03-16'
 modified: '2026-08-27'
 specificationVersion: '0.23'
 apis:
-  - aid: jitterbit:harmony-platform-api
-    name: Jitterbit Harmony Platform APIs
-    description: >-
-      The Harmony platform APIs let a caller interact with the Harmony cloud
-      programmatically — creating, retrieving, deploying, deleting, exporting,
-      importing and migrating Integration Studio projects, reading and setting
-      project variables, retrieving operation logs and their execution detail,
-      and creating, updating, toggling and deleting operation schedules.
-      Authentication is an opaque authToken header obtained from a login
-      operation. The developer portal labels the surface a preview that is
-      "currently targeted toward internal users", and customers are told the
-      APIs may change before full release.
-    humanURL: https://developer.jitterbit.com/harmony-platform-apis/
-    baseURL: https://harmony-api.na-east.jitterbit.com/{endpoint}
-    baseURLs:
-      - https://harmony-api.na-east.jitterbit.com/{endpoint}
-      - https://harmony-api.emea-west.jitterbit.com/{endpoint}
-      - https://harmony-api.apac-southeast.jitterbit.com/{endpoint}
-    tags:
-      - Integration
-      - iPaaS
-      - Projects
-      - Scheduling
-      - Logging
-    properties:
-      - type: OpenAPI
-        url: openapi/jitterbit-harmony-platform-openapi.yml
-      - type: Overlay
-        url: overlays/jitterbit-harmony-platform-overlay.yaml
-      - type: APIReference
-        url: https://developer.jitterbit.com/harmony-platform-apis/
-      - type: Documentation
-        url: https://developer.jitterbit.com/harmony-platform-apis/
-      - type: DataModel
-        url: data-model/jitterbit-data-model.yml
-      - type: ErrorCatalog
-        url: errors/jitterbit-problem-types.yml
-      - type: Authentication
-        url: authentication/jitterbit-authentication.yml
-  - aid: jitterbit:connector-sdk-api
-    name: Jitterbit Connector SDK REST API
-    description: >-
-      APIs for registering and managing connectors created with the Jitterbit
-      Connector SDK — log in to Harmony, register a custom connector, list
-      registered connectors, delete a connector registration, delete a connector
-      payload, and validate a connector key and secret. Served from the
-      Jitterbit Cloud RESTful Service on the region host. Documented in prose;
-      no OpenAPI is published.
-    humanURL: https://docs.jitterbit.com/developer-portal/connector-sdk/apis/
-    baseURL: https://na-east.jitterbit.com/jitterbit-cloud-restful-service/
-    baseURLs:
-      - https://na-east.jitterbit.com/jitterbit-cloud-restful-service/
-      - https://emea-west.jitterbit.com/jitterbit-cloud-restful-service/
-      - https://apac-southeast.jitterbit.com/jitterbit-cloud-restful-service/
-    tags:
-      - Connectors
-      - Integration
-      - SDK
-    properties:
-      - type: Documentation
-        url: https://docs.jitterbit.com/developer-portal/connector-sdk/apis/
-      - type: GettingStarted
-        url: https://docs.jitterbit.com/developer-portal/connector-sdk/getting-started/
-      - type: SDK
-        url: https://docs.jitterbit.com/developer-portal/connector-sdk/
-  - aid: jitterbit:api-manager-log-service-api
-    name: Jitterbit API Manager Log Service API (Beta)
-    description: >-
-      An asynchronous REST API for retrieving API Manager log files as CSV or
-      JSON, as an alternative to the Download as CSV button on the API Logs
-      page. A request submits a time range, an organization ID and an optional
-      query-string filter and returns a reference key; a second call polls that
-      key and downloads the file when the status reaches COMPLETE. Requires an
-      authentication token from the User Service Controller API and a user with
-      Admin permission. Documented in prose; no OpenAPI is published.
-    humanURL: https://docs.jitterbit.com/api-manager/api-manager-reference/api-manager-log-service-api/
-    baseURL: https://na-east.jitterbit.com/jitterbit-cloud-restful-service/api/analytics/
-    tags:
-      - Logging
-      - Analytics
-      - API Management
-    properties:
-      - type: Documentation
-        url: https://docs.jitterbit.com/api-manager/api-manager-reference/api-manager-log-service-api/
+- aid: jitterbit:connector-sdk-api
+  name: Jitterbit Connector SDK REST API
+  description: >-
+    APIs for registering and managing connectors created with the Jitterbit Connector SDK — log in to
+    Harmony, register a custom connector, list registered connectors, delete a connector registration,
+    delete a connector payload, and validate a connector key and secret. Served from the Jitterbit Cloud
+    RESTful Service on the region host. Documented in prose; no OpenAPI is published.
+  humanURL: https://docs.jitterbit.com/developer-portal/connector-sdk/apis/
+  baseURL: https://na-east.jitterbit.com/jitterbit-cloud-restful-service/
+  baseURLs:
+  - https://na-east.jitterbit.com/jitterbit-cloud-restful-service/
+  - https://emea-west.jitterbit.com/jitterbit-cloud-restful-service/
+  - https://apac-southeast.jitterbit.com/jitterbit-cloud-restful-service/
+  tags:
+  - Connectors
+  - Integration
+  - SDK
+  properties:
+  - type: Documentation
+    url: https://docs.jitterbit.com/developer-portal/connector-sdk/apis/
+  - type: GettingStarted
+    url: https://docs.jitterbit.com/developer-portal/connector-sdk/getting-started/
+  - type: SDK
+    url: https://docs.jitterbit.com/developer-portal/connector-sdk/
+- aid: jitterbit:api-manager-log-service-api
+  name: Jitterbit API Manager Log Service API (Beta)
+  description: >-
+    An asynchronous REST API for retrieving API Manager log files as CSV or JSON, as an alternative to
+    the Download as CSV button on the API Logs page. A request submits a time range, an organization ID
+    and an optional query-string filter and returns a reference key; a second call polls that key and
+    downloads the file when the status reaches COMPLETE. Requires an authentication token from the User
+    Service Controller API and a user with Admin permission. Documented in prose; no OpenAPI is published.
+  humanURL: >-
+    https://docs.jitterbit.com/api-manager/api-manager-reference/api-manager-log-service-api/
+  baseURL: https://na-east.jitterbit.com/jitterbit-cloud-restful-service/api/analytics/
+  tags:
+  - Logging
+  - Analytics
+  - API Management
+  properties:
+  - type: Documentation
+    url: >-
+      https://docs.jitterbit.com/api-manager/api-manager-reference/api-manager-log-service-api/
+- aid: jitterbit:jitterbit-login-api
+  name: Jitterbit Login API
+  description: The Login API from Jitterbit — 1 operation(s) for login.
+  humanURL: https://developer.jitterbit.com/harmony-platform-apis/
+  baseURL: https://harmony-api.na-east.jitterbit.com/{endpoint}
+  tags:
+  - Login
+  properties:
+  - type: OpenAPI
+    url: openapi/jitterbit-login-api-openapi.yml
+  - type: APIReference
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: Documentation
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: DataModel
+    url: data-model/jitterbit-data-model.yml
+  - type: ErrorCatalog
+    url: errors/jitterbit-problem-types.yml
+  - type: Authentication
+    url: authentication/jitterbit-authentication.yml
+- aid: jitterbit:jitterbit-operations-api
+  name: Jitterbit Operations API
+  description: The Operations API from Jitterbit — 1 operation(s) for operations.
+  humanURL: https://developer.jitterbit.com/harmony-platform-apis/
+  baseURL: https://harmony-api.na-east.jitterbit.com/{endpoint}
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/jitterbit-operations-api-openapi.yml
+  - type: APIReference
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: Documentation
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: DataModel
+    url: data-model/jitterbit-data-model.yml
+  - type: ErrorCatalog
+    url: errors/jitterbit-problem-types.yml
+  - type: Authentication
+    url: authentication/jitterbit-authentication.yml
+- aid: jitterbit:jitterbit-projects-api
+  name: Jitterbit Projects API
+  description: The Projects API from Jitterbit — 4 operation(s) for projects.
+  humanURL: https://developer.jitterbit.com/harmony-platform-apis/
+  baseURL: https://harmony-api.na-east.jitterbit.com/{endpoint}
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/jitterbit-projects-api-openapi.yml
+  - type: APIReference
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: Documentation
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: DataModel
+    url: data-model/jitterbit-data-model.yml
+  - type: ErrorCatalog
+    url: errors/jitterbit-problem-types.yml
+  - type: Authentication
+    url: authentication/jitterbit-authentication.yml
+- aid: jitterbit:jitterbit-schedules-api
+  name: Jitterbit Schedules API
+  description: The Schedules API from Jitterbit — 2 operation(s) for schedules.
+  humanURL: https://developer.jitterbit.com/harmony-platform-apis/
+  baseURL: https://harmony-api.na-east.jitterbit.com/{endpoint}
+  tags:
+  - Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/jitterbit-schedules-api-openapi.yml
+  - type: APIReference
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: Documentation
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: DataModel
+    url: data-model/jitterbit-data-model.yml
+  - type: ErrorCatalog
+    url: errors/jitterbit-problem-types.yml
+  - type: Authentication
+    url: authentication/jitterbit-authentication.yml
 common:
+  - type: Overlay
+    url: overlays/jitterbit-harmony-platform-overlay.yaml
   - type: Website
     url: https://www.jitterbit.com
   - type: Portal
