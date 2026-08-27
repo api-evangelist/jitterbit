@@ -1,0 +1,72 @@
+generated: '2026-08-27'
+method: searched
+source: https://developer.jitterbit.com/harmony-platform-apis/
+summary: >-
+  Jitterbit publishes an interactive API console but no public sandbox: there is
+  no test-mode credential, no test data set, no free trial and no self-serve
+  signup. Everything below requires a real Harmony account on a paid annual
+  contract.
+console:
+  type: swagger-ui
+  url: https://developer.jitterbit.com/harmony-platform-apis/
+  spec_url: https://developer.jitterbit.com/harmony-platform-apis/test.json
+  interactive: true
+  description: >-
+    The Harmony API reference is a Swagger UI 3 instance embedded in the
+    developer portal, with Try it out enabled on every operation. The documented
+    flow is: pick your region under Region, expand POST /login (Authenticate),
+    Try it out, enter your Harmony credentials, Execute, copy authenticationToken
+    from the response, click Authorize, paste it as the authToken header value.
+    The docs warn that a CORS or network error in this console is usually a
+    browser extension blocking the request, and suggest an incognito tab.
+  credentials_required: true
+  credentials_note: Live Harmony account credentials. No demo or test account is offered.
+environment_selector:
+  parameter: endpoint (an OpenAPI server variable)
+  values: [dev, qa, api]
+  default: dev
+  published_guidance: >-
+    "In Variables, internal testers can change the region's endpoint to use.
+    This variable is for internal usage only and most users should not change
+    this value from the default dev selection."
+  finding: >-
+    The published contract's three servers all default their endpoint variable
+    to `dev`. A client generated straight from this spec targets a development
+    endpoint unless the caller overrides the variable, and the documentation
+    tells external users NOT to change it. This is consistent with the portal's
+    own framing: "Harmony Platform APIs (preview)... currently targeted toward
+    internal users."
+test_credentials: []
+test_data: []
+test_clocks: false
+fixtures: false
+platform_test_surfaces:
+  - name: Sandbox Cloud Agent Group (SCAG)
+    description: >-
+      A Jitterbit-hosted agent group updated to the latest agent at each Harmony
+      release, ahead of the Production Cloud Agent Group. It is where a customer
+      exercises new agent versions before production, not a public sandbox.
+    docs: https://docs.jitterbit.com/release-notes/harmony-release-notes/sandbox-cloud-agent-group-releases/
+  - name: Harmony environments
+    description: >-
+      Environments are the customer's own dev/test/prod separation inside their
+      organization (2 environments on the iPaaS Standard tier, 99 on
+      Professional and Enterprise). Projects are promoted between them with the
+      Migrate Project API.
+    docs: https://docs.jitterbit.com/management-console/environments/
+  - name: Test Connection
+    description: App Builder and connector configuration screens expose a Test Connection action for verifying endpoint configuration.
+    docs: https://docs.jitterbit.com/app-builder/new-features/test-connections/
+signup:
+  self_serve: false
+  free_trial: false
+  evidence:
+    - url: https://www.jitterbit.com/free-trial/
+      status: 404
+    - url: https://www.jitterbit.com/get-started/
+      status: 200
+      note: Redirects to /get-started-with-jitterbit/, a contact-sales form.
+    - url: https://login.jitterbit.com/
+      status: 200
+      note: Meta-refresh to /jitterbit-cloud-mgmt-console/ — the Harmony sign-in for existing customers.
+  pricing_note: 'All products require an annual contract; pricing is quote-only. See plans/jitterbit-plans-pricing.yml.'

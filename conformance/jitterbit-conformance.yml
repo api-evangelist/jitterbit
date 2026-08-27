@@ -1,0 +1,163 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  openapi/jitterbit-harmony-platform-openapi.yml plus
+  https://docs.jitterbit.com/getting-started/jitterbit-security/ and
+  https://docs.jitterbit.com/api-manager/api-manager-reference/api-configuration/odata-service/
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      The Harmony platform API declares a single securityScheme of type apiKey
+      (header authToken). No oauth2 flow is declared anywhere in the contract.
+      OAuth 2.0 in Jitterbit is a capability the API Manager gives to CUSTOMER
+      APIs (2-legged and 3-legged security profiles backed by Microsoft Entra
+      ID, Okta, Google and Salesforce as identity providers) — not the way
+      Jitterbit's own API is authenticated.
+    docs: https://docs.jitterbit.com/api-manager/api-manager-reference/api-identity-provider-configuration/
+  - id: oidc
+    conforms: false
+    evidence: No /.well-known/openid-configuration on any Jitterbit host (all 404).
+  - id: saml2
+    conforms: true
+    scope: platform-sso
+    evidence: >-
+      Harmony SSO supports SAML 2.0 and OAuth 2.0 against external identity
+      providers for platform login.
+    docs: https://docs.jitterbit.com/getting-started/jitterbit-security/sso/
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use a bespoke envelope — {success, uri, data, error:{errorMessage,
+      errorCode, errorId}} — with content-type application/json, not
+      application/problem+json. See errors/jitterbit-problem-types.yml.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: Zero occurrences of Sunset or Deprecation response headers in the documentation.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on every Jitterbit host.
+  - id: pagination
+    conforms: false
+    evidence: >-
+      No page/offset/cursor/limit parameter appears on any of the 19 operations
+      in the published contract. Collection reads (getSchedules, getOperationLogs)
+      return unbounded result sets.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header or equivalent request-deduplication mechanism is
+      declared in the contract or documented. See conventions/jitterbit-conventions.yml.
+  - id: openapi-3
+    conforms: true
+    evidence: openapi/jitterbit-harmony-platform-openapi.yml declares openapi 3.0.3 with 8 paths and 19 operations, all carrying unique operationIds and summaries.
+  - id: asyncapi
+    conforms: false
+    evidence: No AsyncAPI document is published for any Jitterbit event surface.
+domain_standards:
+  - id: odata-v4
+    conforms: true
+    scope: platform-capability
+    evidence: >-
+      Jitterbit API Manager publishes OData services as a first-class API type —
+      an OData service API exposes a Harmony data surface over the OData
+      protocol, consumable directly by Salesforce Connect. The cloud API gateway
+      counts OData requests against the same platform rate limit as custom and
+      proxy APIs. This is a capability Jitterbit gives to customer APIs; it is
+      NOT declared in the Harmony platform API contract, which has no $metadata
+      surface.
+    docs: https://docs.jitterbit.com/api-manager/api-manager-reference/api-configuration/odata-service/
+  - id: x12
+    conforms: true
+    scope: platform-capability
+    evidence: >-
+      Jitterbit EDI handles X12 transaction sets by document type code (810
+      Invoice, 850 Order) with a two-tier document-type filter on the
+      Transactions page, AS2 transport with certificate expiry checks, and
+      trading-partner management. Message types are named by their X12 codes in
+      the release notes and the EDI AI Assistant.
+    docs: https://docs.jitterbit.com/edi/
+  - id: edifact
+    conforms: true
+    scope: platform-capability
+    evidence: >-
+      The same EDI surface handles UN/EDIFACT document types by code (INVOIC is
+      named alongside 810 in the 12.8 release notes as a supported document type
+      code).
+    docs: https://docs.jitterbit.com/edi/
+  - id: as2
+    conforms: true
+    scope: platform-capability
+    evidence: >-
+      AS2 connections with certificate expiration notification, checked on every
+      document send and receive, warning 30 days before expiry.
+    docs: https://docs.jitterbit.com/edi/
+  - id: soap-wsdl
+    conforms: true
+    scope: platform-capability
+    evidence: >-
+      Jitterbit consumes and produces SOAP over WSDL through Design Studio and
+      App Builder SOAP connectivity, and publishes a maintained fork of the
+      Node.js SOAP driver as @jitterbit/strong-soap. Jitterbit does NOT publish
+      a WSDL for its own APIs — ?wsdl on the Jitterbit Cloud RESTful Service base
+      returned 404.
+    docs: https://docs.jitterbit.com/app-builder/documentation/soap-api-connection-guide/
+domain_standards_note: >-
+  Reward-only and honestly scoped. Every domain standard above is a capability
+  of the Jitterbit PLATFORM as an integration product, evidenced in the
+  documentation. None of them is declared inside the Harmony platform API
+  contract itself — the contract has no SCIM URN, no OData $metadata endpoint
+  and no EDI message-type schema. A buyer who already speaks OData, X12,
+  EDIFACT or AS2 can integrate through Jitterbit without a bespoke connector,
+  which is exactly the distinction this field exists to draw, but that value
+  lives in the product, not in the REST contract.
+compliance:
+  program_url: https://docs.jitterbit.com/getting-started/jitterbit-security/iso-certification/
+  trust_center: https://security.jitterbit.com/
+  auditor: A-LIGN (accredited by the ANSI ASQ National Accreditation Board)
+  dpo_contact: dpo@jitterbit.com
+  certifications:
+    - id: iso-42001
+      name: 'ISO/IEC 42001:2023 (AI Management System)'
+      status: certified
+    - id: iso-27001
+      name: 'ISO/IEC 27001:2022'
+      status: certified
+    - id: iso-27017
+      name: 'ISO/IEC 27017:2015 (cloud security controls)'
+      status: 'certified — supplemental controls'
+    - id: iso-27018
+      name: 'ISO/IEC 27018:2019 (PII in the cloud)'
+      status: 'certified — supplemental controls'
+    - id: soc1-type2
+      name: SOC 1 Type 2
+      status: published
+    - id: soc2-type2
+      name: SOC 2 Type 2
+      status: published
+    - id: soc3-type2
+      name: SOC 3 Type 2
+      status: published
+    - id: gdpr
+      name: General Data Protection Regulation
+      status: addressed
+    - id: ccpa
+      name: California Consumer Privacy Act
+      status: addressed
+    - id: hipaa
+      name: Health Insurance Portability and Accountability Act
+      status: addressed
+    - id: nzism
+      name: New Zealand Information Security Manual
+      status: addressed
+    - id: fips-140-2
+      name: 'FIPS 140-2 encryption (unique per-customer keys)'
+      status: implemented
+  evidence:
+    - url: https://docs.jitterbit.com/getting-started/jitterbit-security/iso-certification/
+      quote: >-
+        The Information Security Management System of Jitterbit is certified to
+        conform with ISO 42001:2023 and ISO 27001:2022 with supplemental controls
+        in ISO 27017:2015 and ISO 27018:2019.
+    - url: https://docs.jitterbit.com/getting-started/jitterbit-security/jitterbit-security-features/
+      quote: 'Harmony cloud security list names SOC 1 Type 2, SOC 2 Type 2, SOC 3 Type 2, GDPR, CCPA, HIPAA, NZISM and FIPS 140-2.'

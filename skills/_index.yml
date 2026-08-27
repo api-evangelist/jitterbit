@@ -1,0 +1,24 @@
+generated: '2026-08-27'
+method: generated
+source: openapi/jitterbit-harmony-platform-openapi.yml + conventions/jitterbit-conventions.yml + the Jitterbit documentation
+provider: Jitterbit
+api: Jitterbit Harmony Platform APIs
+note: >-
+  Jitterbit publishes no AGENTS.md, no skills directory and no agent
+  instructions of its own — searched the developer portal, the documentation
+  site and the public GitHub organization. These three skills are generated from
+  the real published contract; every operationId in them is present in
+  openapi/jitterbit-harmony-platform-openapi.yml.
+skills:
+  - name: jitterbit-deploy-project
+    file: jitterbit-deploy-project.md
+    description: Deploy an Integration Studio project, taking a recoverable export first.
+    operations: [authenticate, getProject, exportProject, deployProject]
+  - name: jitterbit-manage-schedules
+    file: jitterbit-manage-schedules.md
+    description: List, create, update, toggle and delete operation schedules, preferring the reversible toggle over deletion.
+    operations: [authenticate, getSchedules, createSchedule, updateSchedule, enableDisableSchedule, deleteSchedules]
+  - name: jitterbit-read-operation-logs
+    file: jitterbit-read-operation-logs.md
+    description: Read Integration Studio operation logs, and pull API Manager API logs through the asynchronous Beta log service.
+    operations: [authenticate, getOperationLogs, getOperationLogDetails]

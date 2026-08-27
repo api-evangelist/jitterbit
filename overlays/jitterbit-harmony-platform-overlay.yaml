@@ -1,0 +1,131 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Jitterbit Harmony Platform APIs
+  version: 1.0.0
+extends: openapi/jitterbit-harmony-platform-openapi.yml
+x-generated: '2026-08-27'
+x-method: generated
+x-source: >-
+  Derived from the verbatim contract at
+  https://developer.jitterbit.com/harmony-platform-apis/test.json plus the
+  runtime semantics harvested into conventions/, errors/, rate-limits/ and
+  lifecycle/. The original spec is never mutated; every enhancement below is an
+  additive annotation.
+actions:
+  - target: $.info
+    update:
+      description: >-
+        The Jitterbit Harmony platform APIs let a caller manage Integration
+        Studio projects, project variables, operation schedules and operation
+        logs in a Harmony organization. The developer portal labels this surface
+        a preview that is "currently targeted toward internal users".
+      x-apievangelist-maturity: preview
+      x-apievangelist-provider: jitterbit
+      x-apievangelist-docs: https://developer.jitterbit.com/harmony-platform-apis/
+      x-apievangelist-contract-source: https://developer.jitterbit.com/harmony-platform-apis/test.json
+      x-apievangelist-harvested: '2026-08-27'
+  - target: $.info
+    update:
+      contact:
+        name: Jitterbit Product Management
+        url: https://www.jitterbit.com/contact-us/
+    x-note: >-
+      The original declares an empty contact object. This overlay supplies the
+      public contact route Jitterbit itself directs feedback to from the
+      Harmony platform APIs page; it does not invent an email address.
+  - target: $.servers[0]
+    update:
+      description: >-
+        North America (na-east). The endpoint variable defaults to `dev`; the
+        documentation states this variable is for internal use and production
+        callers should be aware that `api` is the production value.
+  - target: $.servers[1]
+    update:
+      description: Europe (emea-west). Same endpoint variable semantics as na-east.
+  - target: $.servers[2]
+    update:
+      description: Asia-Pacific (apac-southeast). Same endpoint variable semantics as na-east.
+  - target: $
+    update:
+      x-apievangelist-conventions:
+        error_envelope: '{success, uri, data, error:{errorMessage, errorCode, errorId}, guid-*}'
+        failure_signalling: 'Application failures are returned with success:false in the body; HTTP status alone is insufficient.'
+        rfc9457: false
+        pagination: none
+        idempotency_key: none
+        dry_run: none
+        rate_limit_headers: none
+        artifact: conventions/jitterbit-conventions.yml
+      x-apievangelist-rate-limits:
+        cloud_gateway_platform_ceiling: 200 requests per minute per organization
+        status_on_exhaustion: 429
+        artifact: rate-limits/jitterbit-rate-limits.yml
+      x-apievangelist-lifecycle:
+        support_window: 12 months from release date
+        early_eol_notice: 90 days
+        status_page: https://trust.jitterbit.com
+        artifact: lifecycle/jitterbit-lifecycle.yml
+  - target: $.paths['/project'].delete
+    update:
+      x-apievangelist-reversibility:
+        reversal: restore from trash (Harmony console)
+        window: 90 days
+        window_stated: true
+        rest_reversal_operation: null
+        caveat: Project history is not restored. No REST restore operation is published.
+        docs: https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/#projectcreationandconfiguration-deleting-a-project
+      x-apievangelist-consequence: destructive
+  - target: $.paths['/schedules'].delete
+    update:
+      x-apievangelist-reversibility:
+        reversal: recreate with createSchedule
+        window: null
+        window_stated: false
+      x-apievangelist-consequence: destructive
+  - target: $.paths['/project'].put
+    update:
+      x-apievangelist-reversibility:
+        reversal: import a previously exported project JSON (importProject)
+        window: null
+        window_stated: false
+      x-apievangelist-consequence: state-changing
+  - target: $.paths['/migration'].post
+    update:
+      x-apievangelist-consequence: state-changing
+      x-apievangelist-reversibility:
+        reversal: none published
+  - target: $.paths['/project-variables'].put
+    update:
+      x-apievangelist-consequence: state-changing
+      x-apievangelist-reversibility:
+        reversal: set the previous value back — read it with projectVariablesGet first, nothing preserves it
+  - target: $.paths['/schedules-toggle'].put
+    update:
+      x-apievangelist-consequence: state-changing
+      x-apievangelist-reversibility:
+        reversal: toggle the enable parameter back
+        window: unbounded
+  - target: $.paths['/login'].post
+    update:
+      x-apievangelist-consequence: read-only
+      x-apievangelist-note: >-
+        Credentials are carried as query parameters, so they appear in URLs and
+        can be captured by intermediate logging. Not available to organizations
+        using Harmony SSO.
+  - target: $.components.securitySchemes.authToken
+    update:
+      description: >-
+        Opaque Harmony session token, obtained from POST /login. Observed format
+        1_<uuid>. Session timeout 14400 seconds (4 hours). There is no refresh
+        or revocation operation.
+      x-apievangelist-artifact: authentication/jitterbit-authentication.yml
+gaps_recorded:
+  - Zero components.schemas — no request or response body is typed.
+  - Every operation declares only a 200 response; no 4xx or 5xx is described anywhere.
+  - No examples are carried in the contract.
+  - Five write operations declare a text/plain request body carrying JSON.
+  - The servers[] endpoint variable defaults to `dev` rather than `api`.
+  - No tag descriptions; the four tags (Login, Operations, Projects, Schedules) are bare strings.
+gaps_note: >-
+  These are content gaps in Jitterbit's own contract. This overlay records them;
+  it does not pad the spec to hide them.

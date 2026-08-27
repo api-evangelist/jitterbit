@@ -1,0 +1,110 @@
+generated: '2026-08-27'
+method: searched
+source: openapi/jitterbit-harmony-platform-openapi.yml
+docs: https://developer.jitterbit.com/harmony-platform-apis/
+additional_docs:
+  - https://docs.jitterbit.com/developer-portal/connector-sdk/apis/
+  - https://docs.jitterbit.com/api-manager/api-manager-reference/api-manager-log-service-api/
+  - https://docs.jitterbit.com/getting-started/jitterbit-security/sso/
+summary:
+  types:
+    - apiKey
+  api_key_in:
+    - header
+  oauth2: false
+  openid_connect: false
+  mutual_tls: false
+schemes:
+  - name: authToken
+    type: apiKey
+    in: header
+    parameter: authToken
+    sources:
+      - openapi/jitterbit-harmony-platform-openapi.yml
+    applied_to: 17 of 19 operations (all except POST /login and GET /login)
+    description: >-
+      An opaque Harmony session token passed in the authToken request header.
+      Observed format in published examples: 1_<uuid>. The Cloud RESTful Service
+      login response reports sessionTimeoutInSeconds 14400 (4 hours).
+token_acquisition:
+  - surface: Harmony platform API
+    operation: authenticate
+    method: POST
+    path: /login
+    parameters: [username, password]
+    passed_as: query parameters
+    returns: authenticationToken
+    caveat: >-
+      "The username and password must be associated with Harmony account
+      credentials and not an organization using Harmony SSO." An SSO-only
+      organization cannot obtain a token through this operation.
+  - surface: Jitterbit Cloud RESTful Service (User Service Controller API)
+    method: PUT
+    path: /jitterbit-cloud-restful-service/user/login
+    body: '{"email": "...", "password": "..."}'
+    content_type: application/json
+    returns: 'authenticationToken, serverUrl, cloudAppsUrl, orgAttrs[], defaultOrgId, sessionTimeoutInSeconds'
+    role_requirement: A user with Admin permission in the organization is required for the API Manager Log Service API.
+  - surface: Jitterbit Cloud RESTful Service — two-factor
+    method: PUT
+    path: /jitterbit-cloud-restful-service/user/login/tfacode
+    flow: >-
+      When the organization has TFA enabled, the plain login fails with
+      errorCode VALIDATE_TFA_LOGIN_EMAIL and emails a code. A second request
+      carrying email, password, code and deviceId returns the token.
+    body_fields: [email, password, code, deviceId]
+token_conversion:
+  operation: convertAuthtokenToJwt
+  method: GET
+  path: /login
+  parameter: authToken
+  returns: JSON Web Token
+  status: >-
+    Declared in the contract but described there as "handled automatically for
+    the user where appropriate and currently has no application."
+regions:
+  harmony_platform_api:
+    - https://harmony-api.na-east.jitterbit.com/{endpoint}
+    - https://harmony-api.emea-west.jitterbit.com/{endpoint}
+    - https://harmony-api.apac-southeast.jitterbit.com/{endpoint}
+  cloud_restful_service:
+    NA: https://na-east.jitterbit.com/jitterbit-cloud-restful-service/
+    EMEA: https://emea-west.jitterbit.com/jitterbit-cloud-restful-service/
+    APAC: https://apac-southeast.jitterbit.com/jitterbit-cloud-restful-service/
+  note: >-
+    A token is bound to a region. The organization's region determines the host;
+    Finding My Region is the documented way to establish it.
+platform_authentication:
+  note: >-
+    Distinct from the API above. These are the authentication mechanisms
+    Jitterbit gives to the APIs its CUSTOMERS publish through API Manager, and
+    to Harmony platform login.
+  harmony_login:
+    - password with configurable policy (special-character requirement, TFA requirement)
+    - two-factor authentication by emailed code
+    - 'single sign-on via SAML 2.0 or OAuth 2.0 against an external identity provider (docs: https://docs.jitterbit.com/getting-started/jitterbit-security/sso/)'
+    - security question and answer as an additional identity verification (12.8)
+  customer_api_security_profiles:
+    - anonymous
+    - basic
+    - api-key
+    - 'OAuth 2.0 two-legged (Microsoft Entra ID / Azure AD, Okta)'
+    - 'OAuth 2.0 three-legged (Microsoft Entra ID / Azure AD, Okta, Google, Salesforce)'
+    - JWT
+    - trusted IP groups (network-level restriction, rejects with 429)
+  api_key_expiry:
+    since: '12.9'
+    default_days: 180
+    behavior: >-
+      An API key security profile can be configured to expire; requests using an
+      expired key are rejected. An Expiring soon pill appears within 7 days and a
+      reminder email goes to organization administrators. The cloud API gateway
+      enforces expiry automatically; a private API gateway requires 12.9 or later.
+  credential_masking:
+    since: '12.9'
+    behavior: 'Header values carrying credentials or session data (authorization, password, x_api_key) are replaced with [removed] in API logs.'
+gaps:
+  - No OAuth 2.0, OIDC or scoped authorization for Jitterbit's own APIs — a single all-or-nothing session token.
+  - Credentials are passed as query parameters on the Harmony platform API's POST /login, so they land in URLs and can be logged upstream.
+  - No token refresh or revocation operation is published; the token simply expires after 4 hours.
+  - No /.well-known/openid-configuration or /.well-known/oauth-authorization-server on any host (all 404).

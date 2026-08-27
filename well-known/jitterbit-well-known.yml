@@ -1,0 +1,82 @@
+generated: '2026-08-27'
+method: probed
+source: live GET of each /.well-known/ path on every Jitterbit host in apis.yml and in the OpenAPI servers[] block
+hit_count: 0
+note: >-
+  Every /.well-known/ path was probed on all four Jitterbit hosts and every one
+  returned HTTP 404. Jitterbit serves no security.txt, no OIDC or OAuth
+  discovery document, no api-catalog and no ai-plugin manifest. The three web
+  hosts return an HTML 404 page (a real 404 status, not a soft-200 catch-all);
+  the API host harmony-api.na-east.jitterbit.com returns a 5.4KB HTML 404 body
+  with a 404 status. Because nothing returned a 200 carrying a real document, NO
+  WellKnown or SecurityTxt pointer is emitted in apis.yml — this file records a
+  measured absence.
+hosts:
+  - host: https://developer.jitterbit.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://docs.jitterbit.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://www.jitterbit.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://harmony-api.na-east.jitterbit.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://na-east.jitterbit.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404

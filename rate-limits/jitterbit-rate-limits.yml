@@ -3,89 +3,178 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Jitterbit
 providerId: jitterbit
+generated: '2026-08-27'
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-08-27'
+method: searched
+source: https://docs.jitterbit.com/api-manager/key-concepts/#rate-limits
+docs:
+  - https://docs.jitterbit.com/api-manager/key-concepts/#rate-limits
+  - https://docs.jitterbit.com/api-gateways/#request-limits-and-error-handling
+  - https://docs.jitterbit.com/api-manager/troubleshooting-guide/
+  - https://docs.jitterbit.com/message-queue-service/#limits
+provenance_note: >-
+  Replaces the 2026-05-04 bulk-sweep scaffold (method generated), whose tiers,
+  quotas and X-RateLimit-* headers were invented defaults. Everything below is
+  read from Jitterbit's published documentation.
 tags:
   - API Management
-  - Automation
   - Integration
   - iPaaS
   - Rate Limiting
   - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the Jitterbit API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+description: >-
+  Published rate limits for the Jitterbit Harmony API gateway and the Message
+  Queue service. Jitterbit enforces limits at the organization, environment and
+  security-profile levels, plus one hard platform ceiling on the Jitterbit-hosted
+  cloud API gateway. It does NOT enforce rate limiting at the individual API level.
+limit_count: 4
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  note: >-
+    No rate-limit response headers are documented. Jitterbit publishes no
+    X-RateLimit-*, RateLimit-* or Retry-After contract, so an agent has no
+    runtime signal of remaining budget — it learns it is over the line only when
+    a 429 arrives. Rate-limit utilization is surfaced to humans in the API
+    Manager Analytics page (and via the APIM AI Assistant), not on the wire.
 responseCodes:
   throttled: 429
   quotaExceeded: 429
-  serviceUnavailable: 503
+  forbidden: 403
+  uriTooLong: 414
+  gatewayTimeout: 504
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
+  - name: Cloud API gateway platform ceiling
+    scope: per-organization
     metric: requests_per_minute
-    limit: 10
-    burst: 20
+    limit: 200
     timeFrame: minute
+    enforced_by: Jitterbit-managed cloud API gateway
     applies:
-      - Jitterbit Connector SDK REST API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
+      - Custom APIs
+      - Proxy APIs
+      - OData service APIs
+    exempt:
+      - Private API gateway (throughput is bounded by the host server's capacity instead)
+    on_exceed: 429 Too Many Requests
+    evidence: >-
+      "the Jitterbit-managed cloud API gateway enforces a platform-level limit
+      of 200 API requests per minute per organization... This limit applies
+      collectively across all API types, including custom APIs, proxy APIs, and
+      OData requests."
+    source: https://docs.jitterbit.com/api-gateways/#request-limits-and-error-handling
+  - name: API hits per month allowance
+    scope: per-organization
     metric: requests_per_month
-    limit: 1000
+    limit: contractual
     timeFrame: month
-    applies:
-      - Jitterbit Connector SDK REST API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
+    reset: first day of the following month
+    on_exceed: >-
+      All APIs in the organization return 429 for the remainder of the month.
+      The only remedy is to contact a Customer Success Manager to raise the
+      allowance.
+    evidence: >-
+      "The total allowance provided to an organization in a month. All calls
+      received by all APIs (in all environments) in a single month count toward
+      this limit."
+    source: https://docs.jitterbit.com/api-manager/key-concepts/#rate-limits
+  - name: API hits per minute allowance
+    scope: per-organization
     metric: requests_per_minute
-    limit: 100
-    burst: 200
+    limit: contractual
     timeFrame: minute
-    applies:
-      - Jitterbit Connector SDK REST API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Jitterbit Connector SDK REST API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
+    evidence: >-
+      "The maximum rate at which an organization's allowance can be consumed. By
+      default, an environment or security profile can access an organization's
+      total allowance for hits across all APIs within a minute."
+    source: https://docs.jitterbit.com/api-manager/key-concepts/#rate-limits
+  - name: Environment / security-profile Hits per minute
+    scope: per-environment, per-security-profile
     metric: requests_per_minute
-    limit: 1000
-    burst: 5000
+    limit: configurable
     timeFrame: minute
-    applies:
-      - Jitterbit Connector SDK REST API
+    configured_in: API Manager security profile / environment settings
+    evidence: >-
+      "You can use rate limits at the environment and security profile level to
+      enforce a shared maximum number of API hits per minute that can be made
+      across all APIs within an environment to which a security profile is
+      assigned."
+    source: https://docs.jitterbit.com/api-manager/key-concepts/#rate-limits
+not_enforced:
+  - level: per-API
+    evidence: >-
+      "The system enforces rate limiting at the organization level, environment
+      level, and security profile level. It doesn't enforce rate limiting at the
+      API level."
+harmony_platform_api:
+  note: >-
+    The Harmony platform APIs (harmony-api.<region>.jitterbit.com) publish no
+    rate limits of their own. The contract declares no 429 response and the
+    developer portal states nothing about throttling. The limits above are the
+    API Manager / gateway limits that govern APIs Jitterbit customers publish.
+other_limits:
+  - name: API service URL length
+    limit: 8000
+    unit: characters
+    on_exceed: 414 URI Too Large
+    source: https://docs.jitterbit.com/api-gateways/#request-limits-and-error-handling
+  - name: Proxy API request header value length
+    limit: 8192
+    unit: characters
+    since: '12.9'
+    source: https://docs.jitterbit.com/release-notes/harmony/12-9/
+  - name: API key expiry (security profile)
+    limit: 180
+    unit: days (default, configurable)
+    since: '12.9'
+    source: https://docs.jitterbit.com/release-notes/harmony/12-9/
+message_queue_service:
+  source: https://docs.jitterbit.com/message-queue-service/#limits
+  usage_limits:
+    - tier: Basic
+      environments_enabled: 2
+      queues_per_environment: 2
+      messages_per_queue: 25
+      message_size_bytes: 104857600
+      messages_per_month: 50000
+      contractual: true
+    - tier: Premium
+      environments_enabled: unlimited
+      queues_per_environment: 50
+      messages_per_queue: 100000
+      messages_per_queue_note: '100,000 for queues created after 11.33; 50,000 for 11.29–11.33; 10,000 before 11.29'
+      message_size_bytes: 524288000
+      messages_per_month: limited by purchased message packs
+      contractual: true
+  service_limits:
+    - name: Active sessions
+      limit: 50 per environment, 500 per organization
+    - name: Batch size
+      limit: 10000
+      unit: messages per Get Bulk / Send Bulk activity
+    - name: Message acknowledgement timeout
+      limit: 30
+      unit: minutes
+      behavior: unacknowledged messages return to the queue
+    - name: Message TTL
+      limit: 864000000
+      unit: milliseconds (10 days)
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Monthly quota reset
+    description: The monthly hits allowance resets to its maximum on the first day of the following month.
+  - name: Escalation path
+    description: >-
+      Raising the monthly allowance is a commercial action — contact the
+      organization's Customer Success Manager. There is no self-service overage.
+  - name: Trusted IP enforcement
+    description: >-
+      A security profile with trusted IP groups configured rejects requests from
+      addresses outside the allowed ranges with 429, not 403.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

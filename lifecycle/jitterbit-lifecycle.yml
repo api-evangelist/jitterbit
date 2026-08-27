@@ -1,0 +1,63 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.jitterbit.com/release-notes/end-of-life-policy/
+versioning:
+  scheme: platform-release
+  current: '12.9'
+  docs: https://docs.jitterbit.com/release-notes/release-schedule/
+  note: >-
+    The Harmony platform APIs themselves carry no version segment in the URL
+    path. The published OpenAPI declares info.version 1.0.0 and an optional
+    AcceptVersion header on two operations (getProject, projectVariablesSet).
+    Versioning in practice is the platform release train (12.x), released
+    approximately every three weeks and staggered APAC → EMEA → NA.
+deprecation:
+  policy_url: https://docs.jitterbit.com/release-notes/end-of-life-policy/
+  support_window: 12 months from the release date
+  early_eol_notice: 90 days
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    "Jitterbit is committed to supporting a version for 12 months from the
+    release date... Jitterbit reserves the right to schedule an earlier
+    end-of-life date for a specific version, with 90 days notice, due to
+    critical security vulnerabilities that are fixed in a subsequent version
+    release." The policy page carries live tables of Currently Supported
+    Products and Products Beyond End-of-Life, updated at each Harmony release.
+    No RFC 8594 Sunset or Deprecation response headers are documented anywhere
+    in the documentation; the search index returns zero hits for either.
+  recent_eol_events:
+    - component: Private agent / private API gateway / Design Studio 11.47
+      eol_date: '2026-08-07'
+    - component: Private agent / private API gateway 11.45
+      eol_date: '2026-06-26'
+    - component: 11.x private agent version line (final version 11.59)
+      status: retired — all future work ships on 12.x
+    - component: Cloud Datastore Query Items activity (deprecated in 11.47)
+      status: scheduled for permanent removal in an upcoming release
+status_page: https://trust.jitterbit.com
+status_page_notes: >-
+  Atlassian Statuspage at trust.jitterbit.com ("Jitterbit Status"), covering the
+  Harmony portal, Studio, API Manager, EDI, Marketplace, Management Console,
+  runtime operation logs, the cloud platform, the cloud API gateway and the
+  Sandbox Cloud Agent Group, per region. Subscriptions are available by email,
+  SMS, Slack and webhook. status.jitterbit.com does NOT resolve (connection
+  failure) — trust.jitterbit.com is the canonical host.
+  Documented at https://docs.jitterbit.com/release-notes/system-status-notifications/
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public uptime SLA was found. Support response targets are published on
+    the pricing page by tier (48 hour / 24 hour / 6 hour first response, phone
+    hours 8a–6p, unlimited cases per year), and all products require an annual
+    contract. Uptime commitments are contractual and not published.
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in openapi/jitterbit-harmony-platform-openapi.yml carries
+  deprecated: true. The contract itself is labelled a preview — the developer
+  portal states "Harmony Platform APIs (preview)... This feature is a preview
+  and is not fully supported" and "The Harmony platform APIs are currently
+  targeted toward internal users. Customers may also use this preview feature,
+  keeping in mind that the APIs may change prior to their full release."
+maturity: preview

@@ -1,0 +1,255 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://developer.jitterbit.com/harmony-platform-apis/ and
+  openapi/jitterbit-harmony-platform-openapi.yml, plus
+  https://docs.jitterbit.com/developer-portal/connector-sdk/apis/
+scope: >-
+  Cross-cutting runtime semantics for the Jitterbit Harmony platform APIs and
+  the legacy Jitterbit Cloud RESTful Service. Both are Jitterbit's own
+  administrative APIs; they are distinct from the APIs a Jitterbit customer
+  publishes through API Manager, which have whatever conventions the customer
+  gives them.
+auth:
+  style: opaque token in a custom header
+  header: authToken
+  scheme: 'apiKey (OpenAPI securityScheme name: authToken, in: header)'
+  acquisition: POST /login with username and password query parameters (Harmony platform API), or PUT {baseURL}/user/login with a JSON body (Cloud RESTful Service)
+  jwt: GET /login?authToken=<token> converts an authToken to a JWT; the contract states this "is handled automatically for the user where appropriate and currently has no application"
+  sso_caveat: >-
+    The Authenticate operation's own description states the credentials "must be
+    associated with Harmony account credentials and not an organization using
+    Harmony SSO" — an SSO-only organization cannot obtain a token through this API.
+  session: sessionTimeoutInSeconds 14400 (4 hours) is returned by the Cloud RESTful Service login response
+  cross_reference: authentication/jitterbit-authentication.yml
+base_url:
+  style: region-scoped host
+  harmony_platform_api:
+    template: 'https://harmony-api.{region}.jitterbit.com/{endpoint}'
+    regions: [na-east, emea-west, apac-southeast]
+    endpoint_variable:
+      values: [dev, qa, api]
+      default: dev
+      note: >-
+        The developer portal states this variable "is for internal usage only
+        and most users should not change this value from the default dev
+        selection" — the published contract defaults to a dev endpoint.
+  cloud_restful_service:
+    template: 'https://{regionHost}/jitterbit-cloud-restful-service/'
+    regions:
+      NA: https://na-east.jitterbit.com
+      EMEA: https://emea-west.jitterbit.com
+      APAC: https://apac-southeast.jitterbit.com
+    note: >-
+      The API Manager Log Service documentation gives APAC as
+      https://apac.jitterbit.com while the Connector SDK API documentation gives
+      https://apac-southeast.jitterbit.com. Both are published; the discrepancy
+      is Jitterbit's.
+required_context:
+  identifiers:
+    - name: organizationId
+      description: The Harmony organization ID, shown in the top right of the Harmony portal header.
+    - name: environmentId
+      description: The Harmony environment ID, from the Management Console Environments page.
+    - name: projectGuid
+      description: The project GUID, visible in the browser address bar when the project is open in Integration Studio.
+  note: >-
+    All three identifiers are obtained from the Harmony web console, not from
+    the API. There is no list-organizations or list-environments operation in
+    the published contract, so an agent cannot bootstrap its own context.
+pagination:
+  supported: false
+  style: none
+  evidence: >-
+    No page, offset, cursor, limit or pageSize parameter appears on any of the
+    19 operations. getSchedules and getOperationLogs return unbounded
+    collections. Filtering on the log service is done through a queryString
+    expression (column comparisons delimited by semicolons), not paging.
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+  note: No free-form metadata object is exposed on any resource.
+request_id_tracing:
+  request_header: null
+  response_field: error.errorId
+  note: >-
+    On failure the envelope returns errorId, "an error identifier for support" —
+    a support correlation handle rather than a per-request trace id. The
+    response also carries a guid-* field the documentation explicitly says to
+    ignore. API Manager logs carry a requestid column that is queryable through
+    the Log Service API queryString.
+versioning:
+  in_url: false
+  header: AcceptVersion
+  header_scope: 'declared on 2 of 19 operations (getProject, projectVariablesSet)'
+  spec_version: 1.0.0
+  cross_reference: lifecycle/jitterbit-lifecycle.yml
+error_envelope:
+  content_type: application/json
+  rfc9457: false
+  shape: '{success, uri, data, error:{errorMessage, errorCode, errorId}, guid-*}'
+  failure_signalling: >-
+    Application failures are returned in the body with success:false. HTTP
+    status alone is not sufficient to detect failure.
+  cross_reference: errors/jitterbit-problem-types.yml
+rate_limit_signalling:
+  headers: none
+  status_on_exhaustion: 429
+  cross_reference: rate-limits/jitterbit-rate-limits.yml
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After headers are documented. An
+    agent cannot see how much budget it has left.
+content_types:
+  request:
+    - application/json
+    - 'text/plain (5 operations: createProject, deleteProject, projectVariablesSet, migrateProjectUpdate, getOperationLogs)'
+    - 'multipart/form-data (importProject)'
+  response:
+    - application/json
+  note: >-
+    Five write operations declare a text/plain request body carrying JSON. This
+    is a real contract oddity, not a transcription error — it is what the
+    published spec says.
+idempotency:
+  supported: false
+  key_header: null
+  retention: null
+  evidence: >-
+    No Idempotency-Key header, no request-deduplication mechanism and no
+    at-most-once guarantee appears in the contract or in the documentation. A
+    full-text search of the docs returns only generic HTTP-semantics prose about
+    PUT/DELETE being idempotent and advice to make integration processing
+    idempotent — nothing about idempotent request handling by the Jitterbit API
+    itself. Because of this, NO `Idempotency` pointer is emitted in apis.yml.
+  http_semantics_note: >-
+    PUT operations (deployProject, projectVariablesSet, updateSchedule,
+    enableDisableSchedule, migrateProjectUpdate, getOperationLogs) are
+    idempotent by HTTP method semantics, but getOperationLogs is a read modelled
+    as PUT, which breaks the safe/idempotent read expectation an agent would
+    otherwise rely on.
+dry_run_mode:
+  supported: false
+  evidence: >-
+    No dry-run, validate-only, preview or simulate parameter exists on any write
+    operation. The nearest published rehearsal is `jbcli recipe validate`, a CLI
+    command against Citizen Integrator recipe metadata, not the API.
+reversibility:
+  grade: verified
+  summary: >-
+    Jitterbit publishes exactly one real reversal path with a stated window —
+    project deletion moves to trash and is restorable for 90 days. Everything
+    else on the write surface is either an overwrite with an export-based manual
+    restore, or has no reversal at all.
+  write_surfaces:
+    - operation: deleteProject
+      operationId: deleteProject
+      method: DELETE
+      path: /project
+      reversal: restore from trash
+      reversal_operation: null
+      window: 90 days
+      window_stated: true
+      evidence: >-
+        "This project will be permanently deleted after 90 days. The project
+        history cannot be restored." Restore and Delete Permanently are both
+        available from the Projects page; permanent deletion requires typing the
+        word DELETE to confirm.
+      docs: https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/#projectcreationandconfiguration-deleting-a-project
+      caveat: >-
+        The restore is a Harmony console action. No REST operation to restore a
+        trashed project is published in the contract, and the API's own
+        deleteProject description links to this same docs section without
+        stating whether the API performs a move-to-trash or a permanent delete.
+        An agent can undo this, but not through the API.
+    - operation: deleteSchedules
+      operationId: deleteSchedules
+      method: DELETE
+      path: /schedules
+      reversal: recreate
+      reversal_operation: createSchedule
+      window: null
+      window_stated: false
+      note: >-
+        No restore or undo is documented. The schedule can be recreated from its
+        definition with createSchedule if the caller retained it; nothing on the
+        Jitterbit side holds it.
+    - operation: deployProject
+      operationId: deployProject
+      method: PUT
+      path: /project
+      reversal: redeploy a previously exported project
+      reversal_operation: importProject
+      window: null
+      window_stated: false
+      note: >-
+        Deployment overwrites the deployed state. The published recovery path is
+        to have exported the project first (exportProject → JSON) and import it
+        back. There is no rollback-to-previous-deployment operation.
+    - operation: importProject
+      operationId: importProject
+      method: POST
+      path: /project-import-export
+      reversal: delete the imported project
+      reversal_operation: deleteProject
+      window: 90 days (via the project trash)
+      window_stated: true
+    - operation: migrateProject / migrateProjectUpdate
+      operationId: migrateProject
+      method: POST/PUT
+      path: /migration
+      reversal: none published
+      window: null
+      window_stated: false
+      note: >-
+        Update Migrated Project "replaces an already migrated project" in the
+        target environment. No reversal of a migration is documented.
+    - operation: projectVariablesSet
+      operationId: projectVariablesSet
+      method: PUT
+      path: /project-variables
+      reversal: set the previous value back
+      reversal_operation: projectVariablesSet
+      window: null
+      window_stated: false
+      note: >-
+        A blind overwrite. Read the current value with projectVariablesGet first
+        if the previous value matters — nothing preserves it.
+    - operation: enableDisableSchedule
+      operationId: enableDisableSchedule
+      method: PUT
+      path: /schedules-toggle
+      reversal: toggle back
+      reversal_operation: enableDisableSchedule
+      window: null
+      window_stated: false
+      note: Fully and trivially reversible — the enable parameter flips both ways.
+  adjacent_platform_reversals:
+    - surface: Management Console — environments
+      behavior: >-
+        Since 12.7, deleting an environment also deletes its Cloud Datastore
+        storages, message queues and client certificates. No restore is
+        documented; this cascade is irreversible.
+      docs: https://docs.jitterbit.com/release-notes/harmony/12-7/
+    - surface: App Builder — applications
+      behavior: '"Delete Application: Click to completely delete the application. This action cannot be undone."'
+      docs: https://docs.jitterbit.com/app-builder/documentation/app-workbench/app-settings-tab/
+    - surface: Design Studio — pending operations
+      behavior: 'Documented warning: "There is no ''undo'' function for deleting a pending operation."'
+      docs: https://docs.jitterbit.com/design-studio/design-studio-reference/operations/check-pending-operations/
+    - surface: Studio / Management Console — running operations
+      behavior: >-
+        Since 12.9, operations in Submitted or Received status can be canceled
+        from the Runtime page, the Studio operation log table and the design
+        canvas. Previously this required Jitterbit support.
+      docs: https://docs.jitterbit.com/release-notes/harmony/12-9/
+  agent_guidance: >-
+    Before any destructive call, run exportProject and keep the JSON. It is the
+    only Jitterbit-published mechanism that restores a project's contents, and
+    the 90-day trash explicitly does not restore project history.
+cross_references:
+  errors: errors/jitterbit-problem-types.yml
+  lifecycle: lifecycle/jitterbit-lifecycle.yml
+  authentication: authentication/jitterbit-authentication.yml
+  rate_limits: rate-limits/jitterbit-rate-limits.yml
+  data_model: data-model/jitterbit-data-model.yml

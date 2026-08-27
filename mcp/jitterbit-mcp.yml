@@ -1,0 +1,101 @@
+generated: '2026-08-27'
+method: derived
+status: candidate
+source: openapi/jitterbit-harmony-platform-openapi.yml
+deployment:
+  mode: none
+  auth: unknown
+  verified: searched
+findings:
+  - >-
+    Jitterbit ships NO MCP server for its own Harmony platform APIs. Searched
+    the product site, the documentation (a 32MB full-text search index at
+    docs.jitterbit.com/search/search_index.json), npm and the public GitHub
+    organization. Nothing exposes Jitterbit's own API as MCP tools.
+  - >-
+    "Jitterbit MCP" (https://www.jitterbit.com/product/mcp/) is a PRODUCT that
+    lets Jitterbit customers create, expose and govern THEIR OWN MCP servers
+    from their existing APIs and integrations. Jitterbit's CTO is quoted on that
+    page saying "We are building Jitterbit MCP". It is not a Jitterbit-hosted
+    MCP endpoint an agent can call to drive Harmony.
+  - >-
+    The MCP Client connector
+    (https://docs.jitterbit.com/integration-studio/design/connectors/mcp-client/)
+    is explicitly a CLIENT. Its own documentation states: "This connector is an
+    MCP client, used to connect to an external MCP server to use its tools and
+    capabilities." Its activities are List Tools, Invoke Tools and Get Prompt
+    (Beta) — Jitterbit consuming other people's MCP servers.
+  - >-
+    Because no MCP server exists, no `MCPServer` pointer is emitted in apis.yml
+    and no tool crosswalk (mcp/jitterbit-tool-crosswalk.yml) is written. The
+    tools below are a DERIVED candidate list showing what a Harmony MCP server
+    would expose if one were built from the published contract.
+surfaces:
+  openapi: openapi/jitterbit-harmony-platform-openapi.yml
+  graphql: null
+  mcp: null
+tools:
+  - name: authenticate
+    description: Retrieve a Harmony authToken from a username and password.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#authenticate
+  - name: convert_authtoken_to_jwt
+    description: Convert a Harmony authToken into a JSON Web Token.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#convertAuthtokenToJwt
+  - name: get_project
+    description: Retrieve an Integration Studio project.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#getProject
+  - name: create_project
+    description: Create a new Integration Studio project in an organization.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#createProject
+  - name: deploy_project
+    description: Deploy an Integration Studio project.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#deployProject
+  - name: delete_project
+    description: Delete an Integration Studio project.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#deleteProject
+  - name: export_project
+    description: Export an Integration Studio project to a JSON file.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#exportProject
+  - name: import_project
+    description: Import a previously exported project JSON into an environment.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#importProject
+  - name: migrate_project
+    description: Migrate a project from one environment into another.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#migrateProject
+  - name: update_migrated_project
+    description: Replace an already migrated project in a target environment.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#migrateProjectUpdate
+  - name: get_project_variables
+    description: Retrieve the project variables of a project.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#projectVariablesGet
+  - name: set_project_variables
+    description: Set the value of a project variable.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#projectVariablesSet
+  - name: get_operation_logs
+    description: Retrieve operation logs for an organization.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#getOperationLogs
+  - name: get_operation_log_details
+    description: Retrieve the log detail of one operation execution instance.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#getOperationLogDetails
+  - name: get_schedules
+    description: Retrieve the operation schedules of a project.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#getSchedules
+  - name: create_schedule
+    description: Create an operation schedule and assign it to a project.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#createSchedule
+  - name: update_schedule
+    description: Update an existing operation schedule.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#updateSchedule
+  - name: delete_schedule
+    description: Delete an operation schedule in an environment.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#deleteSchedules
+  - name: enable_disable_schedule
+    description: Toggle an operation schedule on or off.
+    source_operation: openapi/jitterbit-harmony-platform-openapi.yml#enableDisableSchedule
+x-evidence:
+  - url: https://www.jitterbit.com/product/mcp/
+    http_status: 200
+    finding: Jitterbit MCP is a customer-facing MCP server building/governance product, still being built
+  - url: https://docs.jitterbit.com/integration-studio/design/connectors/mcp-client/
+    http_status: 200
+    finding: the MCP connector is a client, not a server

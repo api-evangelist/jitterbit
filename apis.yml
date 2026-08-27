@@ -1,72 +1,223 @@
 aid: jitterbit
 name: Jitterbit
 description: >-
-  Jitterbit is a modern enterprise iPaaS platform infused with AI for API
-  integrations. The Jitterbit Developer Portal provides resources for creating
-  connectors, plugins, templates, and recipes to extend the Jitterbit Harmony
-  platform.
+  Jitterbit is an enterprise integration platform as a service (iPaaS) vendor.
+  Its Harmony platform spans application and data integration (Integration
+  Studio and the legacy Design Studio), full API management (API Manager with a
+  Jitterbit-hosted cloud API gateway and an installable private gateway), EDI
+  with AS2 and X12/EDIFACT trading-partner management, low-code application
+  development (App Builder, formerly Vinyl), a multi-tenant Message Queue
+  service, a connector marketplace, and an AI layer of agents, assistants and a
+  Model Context Protocol offering. Jitterbit publishes one machine-readable
+  contract of its own — the Harmony platform APIs, an OpenAPI 3.0.3 document
+  covering Integration Studio projects, project variables, operation logs and
+  schedules — alongside a prose-documented Connector SDK REST API and an
+  asynchronous API log service. The developer surface includes a Java Connector
+  SDK with Javadocs, a Connector Builder, downloadable recipes and process
+  templates, and the jbcli command line tool.
 type: Index
 accessModel:
-  pricing: freemium
-  onboarding: unknown
+  pricing: paid
+  onboarding: sales
   trial: false
-  try_now: false
+  try_now: true
   public: false
-  label: Freemium
-  confidence: medium
+  label: Contact Sales
+  confidence: high
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
+    - https://www.jitterbit.com/harmony/pricing/
+  generated: '2026-08-27'
+  method: searched
+  note: >-
+    Corrected from the 2026-07-22 derived value of freemium. Jitterbit publishes
+    no free tier and no free trial (/free-trial/ returns 404); all products
+    require an annual contract and pricing is quote-only. try_now is true only
+    in the sense that the developer portal embeds a Swagger UI console — it
+    still requires live Harmony credentials.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/jitterbit.png
 tags:
   - API Management
   - Automation
   - Integration
   - iPaaS
+  - EDI
+  - Low-Code
+  - Enterprise
+  - API Gateway
+  - Workflow Automation
+  - Connectors
 url: >-
   https://raw.githubusercontent.com/api-evangelist/jitterbit/refs/heads/main/apis.yml
 created: '2026-03-16'
-modified: '2026-03-16'
+modified: '2026-08-27'
 specificationVersion: '0.23'
 apis:
+  - aid: jitterbit:harmony-platform-api
+    name: Jitterbit Harmony Platform APIs
+    description: >-
+      The Harmony platform APIs let a caller interact with the Harmony cloud
+      programmatically — creating, retrieving, deploying, deleting, exporting,
+      importing and migrating Integration Studio projects, reading and setting
+      project variables, retrieving operation logs and their execution detail,
+      and creating, updating, toggling and deleting operation schedules.
+      Authentication is an opaque authToken header obtained from a login
+      operation. The developer portal labels the surface a preview that is
+      "currently targeted toward internal users", and customers are told the
+      APIs may change before full release.
+    humanURL: https://developer.jitterbit.com/harmony-platform-apis/
+    baseURL: https://harmony-api.na-east.jitterbit.com/{endpoint}
+    baseURLs:
+      - https://harmony-api.na-east.jitterbit.com/{endpoint}
+      - https://harmony-api.emea-west.jitterbit.com/{endpoint}
+      - https://harmony-api.apac-southeast.jitterbit.com/{endpoint}
+    tags:
+      - Integration
+      - iPaaS
+      - Projects
+      - Scheduling
+      - Logging
+    properties:
+      - type: OpenAPI
+        url: openapi/jitterbit-harmony-platform-openapi.yml
+      - type: Overlay
+        url: overlays/jitterbit-harmony-platform-overlay.yaml
+      - type: APIReference
+        url: https://developer.jitterbit.com/harmony-platform-apis/
+      - type: Documentation
+        url: https://developer.jitterbit.com/harmony-platform-apis/
+      - type: DataModel
+        url: data-model/jitterbit-data-model.yml
+      - type: ErrorCatalog
+        url: errors/jitterbit-problem-types.yml
+      - type: Authentication
+        url: authentication/jitterbit-authentication.yml
   - aid: jitterbit:connector-sdk-api
     name: Jitterbit Connector SDK REST API
     description: >-
       APIs for registering and managing connectors created with the Jitterbit
-      Connector SDK. The SDK allows developers to create custom connectors that
-      extend endpoint connectivity beyond HTTP/REST APIs.
-    humanURL: https://developer.jitterbit.com/connector-sdk/apis/
+      Connector SDK — log in to Harmony, register a custom connector, list
+      registered connectors, delete a connector registration, delete a connector
+      payload, and validate a connector key and secret. Served from the
+      Jitterbit Cloud RESTful Service on the region host. Documented in prose;
+      no OpenAPI is published.
+    humanURL: https://docs.jitterbit.com/developer-portal/connector-sdk/apis/
+    baseURL: https://na-east.jitterbit.com/jitterbit-cloud-restful-service/
+    baseURLs:
+      - https://na-east.jitterbit.com/jitterbit-cloud-restful-service/
+      - https://emea-west.jitterbit.com/jitterbit-cloud-restful-service/
+      - https://apac-southeast.jitterbit.com/jitterbit-cloud-restful-service/
     tags:
       - Connectors
       - Integration
       - SDK
     properties:
       - type: Documentation
-        url: https://developer.jitterbit.com/connector-sdk/apis/
+        url: https://docs.jitterbit.com/developer-portal/connector-sdk/apis/
       - type: GettingStarted
-        url: https://developer.jitterbit.com/
+        url: https://docs.jitterbit.com/developer-portal/connector-sdk/getting-started/
+      - type: SDK
+        url: https://docs.jitterbit.com/developer-portal/connector-sdk/
+  - aid: jitterbit:api-manager-log-service-api
+    name: Jitterbit API Manager Log Service API (Beta)
+    description: >-
+      An asynchronous REST API for retrieving API Manager log files as CSV or
+      JSON, as an alternative to the Download as CSV button on the API Logs
+      page. A request submits a time range, an organization ID and an optional
+      query-string filter and returns a reference key; a second call polls that
+      key and downloads the file when the status reaches COMPLETE. Requires an
+      authentication token from the User Service Controller API and a user with
+      Admin permission. Documented in prose; no OpenAPI is published.
+    humanURL: https://docs.jitterbit.com/api-manager/api-manager-reference/api-manager-log-service-api/
+    baseURL: https://na-east.jitterbit.com/jitterbit-cloud-restful-service/api/analytics/
+    tags:
+      - Logging
+      - Analytics
+      - API Management
+    properties:
+      - type: Documentation
+        url: https://docs.jitterbit.com/api-manager/api-manager-reference/api-manager-log-service-api/
 common:
-  - type: TrustCenter
-    url: security/jitterbit-trust-center.yml
-  - type: DomainSecurity
-    url: security/jitterbit-domain-security.yml
-  - type: GitHubOrganization
-    url: https://github.com/jitterbit
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/jitterbit
   - type: Website
     url: https://www.jitterbit.com
   - type: Portal
     url: https://developer.jitterbit.com/
+  - type: DeveloperPortal
+    url: https://docs.jitterbit.com/developer-portal/
   - type: Documentation
     url: https://docs.jitterbit.com/developer-portal/
+  - type: APIReference
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: GettingStarted
+    url: https://docs.jitterbit.com/getting-started/
+  - type: Blog
+    url: https://www.jitterbit.com/feed/
+  - type: GitHubOrganization
+    url: https://github.com/jitterbit
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/jitterbit
   - type: Integrations
     url: https://www.jitterbit.com/products/marketplace/
-  - url: https://www.jitterbit.com/feed/
-    type: Blog
+  - type: Support
+    url: https://www.jitterbit.com/support-services/
+  - type: Community
+    url: https://community.jitterbit.com/s/
+  - type: Pricing
+    url: https://www.jitterbit.com/harmony/pricing/
+  - type: Login
+    url: https://login.jitterbit.com/
+  - type: TermsOfService
+    url: https://www.jitterbit.com/terms-and-conditions/
+  - type: PrivacyPolicy
+    url: https://www.jitterbit.com/privacy-policy/
+  - type: Compliance
+    url: https://docs.jitterbit.com/getting-started/jitterbit-security/iso-certification/
+  - type: TrustCenter
+    url: security/jitterbit-trust-center.yml
+  - type: DomainSecurity
+    url: security/jitterbit-domain-security.yml
+  - type: StatusPage
+    url: https://trust.jitterbit.com
+  - type: Deprecation
+    url: https://docs.jitterbit.com/release-notes/end-of-life-policy/
+  - type: Lifecycle
+    url: lifecycle/jitterbit-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/jitterbit-changelog.yml
+  - type: Authentication
+    url: authentication/jitterbit-authentication.yml
+  - type: Conventions
+    url: conventions/jitterbit-conventions.yml
+  - type: Conformance
+    url: conformance/jitterbit-conformance.yml
+  - type: ErrorCatalog
+    url: errors/jitterbit-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/jitterbit-rate-limits.yml
+  - type: Plans
+    url: plans/jitterbit-plans-pricing.yml
+  - type: DataModel
+    url: data-model/jitterbit-data-model.yml
+  - type: Packages
+    url: packages/jitterbit-packages.yml
+  - type: CLI
+    url: cli/jitterbit-cli.yml
+  - type: Components
+    url: components/jitterbit-components.yml
+  - type: Sandbox
+    url: sandbox/jitterbit-sandbox.yml
+  - type: Webhooks
+    url: asyncapi/jitterbit-webhooks.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/jitterbit-llms.txt
 integrations:
   - name: Global Strategic Partners
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-27'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

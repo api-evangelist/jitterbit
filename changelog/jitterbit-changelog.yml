@@ -1,0 +1,92 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.jitterbit.com/release-notes/harmony-release-notes/
+docs: https://docs.jitterbit.com/release-notes/
+scheme: >-
+  Platform releases are numbered MAJOR.MINOR (12.9, 12.10). App Builder, Design
+  Studio and the private API gateway carry their own independent version lines
+  and their own release-note pages. Release notes are published on a dedicated
+  docs page per release, before the release ships.
+cadence: >-
+  The Harmony cloud platform, cloud applications and the Sandbox Cloud Agent
+  Group are updated approximately every three weeks, staggered by region — APAC
+  first, EMEA one day later, NA one to four days after EMEA.
+current_version: '12.9'
+next_version: '12.10'
+notification_channels:
+  - https://trust.jitterbit.com (email, SMS, Slack, webhook — incidents and maintenance)
+  - email to Jitterbit users for release dates and release notes
+entries:
+  - version: '12.10'
+    date: '2026-09-02'
+    url: https://docs.jitterbit.com/release-notes/harmony/12-10/
+    status: scheduled
+    breaking: false
+    note: >-
+      Scheduled release; cloud platform and applications 12.10 land APAC
+      2026-09-01, EMEA 2026-09-01/02, NA 2026-09-02, with agents on 2026-09-10.
+      Release notes are published to this page prior to the release.
+  - version: '12.9'
+    date: '2026-08-20'
+    url: https://docs.jitterbit.com/release-notes/harmony/12-9/
+    breaking: false
+    additions:
+      - Marketplace app asset type — a fourth asset type alongside integration recipes, process templates and AI agents, with six Learning Apps at launch
+      - Console AI Assistant (Beta) in Management Console, natural-language monitoring and troubleshooting
+      - Personal, user-level Studio defaults that apply across organizations
+      - PDF Utilities (Beta) connector; ServiceNow v2 (Beta) connector generally available
+    highlights:
+      - API key expiry for security profiles — configurable expiry duration, 180 days by default, with an Expiring soon status pill 7 days out and a reminder email to org administrators
+      - Credential and session headers (authorization, password, x_api_key) are now masked to [removed] in API logs
+      - Portal Manager Regenerate Docs preserves and reapplies OpenAPI editor customizations instead of overwriting them
+      - Operations in Submitted or Received status can now be canceled without contacting Jitterbit support
+      - SHA512 script function; platform-wide multibyte support certified for Portuguese, German and Russian
+    notices:
+      - End of life for private agent, private API gateway and Design Studio 11.47 as of 2026-08-07
+      - Retirement of 11.x private agent versioning — 11.59 was the final 11.x release
+      - 'Action required: the deprecated Cloud Datastore Query Items activity will be permanently removed in an upcoming release'
+  - version: '12.8'
+    date: '2026-07-30'
+    url: https://docs.jitterbit.com/release-notes/harmony/12-8/
+    breaking: false
+    additions:
+      - Document Compliance Agent (Azure) in the Marketplace AI Agent category
+      - ServiceNow v2 (Beta) connector
+      - 'New Management Console alert type: SSO Status Changed'
+    highlights:
+      - Multi-client credential support for 2-legged OAuth 2.0 security profiles — multiple consumers authenticating to one API with their own client credentials
+      - Amazon Bedrock connector short-term memory (chat context across operations) and knowledge base retrieval
+      - Runtime search now accepts HTTP status codes (100–599) for API log entries
+      - Environment role access scoping on the Project access and API access tabs
+    notices:
+      - 'Action required: Google Gemini Prompt activities using RAG Corpus (Vertex AI) must be reconfigured'
+      - Microsoft SQL Server JDBC driver update changes the default to encrypt=true with certificate validation — Microsoft documents this as breaking
+  - version: '12.7'
+    date: '2026-07-09'
+    url: https://docs.jitterbit.com/release-notes/harmony/12-7/
+    breaking: true
+    breaking_changes:
+      - Default character encoding for the Harmony platform changed from Latin-1 (ISO-8859-1) to UTF-8 as of agent 12.7 / Design Studio 11.63
+      - Six deprecated OpenAI models removed from the Model dropdown (gpt-4-turbo-preview, gpt-4-vision-preview, gpt-4-32k, gpt-3.5-turbo-instruct, babbage-002, davinci-002)
+    additions:
+      - QBR Deck Agent and Security RFI Agent in the Marketplace AI Agent category
+      - AI-generated line completion in the Jitterbit script editor
+      - Diff view for selective transfer and import
+    highlights:
+      - Salesforce API version 66 (Spring '26) support
+      - File process order setting (File name / Oldest first) for file-based connectors
+      - Deleting an environment now removes associated Cloud Datastore storages, message queues and client certificates
+    notices:
+      - End of life for private agent and private API gateway 11.45 as of 2026-06-26
+release_history_pages:
+  - https://docs.jitterbit.com/release-notes/harmony-release-notes/production-cloud-agent-group-releases/
+  - https://docs.jitterbit.com/release-notes/harmony-release-notes/sandbox-cloud-agent-group-releases/
+  - https://docs.jitterbit.com/release-notes/harmony-release-notes/private-agent-releases/
+  - https://docs.jitterbit.com/release-notes/app-builder/
+  - https://docs.jitterbit.com/release-notes/wevo-ipaas/
+  - https://docs.jitterbit.com/release-notes/known-issues/
+note: >-
+  Recent window only — the docs site carries 169 release-note pages going back
+  to the 10.x line in 2021. The four most recent Harmony releases are captured
+  here. Release dates are the NA "release end" dates published in the
+  end-of-life policy table.

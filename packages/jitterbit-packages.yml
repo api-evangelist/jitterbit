@@ -1,0 +1,112 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  npm registry (registry.npmjs.org), Maven Central (search.maven.org), PyPI, and
+  the Jitterbit developer documentation at
+  https://docs.jitterbit.com/developer-portal/
+note: >-
+  Jitterbit publishes no first-party client library for the Harmony platform
+  APIs in any public package registry. Registry searches for `jitterbit` on
+  Maven Central (numFound 0 for g:com.jitterbit and 0 for the free-text query),
+  PyPI (404 for `jitterbit` and `jitterbit-sdk`) and NuGet returned nothing
+  first-party. What Jitterbit does publish on npm is one first-party CLI
+  (`jbcli`, last released 2018-10-31) and three forks of third-party libraries
+  under its own `@jitterbit` scope. The Connector SDK — the one genuinely
+  first-party SDK — is a Java kit distributed from the Harmony portal and
+  documented on docs.jitterbit.com; it has no registry coordinates, so no
+  version metadata endpoint exists to query.
+packages:
+  - language: javascript
+    registry: npm
+    name: jbcli
+    url: https://www.npmjs.com/package/jbcli
+    install: npm install -g jbcli
+    official: true
+    version: 1.4.1
+    published: '2018-10-31'
+    first_published: '2016-09-21'
+    repository: https://github.com/jitterbit/jbcli
+    docs: https://docs.jitterbit.com/developer-portal/citizen-recipes/jitterbit-command-line-interface/
+    kind: cli
+    note: >-
+      The Jitterbit Command Line Interface for Citizen Integrator recipes and
+      Design Studio Jitterpaks. Still the version the current documentation
+      instructs users to install (`jbcli version` returns 1.4.1), but the last
+      npm release predates the Harmony platform APIs it sits alongside by seven
+      years. The linked GitHub repository is not present in the public
+      github.com/jitterbit organization listing.
+  - language: javascript
+    registry: npm
+    name: '@jitterbit/soql-parser-js'
+    url: https://www.npmjs.com/package/@jitterbit/soql-parser-js
+    install: npm install @jitterbit/soql-parser-js
+    official: true
+    version: 6.1.0-3
+    published: '2025-03-12'
+    kind: fork
+    note: >-
+      Jitterbit-scoped fork of the community `soql-parser-js` Salesforce SOQL
+      parser (mirrored at github.com/jitterbit/soql-parser-js). Published by
+      Jitterbit, but it is not a client for any Jitterbit API.
+  - language: javascript
+    registry: npm
+    name: '@jitterbit/strong-soap'
+    url: https://www.npmjs.com/package/@jitterbit/strong-soap
+    install: npm install @jitterbit/strong-soap
+    official: true
+    version: 4.1.6
+    published: '2024-11-14'
+    kind: fork
+    note: >-
+      Jitterbit-scoped fork of `strong-soap`, the Node.js SOAP driver
+      (github.com/jitterbit/strong-soap). Infrastructure for Jitterbit's own
+      SOAP connectivity, not a Jitterbit API client.
+  - language: javascript
+    registry: npm
+    name: '@jitterbit/npdynamodb'
+    url: https://www.npmjs.com/package/@jitterbit/npdynamodb
+    install: npm install @jitterbit/npdynamodb
+    official: true
+    version: 0.3.5
+    published: '2025-01-02'
+    kind: fork
+    note: >-
+      Jitterbit-scoped fork of `npdynamodb` (github.com/jitterbit/npdynamodb).
+      Internal infrastructure, not a Jitterbit API client.
+  - language: java
+    registry: none
+    name: Jitterbit Connector SDK
+    url: https://docs.jitterbit.com/developer-portal/connector-sdk/
+    javadocs: https://developer.jitterbit.com/connector-sdk/javadocs/
+    official: true
+    version: null
+    published: null
+    kind: sdk
+    note: >-
+      Checked, nothing to record. The Connector SDK is a first-party Java
+      development kit for building custom Harmony connectors, with published
+      Javadocs, but it is distributed from the Harmony portal rather than a
+      package registry. Maven Central returns numFound 0 for g:com.jitterbit and
+      0 for a free-text `jitterbit` query, so there is no metadata endpoint that
+      states a current version or release date. A consumer cannot determine from
+      any public registry which version they are on.
+registries_checked:
+  - registry: npm
+    result: 'jbcli (first-party CLI) + 3 @jitterbit-scoped forks of third-party libraries'
+  - registry: maven-central
+    result: 'no artifacts (g:com.jitterbit numFound 0; free-text "jitterbit" numFound 0)'
+  - registry: pypi
+    result: 'no package (jitterbit 404, jitterbit-sdk 404)'
+  - registry: nuget
+    result: no first-party package found
+  - registry: rubygems
+    result: no first-party package found
+  - registry: crates.io
+    result: no first-party package found
+  - registry: pkg.go.dev
+    result: no first-party module found
+sdk_verdict: >-
+  No first-party client library exists for the Harmony platform APIs in any
+  registry, so no `SDKs` pointer is emitted for this provider. `jbcli` is
+  wired as a CLI (see cli/jitterbit-cli.yml) and the Connector SDK is recorded
+  here as a registry-less first-party SDK.

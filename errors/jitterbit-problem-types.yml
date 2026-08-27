@@ -1,0 +1,153 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://developer.jitterbit.com/harmony-platform-apis/ (response envelope) and
+  https://docs.jitterbit.com/api-gateways/ (gateway status codes), cross-checked
+  against openapi/jitterbit-harmony-platform-openapi.yml
+format: vendor-envelope
+not_rfc9457: true
+envelope:
+  content_type: application/json
+  shape: |-
+    {
+      "success": true,
+      "uri": "uri/string",
+      "data": { ... },
+      "error": {
+        "errorMessage": "string",
+        "errorCode": "string",
+        "errorId": "string"
+      },
+      "guid-*": ""
+    }
+  fields:
+    - name: success
+      description: Whether the request succeeded, true or false.
+    - name: uri
+      description: The URI used to make the request.
+    - name: data
+      description: The response data. Present only when success is true.
+    - name: error
+      description: Error detail. Present only when success is false.
+    - name: error.errorMessage
+      description: The reason the request failed.
+    - name: error.errorCode
+      description: A code representing the error, for support.
+    - name: error.errorId
+      description: An error identifier, for support.
+    - name: 'guid-*'
+      description: >-
+        Explicitly documented as ignorable. Present to prevent hard-coded API
+        implementations and allow future changes to the API shape.
+  note: >-
+    The legacy Jitterbit Cloud RESTful Service (user login, connector
+    registration, API log service) uses a different envelope again — {status,
+    operation, authenticationToken, serverUrl, orgAttrs[], defaultOrgId} on
+    success and {status:false, operation, errorCode, errorMessage} on failure.
+    Two envelopes coexist across the Jitterbit API surface.
+spec_derivation:
+  note: >-
+    Derived from the contract, and this is the finding: all 19 operations in
+    openapi/jitterbit-harmony-platform-openapi.yml declare ONLY a 200 response.
+    Not one 4xx or 5xx response is described anywhere in the spec, and there are
+    zero components.schemas, so an agent reading the contract alone cannot tell
+    what a failure looks like. Everything below was recovered from the docs, not
+    the spec.
+  operations_with_error_responses: 0
+  operations_total: 19
+problems:
+  - status: 200
+    code: 'error.errorCode (in body)'
+    title: Application-level failure returned with HTTP 200
+    detail: >-
+      The Harmony platform APIs signal failure inside the response body via
+      success:false and the error object. A client must inspect the body, not
+      only the status line.
+    source: https://developer.jitterbit.com/harmony-platform-apis/
+  - status: 403
+    title: Forbidden
+    detail: >-
+      The API gateway rejected the request due to insufficient permissions or
+      authentication failure — missing credentials, an expired or invalid API
+      key, an IP address restriction, or access without the assigned security
+      profile.
+    surface: api-gateway
+    source: https://docs.jitterbit.com/api-gateways/
+  - status: 404
+    title: Not Found
+    detail: >-
+      The requested API endpoint could not be found — incorrect service URL, an
+      unpublished or deleted API, an invalid environment URL prefix, or a
+      mismatch in the API version or service root in the request URL.
+    surface: api-gateway
+    source: https://docs.jitterbit.com/api-gateways/
+  - status: 414
+    title: URI Too Large
+    detail: The API service URL exceeds the 8,000 character limit.
+    surface: api-gateway
+    source: https://docs.jitterbit.com/api-gateways/
+  - status: 429
+    title: Too Many Requests
+    detail: >-
+      Rate limited. Raised when the request exceeds the organization's API hits
+      per minute allowance, violates an environment-level rate limit, exceeds a
+      security profile rate limit, when the organization has consumed its
+      monthly API hits allowance, or when the consumer IP is outside a
+      configured trusted IP group.
+    remediation: >-
+      Monthly exhaustion resets on the first day of the following month and
+      cannot be lifted without contacting a Customer Success Manager. For
+      per-minute limits, configure Hits per minute at the environment or
+      security profile level. For IP rejections, add the consumer's address to a
+      trusted IP group.
+    surface: api-gateway
+    source: https://docs.jitterbit.com/api-manager/troubleshooting-guide/
+  - status: 500
+    title: Error sending message
+    detail: >-
+      Message Queue runtime error, returned as
+      {"statuscode":500,"Error":"Error sending message."} when a queue exceeds
+      its user-defined message limit.
+    remediation: Acknowledge queued messages, or raise the Message Limit under the queue's Advanced Options.
+    surface: message-queue-service
+    source: https://docs.jitterbit.com/message-queue-service/
+  - status: 504
+    title: Gateway Timeout
+    detail: Documented in the API Manager troubleshooting guide as a network and connectivity failure class.
+    surface: api-gateway
+    source: https://docs.jitterbit.com/api-manager/troubleshooting-guide/
+  - status: 401
+    code: VALIDATE_TFA_LOGIN_EMAIL
+    title: Two-factor authentication code required
+    detail: >-
+      Returned by the User Service Controller login when the organization has
+      TFA enabled, as {"status":false,"operation":"User
+      login","errorCode":"VALIDATE_TFA_LOGIN_EMAIL","errorMessage":"Validate your
+      login with authentication code..."}. The documented status line is not
+      stated; the failure is carried in the body.
+    surface: jitterbit-cloud-restful-service
+    source: https://docs.jitterbit.com/api-manager/api-manager-reference/api-manager-log-service-api/
+async_job_statuses:
+  surface: API Manager Log Service API (Beta)
+  source: https://docs.jitterbit.com/api-manager/api-manager-reference/api-manager-log-service-api/
+  statuses:
+    - status: RECEIVED
+      meaning: A valid generation request was received; transitions to PROCESSING.
+    - status: PROCESSING
+      meaning: The log file is being generated; transitions to COMPLETE.
+    - status: COMPLETE
+      meaning: The log file is ready to download.
+    - status: INVALID
+      meaning: The reference key could not be found — unknown or malformed key.
+    - status: ERROR
+      meaning: Generation failed; an error message details why.
+    - status: NO_DATA
+      meaning: The filter parameters returned 0 results.
+  caution: >-
+    "In the event an error occurs during the RECEIVED or PROCESSING statuses,
+    the request will be locked until the reference key expires." Reference keys
+    live 23 hours, generated files 24 hours.
+gaps:
+  - No error code registry is published — errorCode values are documented only as "a code representing the error for support".
+  - No 4xx/5xx response is declared on any operation in the OpenAPI.
+  - No application/problem+json anywhere.

@@ -1,0 +1,1138 @@
+openapi: 3.0.3
+info:
+  title: Harmony API Reference
+  version: 1.0.0
+  contact: {}
+components:
+  securitySchemes:
+    authToken:
+      type: apiKey
+      format: password
+      in: header
+      name: authToken
+servers:
+  - url: https://harmony-api.na-east.jitterbit.com/{endpoint}
+    variables:
+      endpoint:
+        enum:
+          - 'dev'
+          - 'qa'
+          - 'api'
+        default: 'dev'
+  - url: https://harmony-api.emea-west.jitterbit.com/{endpoint}
+    variables:
+      endpoint:
+        enum:
+          - 'dev'
+          - 'qa'
+          - 'api'
+        default: 'dev'
+  - url: https://harmony-api.apac-southeast.jitterbit.com/{endpoint}
+    variables:
+      endpoint:
+        enum:
+          - 'dev'
+          - 'qa'
+          - 'api'
+        default: 'dev'
+paths:
+  /project:
+    get:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Get Project
+      description: >-
+        ## **Get Project**
+
+        The _Get Project API_ retrieves data from an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | organizationId | Yes | Integer | The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) associated with the project. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. |  |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the project. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectGuid | Yes | String | The GUID of the project to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+      operationId: getProject
+      parameters:
+        - name: AcceptVersion
+          in: header
+          schema:
+            type: string
+            example: '2'
+        - name: organizationId
+          in: header
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) associated with the project. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter.
+        - name: environmentId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the project. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.
+        - name: projectGuid
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The GUID of the project to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`.
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\r\n    \"success\": true,\r\n    \"uri\": \"https:\/\/harmony-api.na-east.jitterbit.com\/dev\/project\/?organizationId={orgId}&environmentId={envId}&projectGuid={projectGuid}\",\r\n    \"data\": {\r\n        \"projects\": {\r\n            \"createdBy\": \"{email}\",\r\n            \"createdOn\": \"1691128303397\",\r\n            \"deleted\": false,\r\n            \"deployedVersion\": \"8.25.0\",\r\n            \"description\": null,\r\n            \"environments\": [\r\n  {\r\n      \"agentGroupId\": \"{Agent Group Id}\",\r\n      \"createdBy\": \"{email}\",\r\n      \"createdOn\": \"1691122362620\",\r\n      \"envDesc\": \"Default environment created by Harmony\",\r\n      \"envId\": \"{Environment Id}\",\r\n      \"envName\": \"Default Environment\",\r\n      \"envType\": 2,\r\n      \"lastUpdatedBy\": \"{email}\",\r\n      \"noOfConnections\": 0,\r\n      \"noOfFileFormats\": 0,\r\n      \"noOfHostedEndPoints\": 0,\r\n      \"noOfOperations\": 0,\r\n      \"noOfProjects\": 0,\r\n      \"noOfScripts\": 0,\r\n      \"orgId\": \"{Organization Id}\",\r\n      \"permission\": 0\r\n  }\r\n            ],\r\n            \"guid\": \"{Project Guid}\",\r\n            \"lastModifiedBy\": \"{email}\",\r\n            \"lastModifiedOn\": \"1691691320453\",\r\n            \"name\": \"Open API - Testing Project\",\r\n            \"projectId\": 1234,\r\n            \"requiredVersion\": \"8.25.0.0\"\r\n        }\r\n    },\r\n    \"guid-0.5766848490723843\": \"\"\r\n}"
+    put:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Deploy Project
+      description: >-
+        ## **Deploy Project**
+
+        The _Deploy Project API_ deploys an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | projectGuid | Yes | String | The GUID of the project to deploy. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+      operationId: deployProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectGuid:
+                  type: string
+                  example: ''
+            example:
+              projectGuid: '{{deploy-project-guid}}'
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\r\n    \"success\": true,\r\n    \"uri\": \"https:\/\/harmony-api.na-east.jitterbit.com\/dev\/project\",\r\n    \"guid-0.15465179017754982\": \"\"\r\n}"
+    post:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Create Project
+      description: >-
+        ## **Create Project**
+
+        The _Create Project API_ creates a new [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/). See [Project Creation and Configuration](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) for more details on these request parameters.
+
+        | Parameter | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | organizationId | Yes | Integer | The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) to create the project in. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. |  |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to create the project in. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | name | No | String | The name of the project. |  |
+
+        | description | No | String | The description of the project. |  |
+
+        | requireDeployComment | No | Boolean | Set to `true` to require that each time this project is deployed, a dialog is presented that requires a comment to be added. | `false` |
+
+        | requireDeployTag | No | Boolean | Set to `true` to require that each time this project is deployed, a dialog is presented that requires a tag to be added. | `false` |
+
+        | ignoreHttpTargetTargetValidation | No | Boolean | Set to `true` to ignore HTTP validation rules, at the risk of generating invalid data. For more information see [HTTP Validation Rule Errors](https://docs.jitterbit.com/integration-studio/design/operations/validity/#disable-the-http-validation-rule) in [Operation Validity](https://docs.jitterbit.com/integration-studio/design/operations/validity/). | `false` |
+
+        | disableScriptParser | No | Boolean | Set to `true` to disable the Jitterbit Script Parser. Disabling this setting is not normally required and is advised only if you experience unexpected script output. | `false` |
+
+      operationId: createProject
+      parameters:
+        - name: organizationId
+          in: header
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) associated with the operation logs to return. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter.
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "{\r\n    \"requireDeployComment\": \"{{create-project-require-deploy-comment}}\",\r\n    \"requireDeployTag\": \"{{create-project-require-deploy-tag}}\",\r\n    \"ignoreHttpTargetTargetValidation\": \"{{create-project-ignore-http-target-target-validation}}\",\r\n    \"disableScriptParser\": \"{{create-project-disable-script-parser}}\",\r\n    \"name\": \"{{create-project-name}}\",\r\n    \"environmentId\": \"{{environment-id}}\",\r\n    \"description\": \"{{create-project-description}}\"\r\n}"
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example:  "{\r\n    \"success\": true,\r\n    \"uri\": \"https:\/\/harmony-api.na-east.jitterbit.com\/dev\/project\",\r\n    \"data\": {\r\n        \"type\": 100,\r\n        \"organizationId\": \"{Organization Id}\",\r\n        \"workflows\": [\r\n            {\r\n                \"name\": \"New Workflow\",\r\n                \"operations\": \"\",\r\n                \"type\": 1100,\r\n                \"id\": \"{Workflow GUID}\",\r\n                \"createdOn\": 1691701903672,\r\n                \"createdBy\": \"{email}\",\r\n                \"modifiedOn\": 1691701903672,\r\n                \"modifiedBy\": \"{email}\"\r\n            }\r\n        ],\r\n        \"isDeleted\": 0,\r\n        \"metadataVersion\": \"1.0.1\",\r\n        \"requireDeployComment\": false,\r\n        \"requireDeployTag\": false,\r\n        \"ignoreHTTPTargetTargetValidation\": false,\r\n        \"disableScriptParser\": false,\r\n        \"name\": \"Create Project Name 9e99c770-82ca-4581-b431-933060c4299d\",\r\n        \"targetEnvironmentId\": \"{Environment Id}\",\r\n        \"description\": \"Create Project Description 1ddb3b69-eaa4-434f-8b0a-29780d4b60b3\",\r\n        \"checksum\": \"1\",\r\n        \"components\": \"\",\r\n        \"encryptedAtRest\": true,\r\n        \"appliedDataMigrations\": [\r\n            \"StandaloneWorkflowMigration\",\r\n            \"RepairMigratedProjectMigration\",\r\n            \"ConvertStepObjectsToStepReferencesMigration\",\r\n            \"AddGlobalVariablesToTransformationScriptsMigration\",\r\n            \"DeleteSourcepathsVariablepathsFromRulesMigration\",\r\n            \"AddActivityPolarityMigration\",\r\n            \"FixApiPolarityMigration\",\r\n            \"DeleteLoopSubmappingsMigration\",\r\n            \"FilebasedActivityMigration\",\r\n            \"GlobalVariableEndpointMigration\",\r\n            \"RedoScriptComponentReferencesMigration\",\r\n            \"FtpEndpointEncryptChoiceMigration\",\r\n            \"ScriptTransMigration\",\r\n            \"AddSourceUsersToDocumentsMigration\",\r\n            \"GlobalVariableEndpointToEndpointsMigration\",\r\n            \"DesignComponentDocumentsMigration\",\r\n            \"SFTransformationMappingMigration\",\r\n            \"MoveLastDeployedInformationToPrjSummaryMigration\",\r\n            \"DesignComponentSplitMigration\",\r\n            \"SchemaTypeNodeRenameMigration\",\r\n            \"RestoreDeletedTransformationPropertiesMigration\",\r\n            \"HttpUrlMigration\",\r\n            \"SfdcBulkPatternTypeMigration\",\r\n            \"SFManualQueryMigration\",\r\n            \"NetsuitePropertiesCleanupMigration\",\r\n            \"SaveHarmonyProjectIdMigration\",\r\n            \"RemoveEncryptionMigration\",\r\n            \"DesignComponentEncryptPasswordMigration\",\r\n            \"DesignComponentMigration\",\r\n            \"SampleDocumentTypeMigration\",\r\n            \"AddTagComponentTypeMigration\",\r\n            \"TransformationSourceTargetMigration\",\r\n            \"JiraCreateUpdateGenericRootNameMigration\",\r\n            \"PatchTransformationSourceTargetMigration\",\r\n            \"TransformationAugmentationMigration\"\r\n        ],\r\n        \"appliedPostDataMigrations\": [\r\n            \"TransformationRuleMigration\",\r\n            \"ConvertAssignedSchedulesToComponentReferencesMigration\",\r\n            \"SchemaTypeNodePathUnsanitizedMigration1\",\r\n            \"GlobalVariableRemoveDupNamesMigration2\",\r\n            \"RuleValidationMigration\",\r\n            \"AddRequiresdeployMigration\"\r\n        ],\r\n        \"id\": \"{Project GUID}\",\r\n        \"createdOn\": 1691701903672,\r\n        \"createdBy\": \"{email}\",\r\n        \"modifiedOn\": 1691701903672,\r\n        \"modifiedBy\": \"{email}\",\r\n        \"harmonyProjectId\": 1234\r\n    },\r\n    \"guid-0.5105349020697617\": \"\"\r\n}"
+    delete:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Delete Project
+      description: >-
+        ## **Delete Project**
+
+        The _Delete Project API_ [deletes](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/#projectcreationandconfiguration-deleting-a-project) an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) containing the project to delete. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectGuid | Yes | String | The GUID of the project to delete. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+      operationId: deleteProject
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "{\r\n    \"environmentId\": \"{{environment-id}}\",\r\n    \"projectGuid\": \"{{delete-project-guid}}\"\r\n}"
+      responses:
+        '200':
+          description: ''
+  /project-variables:
+    get:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Get Project Variables
+      description: >-
+        ## **Get Project Variables**
+
+        The _Get Project Variables API_ retrieves [project variables](https://docs.jitterbit.com/integration-studio/design/variables/project/) associated with an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) containing the project variables to retrieve. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectGuid | Yes | String | The GUID of the project containing the project variables to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+      operationId: projectVariablesGet
+      parameters:
+        - name: environmentId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) containing the project variables to retrieve. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.
+        - name: projectGuid
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The GUID of the project containing the project variables to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`.
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\r\n    \"success\": true,\r\n    \"uri\": \"https:\/\/harmony-api.na-east.jitterbit.com\/dev\/project-variables?environmentId=866020&projectGuid=db54a73c-c58d-45c1-8222-4b2d2ebef2e2\",\r\n    \"data\": {\r\n        \"projectVariableDetail\": [\r\n            {\r\n                \"projectVariableId\": \"{Project Variable Id}\",\r\n                \"projectVariableName\": \"TestVar1\",\r\n                \"projectVariableValue\": null,\r\n                \"projectVariableLabel\": \"TestVar1 Label\",\r\n                \"projectVariableDescription\": \"TestVar1 Descriptions\",\r\n                \"projectVariableHideValue\": false,\r\n                \"projectVariableEnvironmentId\": \"{Environment Id}\",\r\n                \"projectVariableProjectId\": \"{Project Id}\",\r\n                \"projectVariableOrganizationId\": \"{Organization Id}\",\r\n                \"createdBy\": \"{email}\",\r\n                \"createdOn\": 1691128313027,\r\n                \"lastUpdatedBy\": \"{email}\",\r\n                \"lastUpdatedOn\": 1691128313027,\r\n                \"guid\": \"{Project Variable GUID}\"\r\n            }\r\n        ]\r\n    },\r\n    \"guid-0.9120006455341024\": \"\"\r\n}"
+    put:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Set Project Variables
+      description: >-
+        ## **Set Project Variables**
+
+        The _Set Project Variables API_ sets the value of a [project variable](https://docs.jitterbit.com/integration-studio/design/variables/project/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | projectVariableId | Yes | Integer | The ID of the project variable to set. |  |
+
+        | projectVariableValue | No | String | The project variable's value. |  |
+
+        | projectVariableDescription | No | String | The project variable's description. |  |
+
+        | projectVariableHideValue | No | Boolean | Set to `true` to indicate if this project variable is a sensitive variable. The value will be kept secure and hidden from user interfaces. | `false` |
+
+      operationId: projectVariablesSet
+      parameters:
+        - name: AcceptVersion
+          in: header
+          schema:
+            type: string
+            example: '2'
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "{\r\n    \"projectVariableId\":\"{{project-variable-id}}\",\r\n    \"projectVariableDescription\":\"{{project-variable-description}}\",\r\n    \"projectVariableValue\":\"{{project-variable-value}}\",\r\n    \"projectVariableHideValue\":true\r\n}"
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\r\n    \"success\": true,\r\n    \"uri\": \"https:\/\/harmony-api.na-east.jitterbit.com\/dev\/project-variables\",\r\n    \"guid-0.683911422805049\": \"\"\r\n}"
+  /project-import-export:
+    get:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Export Project
+      description: >-
+        ## **Export Project**
+
+        The _Export Project API_ [exports](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-export) an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) into a JSON file that can be downloaded and used for [importing](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-import) into a different environment.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | projectGuid | Yes | String | The GUID of the project to export. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | includeEmails | No | Boolean | Include project [email notifiations](https://docs.jitterbit.com/integration-studio/design/notifications/email-notifications/) in the exported project. | `true` |
+
+        | includeSchedules | No | Boolean | Include [operation schedules](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) in the exported project. | `true` |
+
+        | includeCredentials | No | Boolean | Include credentials in the exported project. See details of what’s included in [Export a Project](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-export). | `true` |
+
+        | includeProjectVariables | No | Boolean | Include [project variable](https://docs.jitterbit.com/integration-studio/design/variables/project/) default values in the exported project. | `true` |
+
+      operationId: exportProject
+      parameters:
+        - name: projectGuid
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The GUID of the project to export. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`.
+        - name: includeEmails
+          in: query
+          schema:
+            type: boolean
+            example: true
+          description: Include project [email notifiations](https://docs.jitterbit.com/integration-studio/design/notifications/email-notifications/) in the exported project. Default is `true`.
+        - name: includeSchedules
+          in: query
+          schema:
+            type: boolean
+            example: true
+          description: Include [operation schedules](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) in the exported project. Default is `true`.
+        - name: includeCredentials
+          in: query
+          schema:
+            type: boolean
+            example: true
+          description: Include credentials in the exported project. See details of what’s included in [Export a Project](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-export). Default is `true`.
+        - name: includeProjectVariables
+          in: query
+          schema:
+            type: boolean
+            example: true
+          description: Include [project variable](https://docs.jitterbit.com/integration-studio/design/variables/project/) default values in the exported project. Default is `true`.
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\r\n    \"assets\": [],\r\n    \"project\": {\r\n        \"type\": 100,\r\n        \"organizationId\": \"{Organization Id}\",\r\n        \"workflows\": [\r\n            {\r\n                \"name\": \"Fixed For Testing\",\r\n                \"operations\": [\r\n                    {\r\n                        \"name\": \"New Operation\",\r\n                        \"steps\": [\r\n                            {\r\n                                \"id\": \"fe828b6d-1dc4-4634-86ac-05947c55f474\",\r\n                                \"type\": 700\r\n                            }\r\n                        ],\r\n                        \"outcomes\": [],\r\n                        \"options\": {\r\n                            \"timeoutValue\": 2,\r\n                            \"timeoutMultiplier\": 3600,\r\n                            \"timeoutUnit\": \"HOURS\",\r\n                            \"logLevel\": \"Everything\",\r\n                            \"debugModeEnabled\": false,\r\n                            \"debug_mode_until\": \"\",\r\n                            \"AlwaysRunSuccessOperation\": 0,\r\n                            \"enableChunking\": false,\r\n                            \"chunk_size\": 0,\r\n                            \"target_chunk_size\": 0,\r\n                            \"max_number_of_threads\": 1,\r\n                            \"source_chunk_node\": \"\",\r\n                            \"target_chunk_node\": \"\",\r\n                            \"validate_source_text_file\": 0\r\n                        },\r\n                        \"validationState\": 300,\r\n                        \"type\": 200,\r\n                        \"operationType\": 3,\r\n                        \"isNew\": false,\r\n                        \"id\": \"d8ef0375-e4fb-415c-8872-592febca28c3\",\r\n                        \"projectId\": \"bae62b80-8b9b-4e84-9e1d-9471561a54f5\"\r\n                    },\r\n                    {\r\n                        \"name\": \"New Operation\",\r\n                        \"steps\": [\r\n                            {\r\n                                \"id\": \"c047d19a-ec1a-41ef-ae2e-6a7ce56645c9\",\r\n                                \"type\": 400\r\n                            }\r\n                        ],\r\n                        \"outcomes\": [],\r\n                        \"options\": {\r\n                            \"timeoutValue\": 2,\r\n                            \"timeoutMultiplier\": 3600,\r\n                            \"timeoutUnit\": \"HOURS\",\r\n                            \"logLevel\": \"Everything\",\r\n                            \"debugModeEnabled\": false,\r\n                            \"debug_mode_until\": \"\",\r\n                            \"AlwaysRunSuccessOperation\": 0,\r\n                            \"enableChunking\": false,\r\n                            \"chunk_size\": 0,\r\n                            \"target_chunk_size\": 0,\r\n                            \"max_number_of_threads\": 1,\r\n                            \"source_chunk_node\": \"\",\r\n                            \"target_chunk_node\": \"\",\r\n                            \"validate_source_text_file\": 0\r\n                        },\r\n                        \"validationState\": 300,\r\n                        \"type\": 200,\r\n                        \"operationType\": 3,\r\n                        \"isNew\": false,\r\n                        \"id\": \"d07c2243-9ecd-4c58-8876-3eb1447c4628\",\r\n                        \"projectId\": \"bae62b80-8b9b-4e84-9e1d-9471561a54f5\"\r\n                    },\r\n                    {\r\n                        \"name\": \"New Operation\",\r\n                        \"steps\": [\r\n                            {\r\n                                \"id\": \"96a13d2f-b84a-4727-8d69-15504372421f\",\r\n                                \"type\": 400\r\n                            }\r\n                        ],\r\n                        \"outcomes\": [],\r\n                        \"options\": {\r\n                            \"timeoutValue\": 2,\r\n                            \"timeoutMultiplier\": 3600,\r\n                            \"timeoutUnit\": \"HOURS\",\r\n                            \"logLevel\": \"Everything\",\r\n                            \"debugModeEnabled\": false,\r\n                            \"debug_mode_until\": \"\",\r\n                            \"AlwaysRunSuccessOperation\": 0,\r\n                            \"enableChunking\": false,\r\n                            \"chunk_size\": 0,\r\n                            \"target_chunk_size\": 0,\r\n                            \"max_number_of_threads\": 1,\r\n                            \"source_chunk_node\": \"\",\r\n                            \"target_chunk_node\": \"\",\r\n                            \"validate_source_text_file\": 0\r\n                        },\r\n                        \"validationState\": 300,\r\n                        \"type\": 200,\r\n                        \"operationType\": 3,\r\n                        \"isNew\": false,\r\n                        \"id\": \"7c6cd3ce-3327-4cc6-8a6e-ce50e2a63651\",\r\n                        \"projectId\": \"bae62b80-8b9b-4e84-9e1d-9471561a54f5\"\r\n                    }\r\n                ],\r\n                \"type\": 1100,\r\n                \"id\": \"34e7e6dd-ff7e-445e-b4cb-067f89e022d8\",\r\n                \"validationState\": 100\r\n            }\r\n        ],\r\n        \"isDeleted\": 0,\r\n        \"metadataVersion\": \"1.0.1\",\r\n        \"requireDeployComment\": false,\r\n        \"requireDeployTag\": false,\r\n        \"ignoreHTTPTargetTargetValidation\": false,\r\n        \"disableScriptParser\": false,\r\n        \"name\": \"Open API - Testing Project\",\r\n        \"targetEnvironmentId\": \"{Environment Id}\",\r\n        \"checksum\": \"1\",\r\n        \"encryptedAtRest\": true,\r\n        \"appliedDataMigrations\": [\r\n            \"StandaloneWorkflowMigration\",\r\n            \"RepairMigratedProjectMigration\",\r\n            \"ConvertStepObjectsToStepReferencesMigration\",\r\n            \"AddGlobalVariablesToTransformationScriptsMigration\",\r\n            \"DeleteSourcepathsVariablepathsFromRulesMigration\",\r\n            \"AddActivityPolarityMigration\",\r\n            \"FixApiPolarityMigration\",\r\n            \"DeleteLoopSubmappingsMigration\",\r\n            \"FilebasedActivityMigration\",\r\n            \"GlobalVariableEndpointMigration\",\r\n            \"RedoScriptComponentReferencesMigration\",\r\n            \"FtpEndpointEncryptChoiceMigration\",\r\n            \"ScriptTransMigration\",\r\n            \"AddSourceUsersToDocumentsMigration\",\r\n            \"GlobalVariableEndpointToEndpointsMigration\",\r\n            \"DesignComponentDocumentsMigration\",\r\n            \"SFTransformationMappingMigration\",\r\n            \"MoveLastDeployedInformationToPrjSummaryMigration\",\r\n            \"DesignComponentSplitMigration\",\r\n            \"SchemaTypeNodeRenameMigration\",\r\n            \"RestoreDeletedTransformationPropertiesMigration\",\r\n            \"HttpUrlMigration\",\r\n            \"SfdcBulkPatternTypeMigration\",\r\n            \"SFManualQueryMigration\",\r\n            \"NetsuitePropertiesCleanupMigration\",\r\n            \"SaveHarmonyProjectIdMigration\",\r\n            \"RemoveEncryptionMigration\",\r\n            \"DesignComponentEncryptPasswordMigration\",\r\n            \"DesignComponentMigration\",\r\n            \"SampleDocumentTypeMigration\",\r\n            \"AddTagComponentTypeMigration\",\r\n            \"TransformationSourceTargetMigration\",\r\n            \"JiraCreateUpdateGenericRootNameMigration\",\r\n            \"PatchTransformationSourceTargetMigration\",\r\n            \"TransformationAugmentationMigration\"\r\n        ],\r\n        \"appliedPostDataMigrations\": [\r\n            \"TransformationRuleMigration\",\r\n            \"ConvertAssignedSchedulesToComponentReferencesMigration\",\r\n            \"SchemaTypeNodePathUnsanitizedMigration1\",\r\n            \"GlobalVariableRemoveDupNamesMigration2\",\r\n            \"RuleValidationMigration\",\r\n            \"AddRequiresdeployMigration\"\r\n        ],\r\n        \"id\": \"db54a73c-c58d-45c1-8222-4b2d2ebef2e2\",\r\n        \"validationState\": 100,\r\n        \"adapterIds\": [\r\n            \"variable\"\r\n        ],\r\n        \"tags\": [],\r\n        \"requiresDeploy\": true,\r\n        \"recentlyDeletedComponents\": [],\r\n        \"origCreatedOn\": 1689024532653,\r\n        \"deployments\": [],\r\n        \"createdOn\": 1691128303254,\r\n        \"harmonyProjectId\": 1234,\r\n        \"components\": [\r\n            {\r\n                \"name\": \"Obligatory for it to work\",\r\n                \"scriptBody\": \"<trans>\\n$test = 'test';\\nWriteToOperationLog(\\\"Fixed Test op log - Fixed message\\\");\\n<\/trans>\",\r\n                \"scriptType\": 1,\r\n                \"globalVariables\": [\r\n                    {\r\n                        \"name\": \"test\",\r\n                        \"value\": \"\",\r\n                        \"isNull\": true,\r\n                        \"scope\": \"GLOBAL\",\r\n                        \"isArray\": false\r\n                    }\r\n                ],\r\n                \"notes\": [],\r\n                \"type\": 400,\r\n                \"id\": \"8e78ae54-3837-4119-9d09-adbb67db0610\",\r\n                \"checksum\": \"1\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"chunks\": 1,\r\n                \"cursor\": {\r\n                    \"line\": 2,\r\n                    \"ch\": 57,\r\n                    \"sticky\": null\r\n                },\r\n                \"validationState\": 100,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false,\r\n                \"scriptBodyCleansed\": \"<trans>\\n$test = 'test';\\nWriteToOperationLog(\\\"Fixed Test op log - Fixed message\\\");\\n<\/trans>\"\r\n            },\r\n            {\r\n                \"type\": 700,\r\n                \"entityTypeId\": \"4\",\r\n                \"name\": \"New Transformation\",\r\n                \"mappingRules\": [],\r\n                \"loopMappingRules\": [],\r\n                \"options\": {},\r\n                \"notes\": [],\r\n                \"duplicateNodesInfo\": {\r\n                    \"duplicatedNodes\": {},\r\n                    \"removedNodes\": {}\r\n                },\r\n                \"srcExtendedNodesInfo\": {\r\n                    \"extendedNodes\": {},\r\n                    \"removedNodes\": {}\r\n                },\r\n                \"tgtExtendedNodesInfo\": {\r\n                    \"extendedNodes\": {},\r\n                    \"removedNodes\": {}\r\n                },\r\n                \"description\": \"\",\r\n                \"id\": \"b0c4255a-e81b-4dba-b76a-c91156225909\",\r\n                \"checksum\": \"1\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"chunks\": 1,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false,\r\n                \"validationState\": 300\r\n            },\r\n            {\r\n                \"name\": \"TestVar1\",\r\n                \"isFileBased\": true,\r\n                \"properties\": [\r\n                    {\r\n                        \"name\": \"page1\",\r\n                        \"displayName\": \"Page One Display Name\",\r\n                        \"type\": \"pagination\",\r\n                        \"children\": [\r\n                            {\r\n                                \"type\": \"string\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"entityId\",\r\n                                \"hidden\": true,\r\n                                \"defaultValue\": 4\r\n                            },\r\n                            {\r\n                                \"type\": \"string\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"source_type_id\",\r\n                                \"hidden\": true,\r\n                                \"defaultValue\": 21\r\n                            },\r\n                            {\r\n                                \"type\": \"string\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"encrypt_choice\",\r\n                                \"hidden\": true,\r\n                                \"defaultValue\": \"0\"\r\n                            },\r\n                            {\r\n                                \"type\": \"string\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"transfer_type\",\r\n                                \"hidden\": true,\r\n                                \"defaultValue\": \"-1\"\r\n                            },\r\n                            {\r\n                                \"type\": \"string\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"passive_mode\",\r\n                                \"hidden\": true,\r\n                                \"defaultValue\": \"0\"\r\n                            },\r\n                            {\r\n                                \"type\": \"string\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"http_verb\",\r\n                                \"hidden\": true,\r\n                                \"defaultValue\": \"2\"\r\n                            },\r\n                            {\r\n                                \"type\": \"string\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"document_id\",\r\n                                \"hidden\": true,\r\n                                \"defaultValue\": \"0\"\r\n                            },\r\n                            {\r\n                                \"type\": \"string\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"timeout\",\r\n                                \"hidden\": true,\r\n                                \"defaultValue\": -1\r\n                            },\r\n                            {\r\n                                \"type\": \"boolean\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"ui.test-connection-enabled\",\r\n                                \"hidden\": true,\r\n                                \"defaultValue\": false\r\n                            },\r\n                            {\r\n                                \"type\": \"string\",\r\n                                \"multiple\": false,\r\n                                \"name\": \"variable\",\r\n                                \"displayName\": \"Variable Name\",\r\n                                \"hidden\": false,\r\n                                \"defaultValue\": \"Variable\",\r\n                                \"validators\": [\r\n                                    {\r\n                                        \"name\": \"required\"\r\n                                    },\r\n                                    {\r\n                                        \"name\": \"pattern\",\r\n                                        \"args\": [\r\n                                            \"^[a-zA-Z0-9_.]*$\"\r\n                                        ]\r\n                                    }\r\n                                ],\r\n                                \"variables\": {\r\n                                    \"fileVars\": false,\r\n                                    \"jitterbitVars\": false\r\n                                },\r\n                                \"value\": \"TestVar1\"\r\n                            }\r\n                        ]\r\n                    }\r\n                ],\r\n                \"type\": 600,\r\n                \"adapterId\": \"variable\",\r\n                \"availability\": \"PUBLIC\",\r\n                \"endpointType\": 900,\r\n                \"id\": \"7e48da13-cb4b-4a65-9de9-996fcc81bbb6\",\r\n                \"checksum\": \"1\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"validationState\": 100,\r\n                \"chunks\": 1,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false\r\n            },\r\n            {\r\n                \"name\": \"Project Variables Test\",\r\n                \"scriptBody\": \"<trans>\\n$TestVar1;\\n<\/trans>\",\r\n                \"scriptType\": 1,\r\n                \"globalVariables\": [\r\n                    {\r\n                        \"name\": \"TestVar1\",\r\n                        \"value\": \"\",\r\n                        \"isNull\": true,\r\n                        \"scope\": \"GLOBAL\",\r\n                        \"isHidden\": false\r\n                    }\r\n                ],\r\n                \"notes\": [],\r\n                \"type\": 400,\r\n                \"id\": \"ec5801e2-8dc1-4392-b4c7-f64b896c05c5\",\r\n                \"checksum\": \"1\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"chunks\": 1,\r\n                \"cursor\": {\r\n                    \"line\": 1,\r\n                    \"ch\": 10,\r\n                    \"sticky\": null\r\n                },\r\n                \"validationState\": 100,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false,\r\n                \"scriptBodyCleansed\": \"<trans>\\n$TestVar1;\\n<\/trans>\"\r\n            },\r\n            {\r\n                \"name\": \"Run Operation Test\",\r\n                \"steps\": [\r\n                    {\r\n                        \"id\": \"721bcb69-26d8-4c9d-b538-96e73fe19ae2\",\r\n                        \"type\": 400\r\n                    }\r\n                ],\r\n                \"outcomes\": [],\r\n                \"options\": {\r\n                    \"timeoutValue\": 2,\r\n                    \"timeoutMultiplier\": 3600,\r\n                    \"timeoutUnit\": \"HOURS\",\r\n                    \"logLevel\": \"Everything\",\r\n                    \"debugModeEnabled\": false,\r\n                    \"debug_mode_until\": \"\",\r\n                    \"AlwaysRunSuccessOperation\": 0,\r\n                    \"enableChunking\": false,\r\n                    \"chunk_size\": 0,\r\n                    \"target_chunk_size\": 0,\r\n                    \"max_number_of_threads\": 1,\r\n                    \"source_chunk_node\": \"\",\r\n                    \"target_chunk_node\": \"\",\r\n                    \"validate_source_text_file\": 0\r\n                },\r\n                \"validationState\": 300,\r\n                \"type\": 200,\r\n                \"operationType\": 3,\r\n                \"isNew\": false,\r\n                \"id\": \"d07c2243-9ecd-4c58-8876-3eb1447c4628\",\r\n                \"checksum\": \"1\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"chunks\": 1,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false\r\n            },\r\n            {\r\n                \"type\": 1000,\r\n                \"name\": \"TestVar1\",\r\n                \"defaultValue\": \"\",\r\n                \"label\": \"TestVar1 Label\",\r\n                \"hidevalue\": false,\r\n                \"id\": \"8c79f2f9-21dd-4e79-91a6-cec3d2ed1330\",\r\n                \"checksum\": \"3\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"validationState\": 100,\r\n                \"description\": \"TestVar1 Descriptions\",\r\n                \"chunks\": 1,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false,\r\n                \"passwordEncAtAppLevel\": true\r\n            },\r\n            {\r\n                \"name\": \"Fixed Operation\",\r\n                \"steps\": [\r\n                    {\r\n                        \"id\": \"8e78ae54-3837-4119-9d09-adbb67db0610\",\r\n                        \"type\": 400\r\n                    },\r\n                    {\r\n                        \"id\": \"8f10a5d9-d921-4db9-96c2-18e1ae37f582\",\r\n                        \"type\": 400\r\n                    }\r\n                ],\r\n                \"outcomes\": [],\r\n                \"options\": {\r\n                    \"timeoutValue\": 2,\r\n                    \"timeoutMultiplier\": 3600,\r\n                    \"timeoutUnit\": \"HOURS\",\r\n                    \"logLevel\": \"Everything\",\r\n                    \"debugModeEnabled\": false,\r\n                    \"debug_mode_until\": \"\",\r\n                    \"AlwaysRunSuccessOperation\": 0,\r\n                    \"enableChunking\": false,\r\n                    \"chunk_size\": 0,\r\n                    \"target_chunk_size\": 0,\r\n                    \"max_number_of_threads\": 1,\r\n                    \"source_chunk_node\": \"\",\r\n                    \"target_chunk_node\": \"\",\r\n                    \"validate_source_text_file\": 0\r\n                },\r\n                \"validationState\": 100,\r\n                \"type\": 200,\r\n                \"operationType\": 3,\r\n                \"isNew\": false,\r\n                \"id\": \"d8ef0375-e4fb-415c-8872-592febca28c3\",\r\n                \"checksum\": \"1\",\r\n                \"encryptedAtRest\": true,\r\n                \"requiresDeploy\": true,\r\n                \"chunks\": 1,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false\r\n            },\r\n            {\r\n                \"name\": \"Project Variable Test\",\r\n                \"steps\": [\r\n                    {\r\n                        \"id\": \"ec5801e2-8dc1-4392-b4c7-f64b896c05c5\",\r\n                        \"type\": 400\r\n                    }\r\n                ],\r\n                \"outcomes\": [],\r\n                \"options\": {\r\n                    \"timeoutValue\": 2,\r\n                    \"timeoutMultiplier\": 3600,\r\n                    \"timeoutUnit\": \"HOURS\",\r\n                    \"logLevel\": \"Everything\",\r\n                    \"debugModeEnabled\": false,\r\n                    \"debug_mode_until\": \"\",\r\n                    \"AlwaysRunSuccessOperation\": 0,\r\n                    \"enableChunking\": false,\r\n                    \"chunk_size\": 0,\r\n                    \"target_chunk_size\": 0,\r\n                    \"max_number_of_threads\": 1,\r\n                    \"source_chunk_node\": \"\",\r\n                    \"target_chunk_node\": \"\",\r\n                    \"validate_source_text_file\": 0\r\n                },\r\n                \"validationState\": 300,\r\n                \"type\": 200,\r\n                \"operationType\": 3,\r\n                \"isNew\": false,\r\n                \"id\": \"7c6cd3ce-3327-4cc6-8a6e-ce50e2a63651\",\r\n                \"checksum\": \"1\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"chunks\": 1,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false\r\n            },\r\n            {\r\n                \"name\": \"Fixed Return\",\r\n                \"scriptBody\": \"<javascript>\\nJitterbit.SetVar('jitterbit.api.response', '{fixed: true}');\\n<\/javascript>\",\r\n                \"scriptType\": 0,\r\n                \"globalVariables\": [],\r\n                \"notes\": [],\r\n                \"type\": 400,\r\n                \"id\": \"8f10a5d9-d921-4db9-96c2-18e1ae37f582\",\r\n                \"checksum\": \"1\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"chunks\": 1,\r\n                \"cursor\": {\r\n                    \"line\": 2,\r\n                    \"ch\": 13,\r\n                    \"sticky\": null,\r\n                    \"xRel\": 1,\r\n                    \"outside\": 1\r\n                },\r\n                \"validationState\": 100,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false,\r\n                \"scriptBodyCleansed\": \"<javascript>\\nJitterbit.SetVar('jitterbit.api.response', '{fixed: true}');\\n<\/javascript>\"\r\n            },\r\n            {\r\n                \"name\": \"Run Operation Test\",\r\n                \"scriptBody\": \"<trans>\\nWriteToOperationLog(\\\"Run Operation Test\\\");\\n<\/trans>\",\r\n                \"scriptType\": 1,\r\n                \"globalVariables\": [],\r\n                \"notes\": [],\r\n                \"type\": 400,\r\n                \"id\": \"721bcb69-26d8-4c9d-b538-96e73fe19ae2\",\r\n                \"checksum\": \"1\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"chunks\": 1,\r\n                \"cursor\": {\r\n                    \"line\": 1,\r\n                    \"ch\": 42,\r\n                    \"sticky\": null\r\n                },\r\n                \"validationState\": 100,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false,\r\n                \"scriptBodyCleansed\": \"<trans>\\nWriteToOperationLog(\\\"Run Operation Test\\\");\\n<\/trans>\"\r\n            },\r\n            {\r\n                \"name\": \"test\",\r\n                \"type\": 1300,\r\n                \"endpoints\": [],\r\n                \"usages\": [\r\n                    {\r\n                        \"id\": \"8e78ae54-3837-4119-9d09-adbb67db0610\",\r\n                        \"type\": 400,\r\n                        \"isWrite\": true\r\n                    }\r\n                ],\r\n                \"value\": \"\",\r\n                \"id\": \"d05eefce-2386-49aa-a334-eb54da7cc052\",\r\n                \"checksum\": \"1\",\r\n                \"requiresDeploy\": true,\r\n                \"encryptedAtRest\": true,\r\n                \"chunks\": 1,\r\n                \"metadataVersion\": \"3.0.1\",\r\n                \"partial\": false\r\n            }\r\n        ],\r\n        \"adapters\": []\r\n    },\r\n    \"version\": 4\r\n}"
+    post:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Import Project
+      description: >-
+        ## **Import Project**
+
+        The _Import Project API_ [imports](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-import) an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) into a specific environment. The imported project must be a JSON file that was generated by [exporting](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-export) the project.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | document | Yes | File | The project file containing import data in JSON format. |  |
+
+        | organizationId | Yes | Integer | The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) to import the project to. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. |  |
+
+        | targetEnvironmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to import the project to. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.  |  |
+
+        | name | No | String | The name the project will have after the import. |  |
+
+        | includeEmails | No | Boolean | Include project [email notifiations](https://docs.jitterbit.com/integration-studio/design/notifications/email-notifications/) from the imported project. | `true` |
+
+        | includeSchedules | No | Boolean | Include [operation schedules](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) from the imported project. | `true` |
+
+      operationId: importProject
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                document:
+                  description: The project file containing import data in JSON format.
+                  type: string
+                  format: binary
+                organizationId:
+                  in: header
+                  required: true
+                  schema:
+                    type: string
+                    example: ''
+                  description: The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) associated with the operation logs to return. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter.
+                targetEnvironmentId:
+                  description: The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to import the project to. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page
+                  type: string
+                  example: ''
+                name:
+                  description: The name the project will have after the import.
+                  type: string
+                  example: ''
+                includeEmails:
+                  description: Include project [email notifiations](https://docs.jitterbit.com/integration-studio/design/notifications/email-notifications/) from the imported project. Default is `true`.
+                  type: boolean
+                  example: true
+                includeSchedules:
+                  description: Include [operation schedules](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) from the imported project. Default is `true`.
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: ''
+  /migration:
+    put:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Update Migrated Project
+      description: >-
+        ## **Update Migrated Project**
+
+        The _Update Migrated Project API_ replaces an already [migrated](https://docs.jitterbit.com/integration-studio/design/projects/migration/) [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) from one environment to a different environment. If this is the first time migrating a project into the target environment and you do not have a `targetProjectGuid`, you must migrate the project first, either in the UI or by using the _Migrate Project API_.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | sourceProjectGuid | Yes | String | The GUID of the project to migrate. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | targetProjectGuid | Yes | String | The GUID of the project to replace. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | targetEnvironmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to migrate the project to. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectHistoryTagName | No | String | A tag with a description of the migration. |  |
+
+      operationId: migrateProjectUpdate
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "{\r\n    \"sourceProjectGuid\": \"{{migrate-project-source-project-guid}}\",\r\n    \"targetProjectGuid\": \"{{migrate-project-target-project-guid}}\",\r\n    \"components\": [\r\n        //\"2e146670-50fc-4e31-acac-9f62871a87ac\"\r\n    ],\r\n    \"targetEnvironmentId\": \"{{migrate-project-target-environment-id}}\",\r\n    \"projectHistoryTagName\": \"{{migrate-project-history-tag-name}}\"\r\n}"
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - Projects
+      security:
+        - authToken: []
+      summary: Migrate Project
+      description: >-
+        ## **Migrate Project**
+
+        The _Migrate Project API_ [migrates](https://docs.jitterbit.com/integration-studio/design/projects/migration/) an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) from one environment into a different environment. If the project has already been migrated, then you must use the _Update Migrated Project API_.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | sourceProjectGuid | Yes | String | The GUID of the project to migrate. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | targetEnvironmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to migrate the project to. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectHistoryTagName | No | String | A tag with a description of the migration. |  |
+
+      operationId: migrateProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectHistoryTagName:
+                  type: string
+                  example: ''
+                sourceProjectGuid:
+                  type: string
+                  example: ''
+                targetEnvironmentId:
+                  type: string
+                  example: ''
+            example:
+              projectHistoryTagName: '{{migrate-project-history-tag-name}}'
+              sourceProjectGuid: '{{migrate-project-source-project-guid}}'
+              targetEnvironmentId: '{{migrate-project-target-environment-id}}'
+      responses:
+        '200':
+          description: ''
+  /operation-logs:
+    get:
+      tags:
+        - Operations
+      security:
+        - authToken: []
+      summary: Get Operation Log Details
+      description: >-
+        ## **Get Operation Log Details**
+
+        The _Get Operation Log Details API_ retrieves the [operation log](https://docs.jitterbit.com/integration-studio/design/operations/logs/) details associated with a specific execution instance of an [Integration Studio operation](https://docs.jitterbit.com/integration-studio/design/operations/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | operationInstanceGuid | Yes | String | The GUID of the operation instance to retrieve the log details for. Operation instance GUIDs can be retrieved using the _Run Operation API_ or referencing the [`jitterbit.operation.guid`](https://docs.jitterbit.com/integration-studio/design/variables/jitterbit//operation-jitterbit-variables/#jitterbitoperationguid) Jitterbit variable. |  |
+
+      operationId: getOperationLogDetails
+      parameters:
+        - name: operationInstanceGuid
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The GUID of the operation instance to retrieve the log details for. Operation instance GUIDs can be retrieved using the _Run Operation API_ or referencing the [`jitterbit.operation.guid`](https://docs.jitterbit.com/integration-studio/design/variables/jitterbit//operation-jitterbit-variables/#jitterbitoperationguid) Jitterbit variable.
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Operations
+      security:
+        - authToken: []
+      summary: Get Operation Logs
+      description: >-
+        ## **Get Operation Logs**
+
+        The _Get Operation Logs API_ retrieves the [operation logs](https://docs.jitterbit.com/integration-studio/design/operations/logs/) associated with an [Integration Studio operation](https://docs.jitterbit.com/integration-studio/design/operations/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | organizationId | Yes | Integer | The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) associated with the operation logs to return. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. |  |
+
+        | environmentId | No | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation logs to return. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectGuid | No | String | The GUID of the project associated with the operation logs to return. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | operationGuid | No | String | The GUID of the operation associated with the operation logs to return. Operation GUIDs are visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | operationName | No | String Array | Filter the returned rows by operation names. |  |
+
+        | status | No | String Array | Filter the returned rows by [statuses](https://docs.jitterbit.com/integration-studio/design/operations/logs/#operationlogs-filterbystatus). |  |
+
+        | sortByColumn | No | String | The column or field name to sort by. Valid values include `OperationName`, `ProjectName`, `AgentName`, `EnvironmentName`, `Status`, `SubmittedTimestamp`, and `StatusTimestamp`. |  |
+
+        | ascendSort | No | Boolean | Indicate the sort direction. |  |
+
+        | noOfRowsToReturn | Yes | Integer | The number of rows to return. |  |
+
+      operationId: getOperationLogs
+      parameters:
+        - name: organizationId
+          in: header
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) associated with the operation logs to return. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter.
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "{\r\n    \"environmentId\": [\"{{environment-id}}\"],\r\n    \"projectGuid\": [\"{{project-guid}}\"],\r\n    \"operationGuid\": [\"{{get-operation-log-guid}}\"],\r\n    \"operationName\": [],\r\n    \"status\": [],\r\n    \"sortByColumn\": \"SubmittedTimestamp\",\r\n    \"ascendSort\": false,\r\n    \"noOfRowsToReturn\": 5\r\n}"
+      responses:
+        '200':
+          description: ''
+  /schedules:
+    get:
+      tags:
+        - Schedules
+      security:
+        - authToken: []
+      summary: Get Schedules
+      description: >-
+        ## **Get Schedules**
+
+        The _Get Schedules API_ retrieves the [operation schedules](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) associated with an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedules to retrieve. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.  |  |
+
+        | projectGuid | Yes | String | The GUID of the project associated with the operation schedules to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+      operationId: getSchedules
+      parameters:
+        - name: environmentId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedules to retrieve. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.
+        - name: projectGuid
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The GUID of the project associated with the operation schedules to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`.
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Schedules
+      security:
+        - authToken: []
+      summary: Update Schedule
+      description: >-
+        ## **Update a Schedule**
+
+        The _Update Schedule API_ updates an existing [operation schedule](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/). For new operation schedules, use the _Create Schedule API_.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedule to update. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectGuid | Yes | String | The GUID of the project associated with the operation schedules to update. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | scheduleName | Yes | String | The name of the operation schedule. |  |
+
+        | schedulerId | Yes | Integer | The ID of the operation schedule to update. |  |
+
+        | schedulerGuid | Yes | String | The GUID of the operation schedule to update. |  |
+
+        | occurrence |  | Object | The object representing the settings related to which days to run the operation schedule. |  |
+
+        | occurs |  | Integer |  |  |
+
+        | daily |  | Integer |  |  |
+
+        | monday |  | Integer |  |  |
+
+        | tuesday |  | Integer |  |  |
+
+        | wednesday |  | Integer |  |  |
+
+        | thursday |  | Integer |  |  |
+
+        | friday |  | Integer |  |  |
+
+        | saturday |  | Integer |  |  |
+
+        | sunday |  | Integer |  |  |
+
+        | weekly |  | Integer |  |  |
+
+        | monthly |  | Integer |  |  |
+
+        | monthlyADay |  | Integer |  |  |
+
+        | monthlyAOfEveryXMonth |  | Integer |  |  |
+
+        | monthlyBDay |  | Integer |  |  |
+
+        | monthlyBNum |  | Integer |  |  |
+
+        | monthlyBOfEveryXMonth |  | Integer |  |  |
+
+        | frequency |  | Object | The object representing the settings related to how often to run the operation schedule. |  |
+
+        | frequency |  | Integer |  |  |
+
+        | frequencyOnceTime |  | Time | The specific time of day the operation schedule should run one time. |  |
+
+        | frequencyEveryHm |  | Integer |  |  |
+
+        | frequencyEveryNum |  | Integer |  |  |
+
+        | frequencyStartTime |  | Time |  |  |
+
+        | frequencyEndTime |  | Time |  |  |
+
+        | duration |  | Object | The object representing the settings related to how long to run the operation schedule. |  |
+
+        | durationYesnoEnd |  | Integer |  |  |
+
+        | durationStartDate |  | Date | The date to start running the operation schedule. |  |
+
+        | durationEndDate |  | Date | The date to end running the operation schedule. |  |
+
+      operationId: updateSchedule
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "{\r\n    \"environmentId\": {{environment-id}},\r\n    \"projectGuid\": \"{{update-schedule-project-guid}}\",\r\n    \"scheduleName\": \"Fixed Schedule TestUpdater-{{$timestamp}}\",\r\n    \"schedulerId\": {{update-schedule-id}},\r\n    \"schedulerGuid\": \"{{update-schedule-guid}}\",\r\n    \"occurrence\": {\r\n        \"occurs\": \"1\",\r\n        \"daily\": 69,\r\n        \"monday\": \"-1\",\r\n        \"tuesday\": \"-1\",\r\n        \"wednesday\": \"-1\",\r\n        \"thursday\": \"-1\",\r\n        \"friday\": \"-1\",\r\n        \"saturday\": \"-1\",\r\n        \"sunday\": \"-1\",\r\n        \"weekly\": \"1\",\r\n        \"monthly\": \"1\",\r\n        \"monthlyADay\": \"1\",\r\n        \"monthlyAOfEveryXMonth\": \"1\",\r\n        \"monthlyBDay\": \"-1\",\r\n        \"monthlyBNum\": \"1\",\r\n        \"monthlyBOfEveryXMonth\": \"1\"\r\n    },\r\n    \"frequency\": {\r\n        \"frequency\": \"1\",\r\n        \"frequencyOnceTime\": \"03:13:00\",\r\n        \"frequencyEveryHm\": \"1\",\r\n        \"frequencyEveryNum\": \"0\",\r\n        \"frequencyStartTime\": \"\",\r\n        \"frequencyEndTime\": \"\"\r\n    },\r\n    \"duration\": {\r\n        \"durationYesnoEnd\": \"0\",\r\n        \"durationStartDate\": \"2023-7-7\",\r\n        \"durationEndDate\": \"\"\r\n    }\r\n}"
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - Schedules
+      security:
+        - authToken: []
+      summary: Create Schedule
+      description: >-
+        ## **Create Schedule**
+
+        The _Create Schedule API_ creates an [operation schedule](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) and assigns it to the specified [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/). For existing schedules, use the _Update Schedule API_.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to create the operation schedule in. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectGuid | Yes | String | The GUID of the project to assign the operation schedule to. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | scheduleName | Yes | String | The name of the operation schedule. |  |
+
+        | occurrence |  | Object | The object representing the settings related to which days to run the operation schedule. |  |
+
+        | occurs |  | Integer |  |  |
+
+        | daily |  | Integer |  |  |
+
+        | monday |  | Integer |  |  |
+
+        | tuesday |  | Integer |  |  |
+
+        | wednesday |  | Integer |  |  |
+
+        | thursday |  | Integer |  |  |
+
+        | friday |  | Integer |  |  |
+
+        | saturday |  | Integer |  |  |
+
+        | sunday |  | Integer |  |  |
+
+        | weekly |  | Integer |  |  |
+
+        | monthly |  | Integer |  |  |
+
+        | monthlyADay |  | Integer |  |  |
+
+        | monthlyAOfEveryXMonth |  | Integer |  |  |
+
+        | monthlyBDay |  | Integer |  |  |
+
+        | monthlyBNum |  | Integer |  |  |
+
+        | monthlyBOfEveryXMonth |  | Integer |  |  |
+
+        | frequency |  | Object | The object representing the settings related to how often to run the operation schedule. |  |
+
+        | frequency |  | Integer |  |  |
+
+        | frequencyOnceTime |  | Time | The specific time of day the operation schedule should run one time. |  |
+
+        | frequencyEveryHm |  | Integer |  |  |
+
+        | frequencyEveryNum |  | Integer |  |  |
+
+        | frequencyStartTime |  | Time |  |  |
+
+        | frequencyEndTime |  | Time |  |  |
+
+        | duration |  | Object | The object representing the settings related to how long to run the operation schedule. |  |
+
+        | durationYesnoEnd |  | Integer |  |  |
+
+        | durationStartDate |  | Date | The date to start running the operation schedule. |  |
+
+        | durationEndDate |  | Date | The date to end running the operation schedule. |  |
+
+      operationId: createSchedule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                duration:
+                  type: object
+                  properties:
+                    durationEndDate:
+                      type: string
+                      example: ''
+                    durationStartDate:
+                      type: string
+                      example: 2023-5-3
+                    durationYesnoEnd:
+                      type: number
+                      example: 0
+                environmentId:
+                  type: string
+                  example: ''
+                frequency:
+                  type: object
+                  properties:
+                    frequency:
+                      type: number
+                      example: 1
+                    frequencyEndTime:
+                      type: string
+                      example: ''
+                    frequencyEveryHm:
+                      type: number
+                      example: 1
+                    frequencyEveryNum:
+                      type: number
+                      example: 0
+                    frequencyOnceTime:
+                      type: string
+                      example: '00:00:00'
+                    frequencyStartTime:
+                      type: string
+                      example: ''
+                occurrence:
+                  type: object
+                  properties:
+                    daily:
+                      type: number
+                      example: 1
+                    friday:
+                      type: number
+                      example: -1
+                    monday:
+                      type: number
+                      example: -1
+                    monthly:
+                      type: number
+                      example: 1
+                    monthlyADay:
+                      type: number
+                      example: 1
+                    monthlyAOfEveryXMonth:
+                      type: number
+                      example: 1
+                    monthlyBDay:
+                      type: number
+                      example: -1
+                    monthlyBNum:
+                      type: number
+                      example: 1
+                    monthlyBOfEveryXMonth:
+                      type: number
+                      example: 1
+                    occurs:
+                      type: number
+                      example: 1
+                    saturday:
+                      type: number
+                      example: -1
+                    sunday:
+                      type: number
+                      example: -1
+                    thursday:
+                      type: number
+                      example: -1
+                    tuesday:
+                      type: number
+                      example: -1
+                    wednesday:
+                      type: number
+                      example: -1
+                    weekly:
+                      type: number
+                      example: 1
+                projectGuid:
+                  type: string
+                  example: ''
+                scheduleName:
+                  type: string
+                  example: Schedule_Test_Automated-{{$timestamp}}
+            example:
+              duration:
+                durationEndDate: ''
+                durationStartDate: 2023-5-3
+                durationYesnoEnd: 0
+              environmentId: '{{environment-id}}'
+              frequency:
+                frequency: 1
+                frequencyEndTime: ''
+                frequencyEveryHm: 1
+                frequencyEveryNum: 0
+                frequencyOnceTime: '00:00:00'
+                frequencyStartTime: ''
+              occurrence:
+                daily: 1
+                friday: -1
+                monday: -1
+                monthly: 1
+                monthlyADay: 1
+                monthlyAOfEveryXMonth: 1
+                monthlyBDay: -1
+                monthlyBNum: 1
+                monthlyBOfEveryXMonth: 1
+                occurs: 1
+                saturday: -1
+                sunday: -1
+                thursday: -1
+                tuesday: -1
+                wednesday: -1
+                weekly: 1
+              projectGuid: '{{project-guid}}'
+              scheduleName: Schedule_Test_Automated-{{$timestamp}}
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - Schedules
+      security:
+        - authToken: []
+      summary: Delete Schedule
+      description: >-
+        ## **Delete Schedule**
+
+        The _Delete Schedule API_ deletes an [operation schedule](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) associated with a [Harmony environment](https://docs.jitterbit.com/management-console/environments/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedule to delete. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | scheduleId | Yes | Integer | The ID of the operation schedule to delete. |  |
+
+      operationId: deleteSchedules
+      parameters:
+        - name: environmentId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedule to delete. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.
+        - name: scheduleId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The ID of the operation schedule to delete.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                environmentId:
+                  type: string
+                  example: ''
+                scheduleId:
+                  type: string
+                  example: ''
+            example:
+              environmentId: '{{environment-id}}'
+              scheduleId: '{{delete-schedule-id}}'
+      responses:
+        '200':
+          description: ''
+  /schedules-toggle:
+    put:
+      tags:
+        - Schedules
+      security:
+        - authToken: []
+      summary: Enable / Disable Schedule
+      description: >-
+        ## **Enable / Disable a Schedule**
+
+        The _Enable / Disable Schedule API_ toggles an [operation schedule](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) on or off.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to toggle the operation schedule in. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | scheduleGuid | Yes | String | The GUID of the operation schedule to toggle. |  |
+
+      operationId: enableDisableSchedule
+      parameters:
+        - name: environmentId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to toggle the operation schedule in. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.
+        - name: scheduleGuid
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The GUID of the operation schedule to toggle.
+        - name: enable
+          in: query
+          schema:
+            type: string
+            example: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enable:
+                  type: string
+                  example: ''
+                environmentId:
+                  type: string
+                  example: ''
+                scheduleGuid:
+                  type: array
+                  items:
+                    type: string
+                    example: ''
+                  example:
+                    - '{{enable-schedule-guid}}'
+            example:
+              enable: '{{enable-schedule-enabled}}'
+              environmentId: '{{environment-id}}'
+              scheduleGuid:
+                - '{{enable-schedule-guid}}'
+      responses:
+        '200':
+          description: ''
+  /login:
+    post:
+      tags:
+        - Login
+      summary: Authenticate
+      description: >-
+        ## **Authenticate**
+
+        The _Authenticate API_ retrieves an authToken to be used with other API calls. The username and password must be associated with Harmony account credentials and not an organization using [Harmony SSO](https://docs.jitterbit.com/getting-started/jitterbit-security/jitterbit-harmony-single-sign-on/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | username | Yes | String | The Harmony account username used for authentication, usually an email address. This is a header parameter. |  |
+
+        | password | Yes | String | The Harmony account password used for authentication. This is a header parameter. |  |
+
+      operationId: authenticate
+      parameters:
+        - name: username
+          in: header
+          required: true
+          schema:
+            type: string
+            example: ''
+          description: The Harmony account username used for authentication, usually an email address. This is a header parameter.
+        - name: password
+          in: header
+          required: true
+          schema:
+            type: string
+            format: password
+            example: ''
+          description: The Harmony account password used for authentication. This is a header parameter.
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\r\n    \"success\": true,\r\n    \"uri\": \"https:\/\/harmony-api.na-east.jitterbit.com\/dev\/login\",\r\n    \"data\": {\r\n        \"authenticationToken\": \"{Auth Token}\",\r\n        \"serverUrl\": \"https:\/\/na-east.jitterbit.com\",\r\n        \"cloudAppsUrl\": \"https:\/\/apps.na-east.jitterbit.com\",\r\n        \"orgAttrs\": [\r\n            {\r\n                \"orgId\": \"{Org Id 1}\",\r\n                \"orgName\": \"{Org Name}\",\r\n                \"orgZoneUrl\": \"https:\/\/na-east.jitterbit.com\"\r\n            },\r\n            {\r\n                \"orgId\": \"{Org Id N}\",\r\n                \"orgName\": \"{Org Name}\",\r\n                \"orgZoneUrl\": \"https:\/\/na-east.jitterbit.com\"\r\n            }\r\n        ],\r\n        \"defaultOrgId\": \"{Default Org Id}\",\r\n        \"sessionTimeoutInSeconds\": 14400\r\n    },\r\n    \"guid-0.843237301346141\": \"\"\r\n}"
+    get:
+      tags:
+        - Login
+      summary: Convert AuthToken to JWT
+      description: >-
+        ## **Convert AuthToken to JWT**
+
+        The _Convert AuthToken to JWT API_ converts an authToken obtained from the _Authenticate API_ into a JSON Web Token (JWT). This is handled automatically for the user where appropriate and currently has no application.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | authToken | Yes | String | The authentication token used to retrieve a JWT associated with the active token. |  |
+
+      operationId: convertAuthtokenToJwt
+      parameters:
+        - name: authToken
+          in: header
+          required: true
+          schema:
+            type: string
+            format: password
+            example: ''
+          description: The authentication token used to retrieve a JWT associated with the active token.
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\r\n    \"success\": true,\r\n    \"uri\": \"https:\/\/harmony-api.na-east.jitterbit.com\/dev\/login\",\r\n    \"data\": {\r\n        \"jwt\": \"{JWT Token Here}\"\r\n    },\r\n    \"guid-0.6675163146481039\": \"\"\r\n}"
+tags:
+  - name: Login
+  - name: Projects
+  - name: Operations
+  - name: Schedules

@@ -1,0 +1,120 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/jitterbit-harmony-platform-openapi.yml
+derivation_note: >-
+  The published contract declares ZERO components.schemas — no request or
+  response body is typed. The entity graph below is therefore derived from the
+  operation set, the path structure, the id-reference parameters
+  (organizationId, environmentId, projectGuid, projectVariableId,
+  operationInstanceGuid, scheduleId, scheduleGuid) and the identifier
+  definitions published on the developer portal. Field lists are deliberately
+  limited to identifiers that actually appear in the contract; nothing is
+  invented.
+identifier_conventions:
+  patterns:
+    - suffix: Id
+      type: integer
+      examples: [organizationId, environmentId, projectVariableId, scheduleId]
+    - suffix: Guid
+      type: string (UUID)
+      examples: [projectGuid, operationInstanceGuid, scheduleGuid]
+      format_example: 9a87b6c5-a1b2-34c5-6d7e-123456a7b89c
+  note: >-
+    Schedules are addressed by BOTH scheduleId (integer, on deleteSchedules) and
+    scheduleGuid (UUID, on enableDisableSchedule). That inconsistency is in the
+    contract, not in this derivation.
+entities:
+  - name: Organization
+    id_field: organizationId
+    id_type: integer
+    source: Harmony portal header
+    operations: [getProject, createProject, getOperationLogs]
+    note: The top-level tenant. No operation in the contract lists or manages organizations.
+  - name: Environment
+    id_field: environmentId
+    id_type: integer
+    source: Management Console Environments page
+    operations: [getProject, projectVariablesGet, getSchedules, deleteSchedules, enableDisableSchedule]
+    note: No operation in the contract lists or manages environments.
+  - name: Project
+    id_field: projectGuid
+    id_type: uuid
+    operations: [getProject, createProject, deployProject, deleteProject, exportProject, importProject, migrateProject, migrateProjectUpdate]
+    note: An Integration Studio project. The central write surface of the API.
+  - name: ProjectVariable
+    id_field: projectVariableId
+    id_type: integer
+    operations: [projectVariablesGet, projectVariablesSet]
+  - name: Operation
+    id_field: null
+    operations: [getOperationLogs]
+    note: >-
+      An Integration Studio operation. Not directly addressable in this
+      contract — only reachable through its logs.
+  - name: OperationLogInstance
+    id_field: operationInstanceGuid
+    id_type: uuid
+    operations: [getOperationLogDetails, getOperationLogs]
+  - name: Schedule
+    id_field: scheduleId / scheduleGuid
+    id_type: integer / uuid
+    operations: [getSchedules, createSchedule, updateSchedule, deleteSchedules, enableDisableSchedule]
+  - name: AuthToken
+    id_field: authToken
+    id_type: opaque string
+    operations: [authenticate, convertAuthtokenToJwt]
+    note: 'Format observed in published examples: 1_<uuid>. Session timeout 14400 seconds.'
+  - name: Connector
+    id_field: connector id / key / secret
+    surface: jitterbit-cloud-restful-service
+    operations_docs: https://docs.jitterbit.com/developer-portal/connector-sdk/apis/
+    note: >-
+      Registered custom connectors, managed through the Connector SDK REST APIs
+      on the Cloud RESTful Service host — a different API from the Harmony
+      platform APIs, with no published OpenAPI. Registration returns id, key,
+      secret, endpointEntityId, functionEntityStartId and functionEntityEndId.
+relationships:
+  - from: Organization
+    to: Environment
+    type: has_many
+    via: environmentId
+  - from: Organization
+    to: Project
+    type: has_many
+    via: organizationId
+    evidence: createProject takes organizationId; getProject takes both organizationId and environmentId
+  - from: Environment
+    to: Project
+    type: has_many
+    via: environmentId
+  - from: Project
+    to: ProjectVariable
+    type: has_many
+    via: projectGuid
+    evidence: projectVariablesGet takes environmentId and projectGuid
+  - from: Project
+    to: Operation
+    type: has_many
+    via: projectGuid
+  - from: Project
+    to: Schedule
+    type: has_many
+    via: projectGuid
+    evidence: getSchedules takes environmentId and projectGuid; createSchedule assigns a schedule to a project
+  - from: Operation
+    to: OperationLogInstance
+    type: has_many
+    via: operationInstanceGuid
+  - from: Schedule
+    to: Environment
+    type: belongs_to
+    via: environmentId
+  - from: Organization
+    to: Connector
+    type: has_many
+    via: orgId
+    surface: jitterbit-cloud-restful-service
+gaps:
+  - No components.schemas — no response body in the API is typed.
+  - No operation to enumerate organizations or environments; both identifiers must be read out of the web console before the API can be used.
+  - Schedules carry two different identifier types across operations.

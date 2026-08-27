@@ -1,0 +1,65 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/
+scope: >-
+  Jitterbit publishes one documented client-side component library: the
+  Connector SDK UI components, declared by a connector developer in the
+  connector's adapter JSON and rendered by Jitterbit Studio in the connection
+  and activity configuration screens. These are components Jitterbit ships and
+  a developer composes — not an embeddable widget library for a third-party
+  website. Jitterbit publishes no embeddable JS SDK, no web-component bundle
+  and no CDN-hosted element library.
+families:
+  - name: Connector SDK UI components
+    docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/
+    declared_in: adapter JSON
+    adapter_json_docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/adapter-json/
+    groups:
+      - name: Basic components
+        docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/basic-components/
+      - name: Complex components
+        docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/complex-components/
+        components:
+          - name: 3LO Auth component
+            docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/complex-components/3lo-auth-component/
+            purpose: three-legged OAuth 2.0 authorization flow inside a connection screen
+          - name: Describe Object component
+            docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/complex-components/describe-object-component/
+          - name: Filter Builder component
+            docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/complex-components/filter-builder-component/
+          - name: Key Value component
+            docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/complex-components/key-value-component/
+          - name: List Object component
+            docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/complex-components/list-object-component/
+          - name: Select Fields component
+            docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/complex-components/select-fields-component/
+          - name: Table component
+            docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/complex-components/table-component/
+          - name: Transfer List component
+            docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/complex-components/transfer-list-component/
+      - name: UI endpoint icons
+        docs: https://docs.jitterbit.com/developer-portal/connector-sdk/ui-components/ui-endpoint-icons/
+  - name: App Builder widgets
+    docs: https://docs.jitterbit.com/app-builder/documentation/widget-downloads/
+    purpose: >-
+      Downloadable UI widgets installed into an App Builder application (for
+      example a site banner widget parameterised by BannerText and BannerStyle).
+      They run inside App Builder, not in an arbitrary host page.
+loader_libraries: []
+loader_note: >-
+  No loader script, CDN bundle or npm element package is published. There is no
+  unpkg/jsDelivr distribution to pin a version against.
+adjacent_surfaces:
+  - name: API Manager Portal Manager
+    description: >-
+      Generates a hosted developer portal with OpenAPI documentation for the
+      APIs a customer publishes. Since 12.9, Regenerate Docs preserves OpenAPI
+      editor customizations instead of overwriting them.
+    docs: https://docs.jitterbit.com/api-manager/api-manager-user-interface/portal-manager/
+  - name: Embedded and MSP solutions
+    description: >-
+      The partner program route to embedding Harmony functionality — Embedded
+      Integration Deployment driven by the platform APIs, plus App Builder apps
+      and custom dashboards. The documentation directs the reader to Sales or a
+      CSM rather than publishing a component contract.
+    docs: https://docs.jitterbit.com/developer-portal/partner/embed/

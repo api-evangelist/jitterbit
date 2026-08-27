@@ -1,0 +1,66 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.jitterbit.com/release-notes/system-status-notifications/
+asyncapi_spec: null
+asyncapi_note: >-
+  Jitterbit publishes NO AsyncAPI document. /asyncapi.yaml and /asyncapi.json
+  were not served on any host, the GitHub organization carries no event schema,
+  and there is no event catalog in the documentation. This file records the one
+  real webhook surface Jitterbit does publish, plus the platform webhook
+  capabilities it gives to customers.
+webhooks:
+  - name: System status notifications
+    scope: provider-published
+    delivery: HTTP POST to a subscriber-supplied URL
+    subscribe_at: https://trust.jitterbit.com
+    docs: https://docs.jitterbit.com/release-notes/system-status-notifications/
+    events:
+      - incident created
+      - incident updated
+      - incident resolved
+      - scheduled maintenance posted (approximately two weeks before each Harmony release)
+      - release progress notifications during a release
+    scoping: >-
+      Subscriptions are scoped by region and by component — Harmony portal,
+      Studio, API Manager, EDI, Marketplace, Management Console, runtime
+      operation logs, cloud platform, cloud API gateway, Sandbox Cloud Agent
+      Group.
+    other_channels: [email, SMS, Slack]
+    caveats:
+      - 'Slack webhooks are explicitly not supported: "We recommend using Slack notifications to receive notifications through Slack."'
+      - A subscriber also supplies an email address for endpoint-failure notification.
+      - Unsubscribing is done through the API or the app's webhook configuration, or by contacting Jitterbit support.
+    payload_schema: null
+    payload_note: >-
+      Jitterbit does not publish the payload schema. trust.jitterbit.com is an
+      Atlassian Statuspage instance, so the delivered body is Statuspage's
+      standard incident/component webhook shape, but Jitterbit itself documents
+      only how to subscribe, not what arrives.
+    signing: not documented
+    retries: not documented
+platform_webhook_capabilities:
+  note: >-
+    These are webhook features Jitterbit gives its CUSTOMERS. They are not
+    events Jitterbit emits about itself, and they are listed here so the
+    distinction is on the record rather than conflated with the surface above.
+  capabilities:
+    - name: Trigger an operation from a webhook
+      description: A custom API published through API Manager can be used as the inbound webhook receiver that starts an Integration Studio operation.
+      docs: https://docs.jitterbit.com/integration-studio/how-to/trigger-an-operation-from-a-webhook/
+    - name: App Builder API endpoints and webhooks
+      description: Listed as a platform feature on every App Builder pricing tier.
+      docs: https://www.jitterbit.com/harmony/pricing/
+    - name: App Builder REST webhooks
+      description: Outbound webhook configuration for App Builder REST connections.
+      docs: https://docs.jitterbit.com/app-builder/connect/rest/webhooks/
+    - name: Connector-level webhook registration
+      description: 'Some connectors register and deregister webhooks on the remote system (for example BMC Helix Operations Management: Register Webhook / Deregister Webhook activities).'
+      docs: https://docs.jitterbit.com/integration-studio/design/connectors/bmc-helix-operations-management/register-webhook-activity/
+message_queue_service:
+  note: >-
+    Jitterbit Message Queue is a real asynchronous surface (queues, send,
+    get, acknowledge, NACK, 30-minute ack timeout, 10-day TTL) but it is
+    reachable only through the Jitterbit MQ connector inside a Harmony project,
+    not over a public protocol, and it has no published schema. Its limits are
+    captured in rate-limits/jitterbit-rate-limits.yml.
+  docs: https://docs.jitterbit.com/message-queue-service/

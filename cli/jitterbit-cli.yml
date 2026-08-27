@@ -1,0 +1,92 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.jitterbit.com/developer-portal/citizen-recipes/jitterbit-command-line-interface/
+name: jbcli
+full_name: Jitterbit Command Line Interface
+official: true
+scope: >-
+  Citizen Integrator recipes and Design Studio Jitterpaks. jbcli does NOT drive
+  the Harmony platform APIs (projects, schedules, operation logs) — it is a
+  recipe-repository tool. There is no first-party CLI for Integration Studio or
+  for the Harmony platform APIs.
+version: 1.4.1
+published: '2018-10-31'
+currency_note: >-
+  The documented version and the latest npm release agree at 1.4.1, published
+  2018-10-31. The docs page also notes "Many administrative options provided
+  through jbcli are now also available from within the Citizen Integrator web
+  interface", which is the maintainers' own signal that the web UI has taken
+  over.
+install:
+  - method: npm
+    command: npm install -g jbcli
+    prerequisite: Node.js v6.x or greater
+    registry: https://www.npmjs.com/package/jbcli
+auth:
+  command: jbcli login --email <username> [--password <password>] --host <host>
+  hosts:
+    NA: https://citizen.jitterbit.net
+    EMEA: https://citizen.jitterbit.eu
+    APAC: https://citizen.jitterbit.cc
+  logout: jbcli logout
+grammar: jbcli <entity> <action> [options]
+commands:
+  - group: meta
+    commands:
+      - command: jbcli version
+        description: Print the installed jbcli version.
+  - group: auth
+    commands:
+      - command: jbcli login --email <username> --host <host>
+        description: Authenticate against a Harmony region.
+      - command: jbcli logout
+        description: Log out of jbcli.
+  - group: org
+    commands:
+      - command: jbcli org list
+        description: List the organizations the user is a member of, with IDs and names.
+  - group: env
+    commands:
+      - command: jbcli env list
+        description: List the environments in the current organization.
+  - group: config
+    commands:
+      - command: jbcli config get <key>
+        description: >-
+          Read a config key. defaultOrgId and defaultEnvId are read-only and
+          come from the Harmony account.
+      - command: jbcli config set <key>=<value> [<key>=<value> ...]
+        description: Set orgId / envId to override the account defaults.
+  - group: recipe
+    commands:
+      - command: jbcli recipe list [--private]
+        description: >-
+          List Citizen Integrator recipes available to the user. Public recipes
+          are prefixed with an asterisk.
+      - command: jbcli recipe get <id> [--savejpk <location>]
+        description: Return a recipe's JSON metadata and optionally save its Jitterpak locally.
+      - command: jbcli recipe validate --recipe <recipeLocation>
+        description: Validate a local recipe's JSON metadata before upload.
+      - command: jbcli recipe upload --jpk <jpkLocation> [--recipe <recipeLocation>]
+        description: Upload a new recipe and/or Jitterpak. Uploads are private to the organization by default.
+      - command: jbcli recipe update <id> --jpk <jpkLocation> [--recipe <recipeLocation>]
+        description: Update an existing recipe and/or Jitterpak.
+      - command: jbcli recipe delete <id> [<id> ...]
+        description: Delete an undeployed recipe and its Jitterpak.
+      - command: jbcli recipe generate --jpk <location> [--recipeonly | --cfgonly]
+        description: >-
+          Generate skeleton <project-name>-recipe.json and
+          <project-name>-configure.json templates from a Jitterpak.
+      - command: jbcli recipe deploy <ID> --cfg <location>
+        description: Deploy a recipe using a filled-in configure file; runs each action step of the recipe.
+  - group: deployed-recipe
+    commands:
+      - command: jbcli deployed-recipe list [--environment <envID>]
+        description: List deployed recipes, optionally scoped to one environment.
+      - command: jbcli deployed-recipe delete <id> [<id> ...]
+        description: Un-deploy and delete a deployed recipe, removing both the Jitterpak and the JSON metadata.
+key_flows:
+  - name: Author and publish a recipe
+    steps: [jbcli login, jbcli recipe generate, jbcli recipe validate, jbcli recipe upload]
+  - name: Deploy a recipe into an environment
+    steps: [jbcli login, jbcli config set envId=<envId>, jbcli recipe generate --cfgonly, jbcli recipe deploy]
