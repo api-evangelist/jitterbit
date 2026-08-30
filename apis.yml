@@ -55,6 +55,17 @@ tags:
   - Low-Code
   - Enterprise
   - API Gateway
+  - Workflow-Automation
+  - Connectors
+tags_raw:
+  - API Management
+  - Automation
+  - Integration
+  - iPaaS
+  - EDI
+  - Low-Code
+  - Enterprise
+  - API Gateway
   - Workflow Automation
   - Connectors
 url: >-
@@ -131,7 +142,8 @@ apis:
   description: The Operations API from Jitterbit — 1 operation(s) for operations.
   humanURL: https://developer.jitterbit.com/harmony-platform-apis/
   baseURL: https://harmony-api.na-east.jitterbit.com/{endpoint}
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
@@ -152,6 +164,8 @@ apis:
   humanURL: https://developer.jitterbit.com/harmony-platform-apis/
   baseURL: https://harmony-api.na-east.jitterbit.com/{endpoint}
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
