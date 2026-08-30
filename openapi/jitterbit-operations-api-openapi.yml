@@ -1,0 +1,117 @@
+openapi: 3.2.0
+info:
+  title: Harmony API Reference Operations API
+  version: 1.0.0
+  contact: {}
+servers:
+- url: https://harmony-api.na-east.jitterbit.com/{endpoint}
+  variables:
+    endpoint:
+      enum:
+      - dev
+      - qa
+      - api
+      default: dev
+- url: https://harmony-api.emea-west.jitterbit.com/{endpoint}
+  variables:
+    endpoint:
+      enum:
+      - dev
+      - qa
+      - api
+      default: dev
+- url: https://harmony-api.apac-southeast.jitterbit.com/{endpoint}
+  variables:
+    endpoint:
+      enum:
+      - dev
+      - qa
+      - api
+      default: dev
+tags:
+- name: Operations
+paths:
+  /operation-logs:
+    get:
+      tags:
+      - Operations
+      security:
+      - authToken: []
+      summary: Get Operation Log Details
+      description: '## **Get Operation Log Details**
+
+        The _Get Operation Log Details API_ retrieves the [operation log](https://docs.jitterbit.com/integration-studio/design/operations/logs/) details associated with a specific execution instance of an [Integration Studio operation](https://docs.jitterbit.com/integration-studio/design/operations/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | operationInstanceGuid | Yes | String | The GUID of the operation instance to retrieve the log details for. Operation instance GUIDs can be retrieved using the _Run Operation API_ or referencing the [`jitterbit.operation.guid`](https://docs.jitterbit.com/integration-studio/design/variables/jitterbit//operation-jitterbit-variables/#jitterbitoperationguid) Jitterbit variable. |  |'
+      operationId: getOperationLogDetails
+      parameters:
+      - name: operationInstanceGuid
+        in: query
+        required: true
+        schema:
+          type: string
+          example: ''
+        description: The GUID of the operation instance to retrieve the log details for. Operation instance GUIDs can be retrieved using the _Run Operation API_ or referencing the [`jitterbit.operation.guid`](https://docs.jitterbit.com/integration-studio/design/variables/jitterbit//operation-jitterbit-variables/#jitterbitoperationguid) Jitterbit variable.
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+      - Operations
+      security:
+      - authToken: []
+      summary: Get Operation Logs
+      description: '## **Get Operation Logs**
+
+        The _Get Operation Logs API_ retrieves the [operation logs](https://docs.jitterbit.com/integration-studio/design/operations/logs/) associated with an [Integration Studio operation](https://docs.jitterbit.com/integration-studio/design/operations/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | organizationId | Yes | Integer | The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) associated with the operation logs to return. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. |  |
+
+        | environmentId | No | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation logs to return. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectGuid | No | String | The GUID of the project associated with the operation logs to return. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | operationGuid | No | String | The GUID of the operation associated with the operation logs to return. Operation GUIDs are visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | operationName | No | String Array | Filter the returned rows by operation names. |  |
+
+        | status | No | String Array | Filter the returned rows by [statuses](https://docs.jitterbit.com/integration-studio/design/operations/logs/#operationlogs-filterbystatus). |  |
+
+        | sortByColumn | No | String | The column or field name to sort by. Valid values include `OperationName`, `ProjectName`, `AgentName`, `EnvironmentName`, `Status`, `SubmittedTimestamp`, and `StatusTimestamp`. |  |
+
+        | ascendSort | No | Boolean | Indicate the sort direction. |  |
+
+        | noOfRowsToReturn | Yes | Integer | The number of rows to return. |  |'
+      operationId: getOperationLogs
+      parameters:
+      - name: organizationId
+        in: header
+        required: true
+        schema:
+          type: string
+          example: ''
+        description: The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) associated with the operation logs to return. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter.
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "{\n    \"environmentId\": [\"{{environment-id}}\"],\n    \"projectGuid\": [\"{{project-guid}}\"],\n    \"operationGuid\": [\"{{get-operation-log-guid}}\"],\n    \"operationName\": [],\n    \"status\": [],\n    \"sortByColumn\": \"SubmittedTimestamp\",\n    \"ascendSort\": false,\n    \"noOfRowsToReturn\": 5\n}"
+      responses:
+        '200':
+          description: ''
+components:
+  securitySchemes:
+    authToken:
+      type: apiKey
+      format: password
+      in: header
+      name: authToken

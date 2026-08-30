@@ -1,0 +1,112 @@
+openapi: 3.2.0
+info:
+  title: Harmony API Reference Login API
+  version: 1.0.0
+  contact: {}
+servers:
+- url: https://harmony-api.na-east.jitterbit.com/{endpoint}
+  variables:
+    endpoint:
+      enum:
+      - dev
+      - qa
+      - api
+      default: dev
+- url: https://harmony-api.emea-west.jitterbit.com/{endpoint}
+  variables:
+    endpoint:
+      enum:
+      - dev
+      - qa
+      - api
+      default: dev
+- url: https://harmony-api.apac-southeast.jitterbit.com/{endpoint}
+  variables:
+    endpoint:
+      enum:
+      - dev
+      - qa
+      - api
+      default: dev
+tags:
+- name: Login
+paths:
+  /login:
+    post:
+      tags:
+      - Login
+      summary: Authenticate
+      description: '## **Authenticate**
+
+        The _Authenticate API_ retrieves an authToken to be used with other API calls. The username and password must be associated with Harmony account credentials and not an organization using [Harmony SSO](https://docs.jitterbit.com/getting-started/jitterbit-security/jitterbit-harmony-single-sign-on/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | username | Yes | String | The Harmony account username used for authentication, usually an email address. This is a header parameter. |  |
+
+        | password | Yes | String | The Harmony account password used for authentication. This is a header parameter. |  |'
+      operationId: authenticate
+      parameters:
+      - name: username
+        in: header
+        required: true
+        schema:
+          type: string
+          example: ''
+        description: The Harmony account username used for authentication, usually an email address. This is a header parameter.
+      - name: password
+        in: header
+        required: true
+        schema:
+          type: string
+          format: password
+          example: ''
+        description: The Harmony account password used for authentication. This is a header parameter.
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n    \"success\": true,\n    \"uri\": \"https://harmony-api.na-east.jitterbit.com/dev/login\",\n    \"data\": {\n        \"authenticationToken\": \"{Auth Token}\",\n        \"serverUrl\": \"https://na-east.jitterbit.com\",\n        \"cloudAppsUrl\": \"https://apps.na-east.jitterbit.com\",\n        \"orgAttrs\": [\n            {\n                \"orgId\": \"{Org Id 1}\",\n                \"orgName\": \"{Org Name}\",\n                \"orgZoneUrl\": \"https://na-east.jitterbit.com\"\n            },\n            {\n                \"orgId\": \"{Org Id N}\",\n                \"orgName\": \"{Org Name}\",\n                \"orgZoneUrl\": \"https://na-east.jitterbit.com\"\n            }\n        ],\n        \"defaultOrgId\": \"{Default Org Id}\",\n        \"sessionTimeoutInSeconds\": 14400\n    },\n    \"guid-0.843237301346141\": \"\"\n}"
+    get:
+      tags:
+      - Login
+      summary: Convert AuthToken to JWT
+      description: '## **Convert AuthToken to JWT**
+
+        The _Convert AuthToken to JWT API_ converts an authToken obtained from the _Authenticate API_ into a JSON Web Token (JWT). This is handled automatically for the user where appropriate and currently has no application.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | authToken | Yes | String | The authentication token used to retrieve a JWT associated with the active token. |  |'
+      operationId: convertAuthtokenToJwt
+      parameters:
+      - name: authToken
+        in: header
+        required: true
+        schema:
+          type: string
+          format: password
+          example: ''
+        description: The authentication token used to retrieve a JWT associated with the active token.
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n    \"success\": true,\n    \"uri\": \"https://harmony-api.na-east.jitterbit.com/dev/login\",\n    \"data\": {\n        \"jwt\": \"{JWT Token Here}\"\n    },\n    \"guid-0.6675163146481039\": \"\"\n}"
+components:
+  securitySchemes:
+    authToken:
+      type: apiKey
+      format: password
+      in: header
+      name: authToken

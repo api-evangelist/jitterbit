@@ -1,0 +1,493 @@
+openapi: 3.2.0
+info:
+  title: Harmony API Reference Schedules API
+  version: 1.0.0
+  contact: {}
+servers:
+- url: https://harmony-api.na-east.jitterbit.com/{endpoint}
+  variables:
+    endpoint:
+      enum:
+      - dev
+      - qa
+      - api
+      default: dev
+- url: https://harmony-api.emea-west.jitterbit.com/{endpoint}
+  variables:
+    endpoint:
+      enum:
+      - dev
+      - qa
+      - api
+      default: dev
+- url: https://harmony-api.apac-southeast.jitterbit.com/{endpoint}
+  variables:
+    endpoint:
+      enum:
+      - dev
+      - qa
+      - api
+      default: dev
+tags:
+- name: Schedules
+paths:
+  /schedules:
+    get:
+      tags:
+      - Schedules
+      security:
+      - authToken: []
+      summary: Get Schedules
+      description: '## **Get Schedules**
+
+        The _Get Schedules API_ retrieves the [operation schedules](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) associated with an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedules to retrieve. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.  |  |
+
+        | projectGuid | Yes | String | The GUID of the project associated with the operation schedules to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |'
+      operationId: getSchedules
+      parameters:
+      - name: environmentId
+        in: query
+        required: true
+        schema:
+          type: string
+          example: ''
+        description: The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedules to retrieve. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.
+      - name: projectGuid
+        in: query
+        required: true
+        schema:
+          type: string
+          example: ''
+        description: The GUID of the project associated with the operation schedules to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser's address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`.
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+      - Schedules
+      security:
+      - authToken: []
+      summary: Update Schedule
+      description: '## **Update a Schedule**
+
+        The _Update Schedule API_ updates an existing [operation schedule](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/). For new operation schedules, use the _Create Schedule API_.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedule to update. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectGuid | Yes | String | The GUID of the project associated with the operation schedules to update. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | scheduleName | Yes | String | The name of the operation schedule. |  |
+
+        | schedulerId | Yes | Integer | The ID of the operation schedule to update. |  |
+
+        | schedulerGuid | Yes | String | The GUID of the operation schedule to update. |  |
+
+        | occurrence |  | Object | The object representing the settings related to which days to run the operation schedule. |  |
+
+        | occurs |  | Integer |  |  |
+
+        | daily |  | Integer |  |  |
+
+        | monday |  | Integer |  |  |
+
+        | tuesday |  | Integer |  |  |
+
+        | wednesday |  | Integer |  |  |
+
+        | thursday |  | Integer |  |  |
+
+        | friday |  | Integer |  |  |
+
+        | saturday |  | Integer |  |  |
+
+        | sunday |  | Integer |  |  |
+
+        | weekly |  | Integer |  |  |
+
+        | monthly |  | Integer |  |  |
+
+        | monthlyADay |  | Integer |  |  |
+
+        | monthlyAOfEveryXMonth |  | Integer |  |  |
+
+        | monthlyBDay |  | Integer |  |  |
+
+        | monthlyBNum |  | Integer |  |  |
+
+        | monthlyBOfEveryXMonth |  | Integer |  |  |
+
+        | frequency |  | Object | The object representing the settings related to how often to run the operation schedule. |  |
+
+        | frequency |  | Integer |  |  |
+
+        | frequencyOnceTime |  | Time | The specific time of day the operation schedule should run one time. |  |
+
+        | frequencyEveryHm |  | Integer |  |  |
+
+        | frequencyEveryNum |  | Integer |  |  |
+
+        | frequencyStartTime |  | Time |  |  |
+
+        | frequencyEndTime |  | Time |  |  |
+
+        | duration |  | Object | The object representing the settings related to how long to run the operation schedule. |  |
+
+        | durationYesnoEnd |  | Integer |  |  |
+
+        | durationStartDate |  | Date | The date to start running the operation schedule. |  |
+
+        | durationEndDate |  | Date | The date to end running the operation schedule. |  |'
+      operationId: updateSchedule
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "{\n    \"environmentId\": {{environment-id}},\n    \"projectGuid\": \"{{update-schedule-project-guid}}\",\n    \"scheduleName\": \"Fixed Schedule TestUpdater-{{$timestamp}}\",\n    \"schedulerId\": {{update-schedule-id}},\n    \"schedulerGuid\": \"{{update-schedule-guid}}\",\n    \"occurrence\": {\n        \"occurs\": \"1\",\n        \"daily\": 69,\n        \"monday\": \"-1\",\n        \"tuesday\": \"-1\",\n        \"wednesday\": \"-1\",\n        \"thursday\": \"-1\",\n        \"friday\": \"-1\",\n        \"saturday\": \"-1\",\n        \"sunday\": \"-1\",\n        \"weekly\": \"1\",\n        \"monthly\": \"1\",\n        \"monthlyADay\": \"1\",\n        \"monthlyAOfEveryXMonth\": \"1\",\n        \"monthlyBDay\": \"-1\",\n        \"monthlyBNum\": \"1\",\n        \"monthlyBOfEveryXMonth\": \"1\"\n    },\n    \"frequency\": {\n        \"frequency\": \"1\",\n        \"frequencyOnceTime\": \"03:13:00\",\n        \"frequencyEveryHm\": \"1\",\n        \"frequencyEveryNum\": \"0\",\n        \"frequencyStartTime\": \"\",\n        \"frequencyEndTime\": \"\"\n    },\n    \"duration\": {\n        \"durationYesnoEnd\": \"0\",\n        \"durationStartDate\": \"2023-7-7\",\n        \"durationEndDate\": \"\"\n    }\n}"
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+      - Schedules
+      security:
+      - authToken: []
+      summary: Create Schedule
+      description: '## **Create Schedule**
+
+        The _Create Schedule API_ creates an [operation schedule](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) and assigns it to the specified [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/). For existing schedules, use the _Update Schedule API_.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to create the operation schedule in. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | projectGuid | Yes | String | The GUID of the project to assign the operation schedule to. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+
+        | scheduleName | Yes | String | The name of the operation schedule. |  |
+
+        | occurrence |  | Object | The object representing the settings related to which days to run the operation schedule. |  |
+
+        | occurs |  | Integer |  |  |
+
+        | daily |  | Integer |  |  |
+
+        | monday |  | Integer |  |  |
+
+        | tuesday |  | Integer |  |  |
+
+        | wednesday |  | Integer |  |  |
+
+        | thursday |  | Integer |  |  |
+
+        | friday |  | Integer |  |  |
+
+        | saturday |  | Integer |  |  |
+
+        | sunday |  | Integer |  |  |
+
+        | weekly |  | Integer |  |  |
+
+        | monthly |  | Integer |  |  |
+
+        | monthlyADay |  | Integer |  |  |
+
+        | monthlyAOfEveryXMonth |  | Integer |  |  |
+
+        | monthlyBDay |  | Integer |  |  |
+
+        | monthlyBNum |  | Integer |  |  |
+
+        | monthlyBOfEveryXMonth |  | Integer |  |  |
+
+        | frequency |  | Object | The object representing the settings related to how often to run the operation schedule. |  |
+
+        | frequency |  | Integer |  |  |
+
+        | frequencyOnceTime |  | Time | The specific time of day the operation schedule should run one time. |  |
+
+        | frequencyEveryHm |  | Integer |  |  |
+
+        | frequencyEveryNum |  | Integer |  |  |
+
+        | frequencyStartTime |  | Time |  |  |
+
+        | frequencyEndTime |  | Time |  |  |
+
+        | duration |  | Object | The object representing the settings related to how long to run the operation schedule. |  |
+
+        | durationYesnoEnd |  | Integer |  |  |
+
+        | durationStartDate |  | Date | The date to start running the operation schedule. |  |
+
+        | durationEndDate |  | Date | The date to end running the operation schedule. |  |'
+      operationId: createSchedule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                duration:
+                  type: object
+                  properties:
+                    durationEndDate:
+                      type: string
+                      example: ''
+                    durationStartDate:
+                      type: string
+                      example: 2023-5-3
+                    durationYesnoEnd:
+                      type: number
+                      example: 0
+                environmentId:
+                  type: string
+                  example: ''
+                frequency:
+                  type: object
+                  properties:
+                    frequency:
+                      type: number
+                      example: 1
+                    frequencyEndTime:
+                      type: string
+                      example: ''
+                    frequencyEveryHm:
+                      type: number
+                      example: 1
+                    frequencyEveryNum:
+                      type: number
+                      example: 0
+                    frequencyOnceTime:
+                      type: string
+                      example: 00:00:00
+                    frequencyStartTime:
+                      type: string
+                      example: ''
+                occurrence:
+                  type: object
+                  properties:
+                    daily:
+                      type: number
+                      example: 1
+                    friday:
+                      type: number
+                      example: -1
+                    monday:
+                      type: number
+                      example: -1
+                    monthly:
+                      type: number
+                      example: 1
+                    monthlyADay:
+                      type: number
+                      example: 1
+                    monthlyAOfEveryXMonth:
+                      type: number
+                      example: 1
+                    monthlyBDay:
+                      type: number
+                      example: -1
+                    monthlyBNum:
+                      type: number
+                      example: 1
+                    monthlyBOfEveryXMonth:
+                      type: number
+                      example: 1
+                    occurs:
+                      type: number
+                      example: 1
+                    saturday:
+                      type: number
+                      example: -1
+                    sunday:
+                      type: number
+                      example: -1
+                    thursday:
+                      type: number
+                      example: -1
+                    tuesday:
+                      type: number
+                      example: -1
+                    wednesday:
+                      type: number
+                      example: -1
+                    weekly:
+                      type: number
+                      example: 1
+                projectGuid:
+                  type: string
+                  example: ''
+                scheduleName:
+                  type: string
+                  example: Schedule_Test_Automated-{{$timestamp}}
+            example:
+              duration:
+                durationEndDate: ''
+                durationStartDate: 2023-5-3
+                durationYesnoEnd: 0
+              environmentId: '{{environment-id}}'
+              frequency:
+                frequency: 1
+                frequencyEndTime: ''
+                frequencyEveryHm: 1
+                frequencyEveryNum: 0
+                frequencyOnceTime: 00:00:00
+                frequencyStartTime: ''
+              occurrence:
+                daily: 1
+                friday: -1
+                monday: -1
+                monthly: 1
+                monthlyADay: 1
+                monthlyAOfEveryXMonth: 1
+                monthlyBDay: -1
+                monthlyBNum: 1
+                monthlyBOfEveryXMonth: 1
+                occurs: 1
+                saturday: -1
+                sunday: -1
+                thursday: -1
+                tuesday: -1
+                wednesday: -1
+                weekly: 1
+              projectGuid: '{{project-guid}}'
+              scheduleName: Schedule_Test_Automated-{{$timestamp}}
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+      - Schedules
+      security:
+      - authToken: []
+      summary: Delete Schedule
+      description: '## **Delete Schedule**
+
+        The _Delete Schedule API_ deletes an [operation schedule](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) associated with a [Harmony environment](https://docs.jitterbit.com/management-console/environments/).
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedule to delete. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | scheduleId | Yes | Integer | The ID of the operation schedule to delete. |  |'
+      operationId: deleteSchedules
+      parameters:
+      - name: environmentId
+        in: query
+        required: true
+        schema:
+          type: string
+          example: ''
+        description: The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the operation schedule to delete. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.
+      - name: scheduleId
+        in: query
+        required: true
+        schema:
+          type: string
+          example: ''
+        description: The ID of the operation schedule to delete.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                environmentId:
+                  type: string
+                  example: ''
+                scheduleId:
+                  type: string
+                  example: ''
+            example:
+              environmentId: '{{environment-id}}'
+              scheduleId: '{{delete-schedule-id}}'
+      responses:
+        '200':
+          description: ''
+  /schedules-toggle:
+    put:
+      tags:
+      - Schedules
+      security:
+      - authToken: []
+      summary: Enable / Disable Schedule
+      description: '## **Enable / Disable a Schedule**
+
+        The _Enable / Disable Schedule API_ toggles an [operation schedule](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) on or off.
+
+        | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
+
+        | --- | --- | --- | --- | --- |
+
+        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to toggle the operation schedule in. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+
+        | scheduleGuid | Yes | String | The GUID of the operation schedule to toggle. |  |'
+      operationId: enableDisableSchedule
+      parameters:
+      - name: environmentId
+        in: query
+        required: true
+        schema:
+          type: string
+          example: ''
+        description: The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to toggle the operation schedule in. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.
+      - name: scheduleGuid
+        in: query
+        required: true
+        schema:
+          type: string
+          example: ''
+        description: The GUID of the operation schedule to toggle.
+      - name: enable
+        in: query
+        schema:
+          type: string
+          example: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enable:
+                  type: string
+                  example: ''
+                environmentId:
+                  type: string
+                  example: ''
+                scheduleGuid:
+                  type: array
+                  items:
+                    type: string
+                    example: ''
+                  example:
+                  - '{{enable-schedule-guid}}'
+            example:
+              enable: '{{enable-schedule-enabled}}'
+              environmentId: '{{environment-id}}'
+              scheduleGuid:
+              - '{{enable-schedule-guid}}'
+      responses:
+        '200':
+          description: ''
+components:
+  securitySchemes:
+    authToken:
+      type: apiKey
+      format: password
+      in: header
+      name: authToken
