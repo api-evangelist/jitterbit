@@ -186,6 +186,8 @@ apis:
   humanURL: https://developer.jitterbit.com/harmony-platform-apis/
   baseURL: https://harmony-api.na-east.jitterbit.com/{endpoint}
   tags:
+  - Schedule
+  tags_raw:
   - Schedules
   properties:
   - type: OpenAPI
