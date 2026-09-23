@@ -1,0 +1,26 @@
+{
+  "provider": "jitterbit",
+  "sources": [
+    "_original/jitterbit-harmony-platform-openapi.yml"
+  ],
+  "outputs": [
+    "jitterbit-login-api-openapi.yml",
+    "jitterbit-operations-api-openapi.yml",
+    "jitterbit-projects-api-openapi.yml",
+    "jitterbit-schedules-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "jitterbit-harmony-platform-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "jitterbit-login-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jitterbit-operations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jitterbit-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jitterbit-schedules-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

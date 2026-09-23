@@ -40,17 +40,17 @@ paths:
       summary: Get Project
       description: '## **Get Project**
 
-        The _Get Project API_ retrieves data from an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+        The _Get Project API_ retrieves data from an Integration Studio project.
 
         | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | organizationId | Yes | Integer | The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) associated with the project. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. |  |
+        | organizationId | Yes | Integer | The Harmony organization ID associated with the project. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. | |
 
-        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) associated with the project. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+        | environmentId | Yes | Integer | The Harmony environment ID associated with the project. This ID is located by hovering on the environment name in the Management Console Environments page. | |
 
-        | projectGuid | Yes | String | The GUID of the project to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |'
+        | projectGuid | Yes | String | The GUID of the project to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. | |'
       operationId: getProject
       parameters:
       - name: AcceptVersion
@@ -95,13 +95,13 @@ paths:
       summary: Deploy Project
       description: '## **Deploy Project**
 
-        The _Deploy Project API_ deploys an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+        The _Deploy Project API_ deploys an Integration Studio project.
 
         | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | projectGuid | Yes | String | The GUID of the project to deploy. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |'
+        | projectGuid | Yes | String | The GUID of the project to deploy. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. | |'
       operationId: deployProject
       requestBody:
         content:
@@ -130,25 +130,25 @@ paths:
       summary: Create Project
       description: '## **Create Project**
 
-        The _Create Project API_ creates a new [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/). See [Project Creation and Configuration](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) for more details on these request parameters.
+        The _Create Project API_ creates a new Integration Studio project. See Project Creation and Configuration for more details on these request parameters.
 
         | Parameter | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | organizationId | Yes | Integer | The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) to create the project in. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. |  |
+        | organizationId | Yes | Integer | The Harmony organization ID to create the project in. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. | |
 
-        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to create the project in. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+        | environmentId | Yes | Integer | The Harmony environment ID to create the project in. This ID is located by hovering on the environment name in the Management Console Environments page. | |
 
-        | name | No | String | The name of the project. |  |
+        | name | No | String | The name of the project. | |
 
-        | description | No | String | The description of the project. |  |
+        | description | No | String | The description of the project. | |
 
         | requireDeployComment | No | Boolean | Set to `true` to require that each time this project is deployed, a dialog is presented that requires a comment to be added. | `false` |
 
         | requireDeployTag | No | Boolean | Set to `true` to require that each time this project is deployed, a dialog is presented that requires a tag to be added. | `false` |
 
-        | ignoreHttpTargetTargetValidation | No | Boolean | Set to `true` to ignore HTTP validation rules, at the risk of generating invalid data. For more information see [HTTP Validation Rule Errors](https://docs.jitterbit.com/integration-studio/design/operations/validity/#disable-the-http-validation-rule) in [Operation Validity](https://docs.jitterbit.com/integration-studio/design/operations/validity/). | `false` |
+        | ignoreHttpTargetTargetValidation | No | Boolean | Set to `true` to ignore HTTP validation rules, at the risk of generating invalid data. For more information see HTTP Validation Rule Errors in Operation Validity. | `false` |
 
         | disableScriptParser | No | Boolean | Set to `true` to disable the Jitterbit Script Parser. Disabling this setting is not normally required and is advised only if you experience unexpected script output. | `false` |'
       operationId: createProject
@@ -182,15 +182,15 @@ paths:
       summary: Delete Project
       description: '## **Delete Project**
 
-        The _Delete Project API_ [deletes](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/#projectcreationandconfiguration-deleting-a-project) an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+        The _Delete Project API_ deletes an Integration Studio project.
 
         | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) containing the project to delete. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+        | environmentId | Yes | Integer | The Harmony environment ID containing the project to delete. This ID is located by hovering on the environment name in the Management Console Environments page. | |
 
-        | projectGuid | Yes | String | The GUID of the project to delete. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |'
+        | projectGuid | Yes | String | The GUID of the project to delete. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. | |'
       operationId: deleteProject
       requestBody:
         content:
@@ -210,15 +210,15 @@ paths:
       summary: Get Project Variables
       description: '## **Get Project Variables**
 
-        The _Get Project Variables API_ retrieves [project variables](https://docs.jitterbit.com/integration-studio/design/variables/project/) associated with an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/).
+        The _Get Project Variables API_ retrieves project variables associated with an Integration Studio project.
 
         | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | environmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) containing the project variables to retrieve. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+        | environmentId | Yes | Integer | The Harmony environment ID containing the project variables to retrieve. This ID is located by hovering on the environment name in the Management Console Environments page. | |
 
-        | projectGuid | Yes | String | The GUID of the project containing the project variables to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |'
+        | projectGuid | Yes | String | The GUID of the project containing the project variables to retrieve. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. | |'
       operationId: projectVariablesGet
       parameters:
       - name: environmentId
@@ -251,17 +251,17 @@ paths:
       summary: Set Project Variables
       description: '## **Set Project Variables**
 
-        The _Set Project Variables API_ sets the value of a [project variable](https://docs.jitterbit.com/integration-studio/design/variables/project/).
+        The _Set Project Variables API_ sets the value of a project variable.
 
         | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | projectVariableId | Yes | Integer | The ID of the project variable to set. |  |
+        | projectVariableId | Yes | Integer | The ID of the project variable to set. | |
 
-        | projectVariableValue | No | String | The project variable''s value. |  |
+        | projectVariableValue | No | String | The project variable''s value. | |
 
-        | projectVariableDescription | No | String | The project variable''s description. |  |
+        | projectVariableDescription | No | String | The project variable''s description. | |
 
         | projectVariableHideValue | No | Boolean | Set to `true` to indicate if this project variable is a sensitive variable. The value will be kept secure and hidden from user interfaces. | `false` |'
       operationId: projectVariablesSet
@@ -294,21 +294,21 @@ paths:
       summary: Export Project
       description: '## **Export Project**
 
-        The _Export Project API_ [exports](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-export) an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) into a JSON file that can be downloaded and used for [importing](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-import) into a different environment.
+        The _Export Project API_ exports an Integration Studio project into a JSON file that can be downloaded and used for importing into a different environment.
 
         | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | projectGuid | Yes | String | The GUID of the project to export. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+        | projectGuid | Yes | String | The GUID of the project to export. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. | |
 
-        | includeEmails | No | Boolean | Include project [email notifiations](https://docs.jitterbit.com/integration-studio/design/notifications/email-notifications/) in the exported project. | `true` |
+        | includeEmails | No | Boolean | Include project email notifiations in the exported project. | `true` |
 
-        | includeSchedules | No | Boolean | Include [operation schedules](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) in the exported project. | `true` |
+        | includeSchedules | No | Boolean | Include operation schedules in the exported project. | `true` |
 
-        | includeCredentials | No | Boolean | Include credentials in the exported project. See details of what’s included in [Export a Project](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-export). | `true` |
+        | includeCredentials | No | Boolean | Include credentials in the exported project. See details of what’s included in Export a Project. | `true` |
 
-        | includeProjectVariables | No | Boolean | Include [project variable](https://docs.jitterbit.com/integration-studio/design/variables/project/) default values in the exported project. | `true` |'
+        | includeProjectVariables | No | Boolean | Include project variable default values in the exported project. | `true` |'
       operationId: exportProject
       parameters:
       - name: projectGuid
@@ -358,23 +358,23 @@ paths:
       summary: Import Project
       description: '## **Import Project**
 
-        The _Import Project API_ [imports](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-import) an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) into a specific environment. The imported project must be a JSON file that was generated by [exporting](https://docs.jitterbit.com/integration-studio/design/projects/exports-and-imports/#projectexportsandimports-export) the project.
+        The _Import Project API_ imports an Integration Studio project into a specific environment. The imported project must be a JSON file that was generated by exporting the project.
 
         | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | document | Yes | File | The project file containing import data in JSON format. |  |
+        | document | Yes | File | The project file containing import data in JSON format. | |
 
-        | organizationId | Yes | Integer | The [Harmony organization ID](https://docs.jitterbit.com/getting-started/jitterbit-support/my-harmony-organization-id/) to import the project to. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. |  |
+        | organizationId | Yes | Integer | The Harmony organization ID to import the project to. This ID is located in the top right of the Harmony portal header next to the organization name. This is a header parameter. | |
 
-        | targetEnvironmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to import the project to. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page.  |  |
+        | targetEnvironmentId | Yes | Integer | The Harmony environment ID to import the project to. This ID is located by hovering on the environment name in the Management Console Environments page. | |
 
-        | name | No | String | The name the project will have after the import. |  |
+        | name | No | String | The name the project will have after the import. | |
 
-        | includeEmails | No | Boolean | Include project [email notifiations](https://docs.jitterbit.com/integration-studio/design/notifications/email-notifications/) from the imported project. | `true` |
+        | includeEmails | No | Boolean | Include project email notifiations from the imported project. | `true` |
 
-        | includeSchedules | No | Boolean | Include [operation schedules](https://docs.jitterbit.com/integration-studio/design/operations/settings/schedules/) from the imported project. | `true` |'
+        | includeSchedules | No | Boolean | Include operation schedules from the imported project. | `true` |'
       operationId: importProject
       requestBody:
         content:
@@ -421,19 +421,19 @@ paths:
       summary: Update Migrated Project
       description: '## **Update Migrated Project**
 
-        The _Update Migrated Project API_ replaces an already [migrated](https://docs.jitterbit.com/integration-studio/design/projects/migration/) [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) from one environment to a different environment. If this is the first time migrating a project into the target environment and you do not have a `targetProjectGuid`, you must migrate the project first, either in the UI or by using the _Migrate Project API_.
+        The _Update Migrated Project API_ replaces an already migrated Integration Studio project from one environment to a different environment. If this is the first time migrating a project into the target environment and you do not have a `targetProjectGuid`, you must migrate the project first, either in the UI or by using the _Migrate Project API_.
 
         | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | sourceProjectGuid | Yes | String | The GUID of the project to migrate. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+        | sourceProjectGuid | Yes | String | The GUID of the project to migrate. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. | |
 
-        | targetProjectGuid | Yes | String | The GUID of the project to replace. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+        | targetProjectGuid | Yes | String | The GUID of the project to replace. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. | |
 
-        | targetEnvironmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to migrate the project to. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+        | targetEnvironmentId | Yes | Integer | The Harmony environment ID to migrate the project to. This ID is located by hovering on the environment name in the Management Console Environments page. | |
 
-        | projectHistoryTagName | No | String | A tag with a description of the migration. |  |'
+        | projectHistoryTagName | No | String | A tag with a description of the migration. | |'
       operationId: migrateProjectUpdate
       requestBody:
         content:
@@ -452,17 +452,17 @@ paths:
       summary: Migrate Project
       description: '## **Migrate Project**
 
-        The _Migrate Project API_ [migrates](https://docs.jitterbit.com/integration-studio/design/projects/migration/) an [Integration Studio project](https://docs.jitterbit.com/integration-studio/design/projects/creation-and-configuration/) from one environment into a different environment. If the project has already been migrated, then you must use the _Update Migrated Project API_.
+        The _Migrate Project API_ migrates an Integration Studio project from one environment into a different environment. If the project has already been migrated, then you must use the _Update Migrated Project API_.
 
         | **Parameter** | **Required** | **Data Type** | **Description** | **Default** |
 
         | --- | --- | --- | --- | --- |
 
-        | sourceProjectGuid | Yes | String | The GUID of the project to migrate. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. |  |
+        | sourceProjectGuid | Yes | String | The GUID of the project to migrate. Project GUIDs can be retrieved using the _Get Project API_. Project GUIDs are also visible in your browser''s address bar when you are accessing them in Integration Studio. For example, `9a87b6c5-a1b2-34c5-6d7e-123456a7b89c`. | |
 
-        | targetEnvironmentId | Yes | Integer | The [Harmony environment ID](https://docs.jitterbit.com/management-console/environments/#viewing-environments) to migrate the project to. This ID is located by hovering on the environment name in the Management Console [Environments](https://docs.jitterbit.com/management-console/environments/) page. |  |
+        | targetEnvironmentId | Yes | Integer | The Harmony environment ID to migrate the project to. This ID is located by hovering on the environment name in the Management Console Environments page. | |
 
-        | projectHistoryTagName | No | String | A tag with a description of the migration. |  |'
+        | projectHistoryTagName | No | String | A tag with a description of the migration. | |'
       operationId: migrateProject
       requestBody:
         content:
