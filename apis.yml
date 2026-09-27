@@ -55,7 +55,7 @@ tags:
   - Low-Code
   - Enterprise
   - API Gateway
-  - Workflow-Automation
+  - Workflow Automation
   - Connectors
 tags_raw:
   - API Management
@@ -68,6 +68,7 @@ tags_raw:
   - API Gateway
   - Workflow Automation
   - Connectors
+  - Workflow-Automation
 url: >-
   https://raw.githubusercontent.com/api-evangelist/jitterbit/refs/heads/main/apis.yml
 created: '2026-03-16'
