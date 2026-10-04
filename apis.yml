@@ -1,5 +1,7 @@
 aid: jitterbit
+
 name: Jitterbit
+
 description: >-
   Jitterbit is an enterprise integration platform as a service (iPaaS) vendor.
   Its Harmony platform spans application and data integration (Integration
@@ -15,7 +17,9 @@ description: >-
   asynchronous API log service. The developer surface includes a Java Connector
   SDK with Javadocs, a Connector Builder, downloadable recipes and process
   templates, and the jbcli command line tool.
+
 type: Index
+
 deliveryModel:
   model: saas
   open_source: false
@@ -27,6 +31,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: paid
   onboarding: sales
@@ -45,7 +50,9 @@ accessModel:
     require an annual contract and pricing is quote-only. try_now is true only
     in the sense that the developer portal embeds a Swagger UI console — it
     still requires live Harmony credentials.
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/jitterbit.png
+
 tags:
   - API Management
   - Automation
@@ -57,6 +64,7 @@ tags:
   - API Gateway
   - Workflow Automation
   - Connectors
+
 tags_raw:
   - API Management
   - Automation
@@ -69,11 +77,114 @@ tags_raw:
   - Workflow Automation
   - Connectors
   - Workflow-Automation
+
 url: >-
   https://raw.githubusercontent.com/api-evangelist/jitterbit/refs/heads/main/apis.yml
+
 created: '2026-03-16'
+
 modified: '2026-08-27'
+
 specificationVersion: '0.23'
+
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+
+common:
+  - type: AgenticAccess
+    url: agentic-access/jitterbit-agentic-access.yml
+  - type: FinOps
+    url: finops/jitterbit-finops.yml
+  - type: Spectral
+    url: rules/jitterbit-rules.yml
+  - type: Hosts
+    url: hosts/jitterbit-hosts.yml
+  - type: Vendors
+    url: vendors/jitterbit-vendors.yml
+  - type: SDKs
+    url: packages/jitterbit-packages.yml
+  - type: Security
+    url: https://www.jitterbit.com/security/
+  - type: Newsroom
+    url: http://www.jitterbit.com/company/news
+  - type: Leadership
+    url: https://www.jitterbit.com/leadership/
+  - type: Overlay
+    url: overlays/jitterbit-harmony-platform-overlay.yaml
+  - type: Website
+    url: https://www.jitterbit.com
+  - type: Portal
+    url: https://developer.jitterbit.com/
+  - type: DeveloperPortal
+    url: https://docs.jitterbit.com/developer-portal/
+  - type: Documentation
+    url: https://docs.jitterbit.com/developer-portal/
+  - type: APIReference
+    url: https://developer.jitterbit.com/harmony-platform-apis/
+  - type: GettingStarted
+    url: https://docs.jitterbit.com/getting-started/
+  - type: Blog
+    url: https://www.jitterbit.com/feed/
+  - type: GitHubOrganization
+    url: https://github.com/jitterbit
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/jitterbit
+  - type: Integrations
+    url: https://www.jitterbit.com/products/marketplace/
+  - type: Support
+    url: https://www.jitterbit.com/support-services/
+  - type: Community
+    url: https://community.jitterbit.com/s/
+  - type: Pricing
+    url: https://www.jitterbit.com/harmony/pricing/
+  - type: Login
+    url: https://login.jitterbit.com/
+  - type: TermsOfService
+    url: https://www.jitterbit.com/terms-and-conditions/
+  - type: PrivacyPolicy
+    url: https://www.jitterbit.com/privacy-policy/
+  - type: Compliance
+    url: https://docs.jitterbit.com/getting-started/jitterbit-security/iso-certification/
+  - type: TrustCenter
+    url: security/jitterbit-trust-center.yml
+  - type: DomainSecurity
+    url: security/jitterbit-domain-security.yml
+  - type: StatusPage
+    url: https://trust.jitterbit.com
+  - type: Deprecation
+    url: https://docs.jitterbit.com/release-notes/end-of-life-policy/
+  - type: Lifecycle
+    url: lifecycle/jitterbit-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/jitterbit-changelog.yml
+  - type: Authentication
+    url: authentication/jitterbit-authentication.yml
+  - type: Conventions
+    url: conventions/jitterbit-conventions.yml
+  - type: Conformance
+    url: conformance/jitterbit-conformance.yml
+  - type: ErrorCatalog
+    url: errors/jitterbit-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/jitterbit-rate-limits.yml
+  - type: Plans
+    url: plans/jitterbit-plans-pricing.yml
+  - type: DataModel
+    url: data-model/jitterbit-data-model.yml
+  - type: Packages
+    url: packages/jitterbit-packages.yml
+  - type: CLI
+    url: cli/jitterbit-cli.yml
+  - type: Components
+    url: components/jitterbit-components.yml
+  - type: Sandbox
+    url: sandbox/jitterbit-sandbox.yml
+  - type: Webhooks
+    url: asyncapi/jitterbit-webhooks.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+
 apis:
 - aid: jitterbit:connector-sdk-api
   name: Jitterbit Connector SDK REST API
@@ -203,90 +314,13 @@ apis:
     url: errors/jitterbit-problem-types.yml
   - type: Authentication
     url: authentication/jitterbit-authentication.yml
-common:
-  - type: Overlay
-    url: overlays/jitterbit-harmony-platform-overlay.yaml
-  - type: Website
-    url: https://www.jitterbit.com
-  - type: Portal
-    url: https://developer.jitterbit.com/
-  - type: DeveloperPortal
-    url: https://docs.jitterbit.com/developer-portal/
-  - type: Documentation
-    url: https://docs.jitterbit.com/developer-portal/
-  - type: APIReference
-    url: https://developer.jitterbit.com/harmony-platform-apis/
-  - type: GettingStarted
-    url: https://docs.jitterbit.com/getting-started/
-  - type: Blog
-    url: https://www.jitterbit.com/feed/
-  - type: GitHubOrganization
-    url: https://github.com/jitterbit
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/jitterbit
-  - type: Integrations
-    url: https://www.jitterbit.com/products/marketplace/
-  - type: Support
-    url: https://www.jitterbit.com/support-services/
-  - type: Community
-    url: https://community.jitterbit.com/s/
-  - type: Pricing
-    url: https://www.jitterbit.com/harmony/pricing/
-  - type: Login
-    url: https://login.jitterbit.com/
-  - type: TermsOfService
-    url: https://www.jitterbit.com/terms-and-conditions/
-  - type: PrivacyPolicy
-    url: https://www.jitterbit.com/privacy-policy/
-  - type: Compliance
-    url: https://docs.jitterbit.com/getting-started/jitterbit-security/iso-certification/
-  - type: TrustCenter
-    url: security/jitterbit-trust-center.yml
-  - type: DomainSecurity
-    url: security/jitterbit-domain-security.yml
-  - type: StatusPage
-    url: https://trust.jitterbit.com
-  - type: Deprecation
-    url: https://docs.jitterbit.com/release-notes/end-of-life-policy/
-  - type: Lifecycle
-    url: lifecycle/jitterbit-lifecycle.yml
-  - type: ChangeLog
-    url: changelog/jitterbit-changelog.yml
-  - type: Authentication
-    url: authentication/jitterbit-authentication.yml
-  - type: Conventions
-    url: conventions/jitterbit-conventions.yml
-  - type: Conformance
-    url: conformance/jitterbit-conformance.yml
-  - type: ErrorCatalog
-    url: errors/jitterbit-problem-types.yml
-  - type: RateLimits
-    url: rate-limits/jitterbit-rate-limits.yml
-  - type: Plans
-    url: plans/jitterbit-plans-pricing.yml
-  - type: DataModel
-    url: data-model/jitterbit-data-model.yml
-  - type: Packages
-    url: packages/jitterbit-packages.yml
-  - type: CLI
-    url: cli/jitterbit-cli.yml
-  - type: Components
-    url: components/jitterbit-components.yml
-  - type: Sandbox
-    url: sandbox/jitterbit-sandbox.yml
-  - type: Webhooks
-    url: asyncapi/jitterbit-webhooks.yml
-  - type: AgentSkill
-    url: skills/_index.yml
-  - type: LLMsTxt
-    url: llms/jitterbit-llms.txt
+
 integrations:
   - name: Global Strategic Partners
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+
 x-enrichment:
-  date: '2026-08-27'
+  date: '2026-10-04'
   status: enriched
-  artifacts_added: 21
-  pass: local-v1
+  artifacts_added: 5
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

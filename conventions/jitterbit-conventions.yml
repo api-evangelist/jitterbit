@@ -112,6 +112,7 @@ content_types:
     is a real contract oddity, not a transcription error — it is what the
     published spec says.
 idempotency:
+  coverage: none
   supported: false
   key_header: null
   retention: null

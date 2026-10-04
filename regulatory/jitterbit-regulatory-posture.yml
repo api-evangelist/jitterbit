@@ -1,0 +1,35 @@
+generated: '2026-10-04'
+method: searched
+source: https://www.jitterbit.com/privacy-policy/
+signals:
+  - data_subject_request
+  - data_retention
+  - incident_notification
+artifacts:
+  - signal: data_subject_request
+    evidence:
+      source: https://www.jitterbit.com/privacy-policy/
+      http_status: 200
+      fetched: true
+      quote: "Under Article 18 of the LGPD, you have the following rights regarding your personal data: Confirmation and Access, Correction, Anonymization, Blocking, or Deletion, Portability, Information on Sharing, Revocation of Consent."
+      url: https://www.jitterbit.com/privacy-policy/
+      section: "4. Data Subject Rights"
+      note: "Lists data subject rights, confirming the provider honors data subject requests."
+  - signal: data_retention
+    evidence:
+      source: https://www.jitterbit.com/privacy-policy/
+      http_status: 200
+      fetched: true
+      quote: "We retain your personal data only for as long as necessary to fulfill the purposes for which it was collected... Once the retention period expires, data is securely deleted or anonymized."
+      url: https://www.jitterbit.com/privacy-policy/
+      section: "7. Data Retention"
+      note: "Describes retention period and deletion, indicating a data retention policy."
+  - signal: incident_notification
+    evidence:
+      source: https://www.jitterbit.com/privacy-policy/
+      http_status: 200
+      fetched: true
+      quote: "... detection and investigation of security incidents ..."
+      url: https://www.jitterbit.com/privacy-policy/
+      section: "Legal Basis for Processing"
+      note: "Mentions security incident investigation, implying incident handling."

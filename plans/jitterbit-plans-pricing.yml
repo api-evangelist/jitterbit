@@ -1,3 +1,4 @@
+name: Jitterbit API Plans
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
@@ -14,7 +15,7 @@ provenance_note: >-
   invented defaults. Jitterbit publishes no free tier and no prices.
 plan_count: 7
 pricing_model: quote-only
-currency: null
+currency: ''
 billing_period: annual
 pricing_note: >-
   Jitterbit publishes tier NAMES and a feature matrix, but no prices. The

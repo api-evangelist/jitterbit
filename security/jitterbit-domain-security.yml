@@ -1,4 +1,4 @@
-generated: '2026-08-27'
+generated: '2026-10-04'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -13,15 +13,20 @@ hosts:
   tls_version: TLSv1.3
   cert_expires: Nov 24 08:52:48 2026 GMT
   hsts: false
+- host: docs.jitterbit.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 23 17:13:48 2026 GMT
+  hsts: false
 domains:
 - domain: jitterbit.com
   dnssec: true
   caa:
+  - 0 iodef "mailto:operations@jitterbit.com"
+  - 0 issue "amazon.com"
   - 0 issue "comodoca.com"
   - 0 issue "digicert.com"
   - 0 issue "letsencrypt.org"
-  - 0 iodef "mailto:operations@jitterbit.com"
-  - 0 issue "amazon.com"
   spf: true
   dmarc: true
   dmarc_policy: reject

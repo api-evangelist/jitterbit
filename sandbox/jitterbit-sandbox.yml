@@ -1,5 +1,7 @@
 generated: '2026-08-27'
 method: searched
+description: ""
+docs: ""
 source: https://developer.jitterbit.com/harmony-platform-apis/
 summary: >-
   Jitterbit publishes an interactive API console but no public sandbox: there is

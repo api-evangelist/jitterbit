@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for the Jitterbit Harmony Platform APIs
   version: 1.0.0
-extends: openapi/jitterbit-harmony-platform-openapi.yml
+extends: ../openapi/_original/jitterbit-harmony-platform-openapi.yml
 x-generated: '2026-08-27'
 x-method: generated
 x-source: >-
