@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.jitterbit.com/harmony-platform-apis/test.json",
+ "requested_url": "https://developer.jitterbit.com/harmony-platform-apis/test.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 89831,
+ "sha256": "a0ed2cf50668984e9b9199d8ae99c96cfcd5b696595ffb295a0c740c1c0f8b64",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
