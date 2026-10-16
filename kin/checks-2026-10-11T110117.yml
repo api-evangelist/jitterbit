@@ -2,22 +2,18 @@
 kin_checks:
   slug: jitterbit
   schema_version: 0.23.0
-  scored_at: '2026-10-03'
-  run_ts: 2026-10-03T024842
+  scored_at: '2026-10-11'
+  run_ts: 2026-10-11T110117
   note: Actionable checks (missed + partial) in `checks`, plus the ids that did not
     apply in `na`. Everything else in rubric/scoring-0.23.0.yml was earned; counts
     below let you verify that.
   counts:
     total: 153
-    earned: 45
-    partial: 22
-    missed: 59
+    earned: 48
+    partial: 26
+    missed: 52
     na: 27
   checks:
-  - id: newsroom_present
-    status: missed
-  - id: leadership_present
-    status: missed
   - id: multiple_apis
     status: missed
   - id: well_known_published
@@ -62,17 +58,9 @@ kin_checks:
     status: missed
   - id: domain_standard_conformance
     status: missed
-  - id: rules_present
-    status: missed
-  - id: rules_substantial
-    status: missed
-  - id: balanced_severities
-    status: missed
   - id: vocabulary_published
     status: missed
   - id: overlay_published
-    status: missed
-  - id: security_disclosure
     status: missed
   - id: roadmap_present
     status: missed
@@ -119,8 +107,6 @@ kin_checks:
   - id: upsert_named
     status: missed
   - id: upsert_declared_conflict
-    status: missed
-  - id: agentic_access
     status: missed
   - id: reversibility_documented
     status: missed
@@ -213,6 +199,15 @@ kin_checks:
     earned: 3.6
     detail: 4 of 4 openapi documents pass; credited at 90% because of their provenance
       (unknown)
+  - id: rules_present
+    status: partial
+    earned: 9.0
+  - id: rules_substantial
+    status: partial
+    earned: 4.5
+  - id: balanced_severities
+    status: partial
+    earned: 2.7
   - id: github_org_present
     status: partial
     earned: 1.0
@@ -224,6 +219,10 @@ kin_checks:
     status: partial
     earned: 2.5
     detail: pointer liveness 0.5
+  - id: agentic_access
+    status: partial
+    earned: 9.0
+    detail: 'authorship: unknown'
   - id: auth_clarity
     status: partial
     earned: 3.5
