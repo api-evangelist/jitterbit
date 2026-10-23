@@ -491,3 +491,9 @@ components:
       format: password
       in: header
       name: authToken
+x-provenance:
+  method: harvested
+  publisher: Jitterbit
+  source: https://developer.jitterbit.com/harmony-platform-apis/test.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
