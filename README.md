@@ -1,4 +1,4 @@
-# Jitterbit (jitterbit)
+# Jitterbit
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,50 +64,156 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Jitterbit is a modern enterprise iPaaS platform infused with AI for API integrations. The Jitterbit Developer Portal provides resources for creating connectors, plugins, templates, and recipes to extend the Jitterbit Harmony platform.
+Jitterbit is an enterprise integration platform as a service (iPaaS) vendor. Its Harmony platform spans application and data integration (Integration Studio and the legacy Design Studio), full API management (API Manager with a Jitterbit-hosted cloud API gateway and an installable private gateway), EDI with AS2 and X12/EDIFACT trading-partner management, low-code application development (App Builder, formerly Vinyl), a multi-tenant Message Queue service, a connector marketplace, and an AI layer of agents, assistants and a Model Context Protocol offering. Jitterbit publishes one machine-readable contract of its own — the Harmony platform APIs, an OpenAPI 3.0.3 document covering Integration Studio projects, project variables, operation logs and schedules — alongside a prose-documented Connector SDK REST API and an asynchronous API log service. The developer surface includes a Java Connector SDK with Javadocs, a Connector Builder, downloadable recipes and process templates, and the jbcli command line tool.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/jitterbit/refs/heads/main/apis.yml)
+**Areas:** API Management · Automation · Integration · iPaaS · EDI · Low-Code · Enterprise · API Gateway · Workflow Automation · Connectors
 
-## Scope
+## Jitterbit on APIs.io
 
-- **Type:** Index 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
+Everything profiled for Jitterbit is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/jitterbit/](https://apis.io/providers/jitterbit/)** — or go straight to one of the APIs or properties below.
 
-## Tags:
+### APIs (6)
 
- - iPaaS, Integration, API Management, Automation
+- [Jitterbit Connector SDK REST API](https://apis.io/apis/jitterbit/connector-sdk-api/) — APIs for registering and managing connectors created with the Jitterbit Connector SDK — log in to Harmony, register a custom connector, list registered…
+- [Jitterbit API Manager Log Service API (Beta)](https://apis.io/apis/jitterbit/api-manager-log-service-api/) — An asynchronous REST API for retrieving API Manager log files as CSV or JSON, as an alternative to the Download as CSV button on the API Logs page. A…
+- [Jitterbit Login API](https://apis.io/apis/jitterbit/jitterbit-login-api/) — The Login API from Jitterbit — 1 operation(s) for login.
+- [Jitterbit Operations API](https://apis.io/apis/jitterbit/jitterbit-operations-api/) — The Operations API from Jitterbit — 1 operation(s) for operations.
+- [Jitterbit Projects API](https://apis.io/apis/jitterbit/jitterbit-projects-api/) — The Projects API from Jitterbit — 4 operation(s) for projects.
+- [Jitterbit Schedules API](https://apis.io/apis/jitterbit/jitterbit-schedules-api/) — The Schedules API from Jitterbit — 2 operation(s) for schedules.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16 
-- **Modified:** 2026-03-16 
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Jitterbit Connector SDK REST API
-APIs for registering and managing connectors created with the Jitterbit Connector SDK. The SDK allows developers to create custom connectors that extend endpoint connectivity beyond HTTP/REST APIs.
+Event-driven and webhook contracts.
 
-**Human URL:** [https://developer.jitterbit.com/connector-sdk/apis/](https://developer.jitterbit.com/connector-sdk/apis/)
+- [Jitterbit Webhooks](https://apis.io/asyncapis/jitterbit/jitterbit-webhooks/)
 
+#### MCP servers (1)
 
-#### Tags:
+Model Context Protocol servers that expose the API to agents.
 
- - Connectors, SDK, Integration
+- [jitterbit-mcp.yml](https://apis.io/servers/jitterbit/jitterbit-mcp-yml/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://developer.jitterbit.com/connector-sdk/apis/)
-- [Getting Started](https://developer.jitterbit.com/)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Common Properties
+- [Jitterbit Agentic Access](https://apis.io/agentic-access/jitterbit/jitterbit-agentic-access/)
+
+#### Overlays (5)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Jitterbit Harmony Platform Overlay](https://apis.io/overlays/jitterbit/jitterbit-harmony-platform-overlay/)
+- [Jitterbit Login Api Phrasing Overlay](https://apis.io/overlays/jitterbit/jitterbit-login-api-phrasing-overlay/)
+- [Jitterbit Operations Api Phrasing Overlay](https://apis.io/overlays/jitterbit/jitterbit-operations-api-phrasing-overlay/)
+- [Jitterbit Projects Api Phrasing Overlay](https://apis.io/overlays/jitterbit/jitterbit-projects-api-phrasing-overlay/)
+- [Jitterbit Schedules Api Phrasing Overlay](https://apis.io/overlays/jitterbit/jitterbit-schedules-api-phrasing-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Jitterbit API Rules](https://apis.io/rules/jitterbit/jitterbit-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Jitterbit Authentication](https://apis.io/security/jitterbit/jitterbit-authentication/)
+- [Jitterbit Domain Security](https://apis.io/security/jitterbit/jitterbit-domain-security/)
+- [Jitterbit Trust Center](https://apis.io/security/jitterbit/jitterbit-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Jitterbit Plans Pricing](https://apis.io/plans/jitterbit/jitterbit-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Jitterbit Rate Limits](https://apis.io/rate-limits/jitterbit/jitterbit-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Jitterbit Finops](https://apis.io/finops/jitterbit/jitterbit-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.jitterbit.com)
-- [Portal](https://developer.jitterbit.com/)
 - [Documentation](https://docs.jitterbit.com/developer-portal/)
+- [Getting started](https://docs.jitterbit.com/getting-started/)
+- [API reference](https://developer.jitterbit.com/harmony-platform-apis/)
+- [Pricing](https://www.jitterbit.com/harmony/pricing/)
+- [Support](https://www.jitterbit.com/support-services/)
+- [Blog](https://www.jitterbit.com/feed/)
+- [Security](https://www.jitterbit.com/security/)
+- [Compliance](https://docs.jitterbit.com/getting-started/jitterbit-security/iso-certification/)
+- [Terms of service](https://www.jitterbit.com/terms-and-conditions/)
+- [Privacy policy](https://www.jitterbit.com/privacy-policy/)
+- [GitHub](https://github.com/jitterbit)
+- [Status](https://trust.jitterbit.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
+**Kin Score 72.5** — exemplar · rubric 0.25.0 · scored 2026-10-23
 
-**Email:** kin@apievangelist.com
+| Facet | Score |
+|---|---|
+| Discoverability | 76.8 |
+| Contract quality | 57.6 |
+| Contract governance | 31.8 |
+| Operational transparency | 92.1 |
+| Developer ergonomics | 80.4 |
+| Access clarity | 85.5 |
+
+**Agent readiness 34.3** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 29.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/jitterbit/](https://apis.io/providers/jitterbit/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Jitterbit: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/jitterbit/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
